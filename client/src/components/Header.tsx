@@ -117,13 +117,33 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="fixed inset-0 bg-white z-40 lg:hidden flex flex-col pt-20 px-6"
+            className="fixed inset-0 bg-white z-[60] lg:hidden flex flex-col px-6"
           >
-            <nav className="flex flex-col gap-2">
+            {/* Overlay header row: solid bg with logo + close button */}
+            <div className="flex items-center justify-between h-16">
+              <Link href="/" className="flex items-center gap-2.5">
+                <img
+                  src="/manus-storage/BosphorusGazLogo_952823a6.png"
+                  alt="Bosphorus Gaz Corporation"
+                  className="h-10 w-auto object-contain"
+                />
+                <span className="text-[#1e3a5f] font-bold text-lg tracking-tight">
+                  Bosphorus Gaz
+                </span>
+              </Link>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-2 text-slate-700"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-2 mt-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
