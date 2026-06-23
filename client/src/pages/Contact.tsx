@@ -85,7 +85,6 @@ export default function Contact() {
                   <div>
                     <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("E-posta", "Email", "Эл. почта")}</h3>
                     <p className="text-slate-500 text-sm mt-1">info@bosphorusgaz.com</p>
-                    <p className="text-slate-500 text-sm">ticaret@bosphorusgaz.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
