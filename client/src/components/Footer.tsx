@@ -42,7 +42,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-slate-500 text-sm">
               <p>Seba Center, Darüşşafaka Cad. No:45</p>
               <p>Sarıyer, İstanbul</p>
-              <p className="mt-2">+90 (212) 000 00 00</p>
+              <p className="mt-2">+90 (212) 335 09 00</p>
               <p>info@bosphorusgaz.com</p>
               <div className="flex gap-3 mt-4">
                 <a href="https://linkedin.com/company/bosphorus-gaz-corporation" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#1d4ed8] transition-colors">
