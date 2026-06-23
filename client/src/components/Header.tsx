@@ -16,8 +16,8 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [location] = useLocation();
-  const { lang, setLang, t } = useLanguage();
+  const [location] = useLocation(); // base-relative path (e.g. "/sirketimiz") thanks to <Router base>
+  const { lang, setLang, t } = useLanguage(); // setLang navigates across language prefixes using the full URL
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);

@@ -45,3 +45,14 @@
 - [x] Translate data structures with Tr/En fields (Header nav, Footer, DashboardLayout, IndustryBubbles, Home news, Careers values, Company timeline/management, NaturalGas FAQ/months)
 - [x] Update date locale (tr-TR/en-US) to add ru-RU (Press, AdminNews)
 - [x] Verify build, run vitest (29/29 pass), typecheck clean
+
+## URL Language Prefix Routing (SEO-friendly shareable URLs)
+- [x] LanguageContext reads active language from URL prefix (/en, /ru) as source of truth; TR = un-prefixed root
+- [x] App.tsx: wrap public routes in wouter <Router base={langBase}> so all internal Links auto-resolve under the active prefix
+- [x] Persist language choice but let URL win on direct navigation/share
+- [x] Header toggle navigates to the same page under the new language prefix (TR/EN/RU)
+- [x] Keep admin routes un-prefixed; ensure /admin still works
+- [x] Set <html lang> attribute dynamically per active language
+- [x] Dynamic document.title per language
+- [x] Verify: direct-load /ru/dogal-gaz and /en/sirketimiz render correct language; toggling updates URL; TR root still works (browser-verified)
+- [x] Typecheck clean + 29/29 vitest pass + production build OK
