@@ -121,6 +121,7 @@ export default function Header() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            style={{ backgroundColor: "#ffffff" }}
             className="fixed inset-0 bg-white z-[60] lg:hidden flex flex-col px-6"
           >
             {/* Overlay header row: solid bg with logo + close button */}
