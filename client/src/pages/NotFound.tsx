@@ -26,18 +26,20 @@ export default function NotFound() {
           <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
 
           <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            {t("Sayfa Bulunamadı", "Page Not Found")}
+            {t("Sayfa Bulunamadı", "Page Not Found", "Страница не найдена")}
           </h2>
 
           <p className="text-slate-600 mb-8 leading-relaxed">
             {t(
               "Üzgünüz, aradığınız sayfa bulunamadı.",
-              "Sorry, the page you are looking for doesn't exist."
+              "Sorry, the page you are looking for doesn't exist.",
+              "К сожалению, страница, которую вы ищете, не существует."
             )}
             <br />
             {t(
               "Taşınmış veya silinmiş olabilir.",
-              "It may have been moved or deleted."
+              "It may have been moved or deleted.",
+              "Возможно, она была перемещена или удалена."
             )}
           </p>
 
@@ -50,7 +52,7 @@ export default function NotFound() {
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               <Home className="w-4 h-4 mr-2" />
-              {t("Ana Sayfa", "Go Home")}
+              {t("Ana Sayfa", "Go Home", "На главную")}
             </Button>
           </div>
         </CardContent>

@@ -11,33 +11,33 @@ export default function Footer() {
           {/* Company Links */}
           <div>
             <h4 className="text-[#1e3a5f] font-semibold text-sm uppercase tracking-wider mb-4">
-              {t("Şirketimiz", "Company")}
+              {t("Şirketimiz", "Company", "Компания")}
             </h4>
             <nav className="flex flex-col gap-2">
-              <Link href="/sirketimiz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Profil", "Profile")}</Link>
-              <Link href="/sirketimiz#vizyon" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Vizyon & Misyon", "Vision & Mission")}</Link>
-              <Link href="/sirketimiz#tarihce" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Tarihçe", "History")}</Link>
-              <Link href="/kariyer" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Kariyer", "Careers")}</Link>
+              <Link href="/sirketimiz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Profil", "Profile", "Профиль")}</Link>
+              <Link href="/sirketimiz#vizyon" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Vizyon & Misyon", "Vision & Mission", "Видение и миссия")}</Link>
+              <Link href="/sirketimiz#tarihce" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Tarihçe", "History", "История")}</Link>
+              <Link href="/kariyer" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Kariyer", "Careers", "Карьера")}</Link>
             </nav>
           </div>
 
           {/* Natural Gas Links */}
           <div>
             <h4 className="text-[#1e3a5f] font-semibold text-sm uppercase tracking-wider mb-4">
-              {t("Doğal Gaz", "Natural Gas")}
+              {t("Doğal Gaz", "Natural Gas", "Природный газ")}
             </h4>
             <nav className="flex flex-col gap-2">
-              <Link href="/dogal-gaz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Faaliyetlerimiz", "Our Activities")}</Link>
-              <Link href="/dogal-gaz#piyasa" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Piyasa Görünümü", "Market Overview")}</Link>
-              <Link href="/dogal-gaz#talep" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Talep Formu", "Request Form")}</Link>
-              <Link href="/dogal-gaz#sss" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("SSS", "FAQ")}</Link>
+              <Link href="/dogal-gaz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Faaliyetlerimiz", "Our Activities", "Наша деятельность")}</Link>
+              <Link href="/dogal-gaz#piyasa" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Piyasa Görünümü", "Market Overview", "Обзор рынка")}</Link>
+              <Link href="/dogal-gaz#talep" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Talep Formu", "Request Form", "Форма запроса")}</Link>
+              <Link href="/dogal-gaz#sss" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("SSS", "FAQ", "Вопросы и ответы")}</Link>
             </nav>
           </div>
 
           {/* Contact Info */}
           <div>
             <h4 className="text-[#1e3a5f] font-semibold text-sm uppercase tracking-wider mb-4">
-              {t("İletişim", "Contact")}
+              {t("İletişim", "Contact", "Контакты")}
             </h4>
             <div className="flex flex-col gap-2 text-slate-500 text-sm">
               <p>Seba Center, Darüşşafaka Cad. No:45</p>
@@ -59,17 +59,17 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-slate-400 text-xs">
-            &copy; 2026 Bosphorus Gaz Corporation A.Ş. {t("Tüm hakları saklıdır.", "All rights reserved.")}
+            &copy; 2026 Bosphorus Gaz Corporation A.Ş. {t("Tüm hakları saklıdır.", "All rights reserved.", "Все права защищены.")}
           </p>
           <div className="flex gap-4 text-slate-400 text-xs">
             <Link href="/sirketimiz#bilgi-toplumu" className="hover:text-[#1d4ed8] transition-colors">
-              {t("Bilgi Toplumu Hizmetleri", "Information Society Services")}
+              {t("Bilgi Toplumu Hizmetleri", "Information Society Services", "Услуги информационного общества")}
             </Link>
             <Link href="/iletisim" className="hover:text-[#1d4ed8] transition-colors">
-              {t("Gizlilik Politikası", "Privacy Policy")}
+              {t("Gizlilik Politikası", "Privacy Policy", "Политика конфиденциальности")}
             </Link>
             <Link href="/admin" className="hover:text-[#1d4ed8] transition-colors">
-              {t("Yönetim", "Admin")}
+              {t("Yönetim", "Admin", "Администрирование")}
             </Link>
           </div>
         </div>

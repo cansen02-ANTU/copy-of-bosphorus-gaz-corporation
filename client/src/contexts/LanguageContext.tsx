@@ -1,11 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 
-export type Language = "tr" | "en";
+export type Language = "tr" | "en" | "ru";
 
 interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
-  t: (tr: string, en: string) => string;
+  /**
+   * Translate a string.
+   * @param tr Turkish text (default / fallback)
+   * @param en English text
+   * @param ru Russian text. Optional — when not provided, falls back to English (then Turkish).
+   */
+  t: (tr: string, en: string, ru?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -17,7 +23,10 @@ interface LanguageProviderProps {
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [lang, setLangState] = useState<Language>(() => {
     const stored = localStorage.getItem("lang");
-    return (stored as Language) || "tr";
+    if (stored === "tr" || stored === "en" || stored === "ru") {
+      return stored;
+    }
+    return "tr";
   });
 
   const setLang = (newLang: Language) => {
@@ -25,7 +34,11 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     localStorage.setItem("lang", newLang);
   };
 
-  const t = (tr: string, en: string) => (lang === "en" ? en : tr);
+  const t = (tr: string, en: string, ru?: string) => {
+    if (lang === "en") return en;
+    if (lang === "ru") return ru ?? en ?? tr;
+    return tr;
+  };
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>

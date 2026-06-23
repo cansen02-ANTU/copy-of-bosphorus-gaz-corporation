@@ -38,7 +38,7 @@ export default function AdminNews() {
     onSuccess: () => {
       utils.news.list.invalidate();
       resetForm();
-      toast.success(t("Haber başarıyla eklendi", "News article added successfully"));
+      toast.success(t("Haber başarıyla eklendi", "News article added successfully", "Новость успешно добавлена"));
     },
     onError: (err) => toast.error(err.message),
   });
@@ -47,7 +47,7 @@ export default function AdminNews() {
     onSuccess: () => {
       utils.news.list.invalidate();
       resetForm();
-      toast.success(t("Haber başarıyla güncellendi", "News article updated successfully"));
+      toast.success(t("Haber başarıyla güncellendi", "News article updated successfully", "Новость успешно обновлена"));
     },
     onError: (err) => toast.error(err.message),
   });
@@ -55,7 +55,7 @@ export default function AdminNews() {
   const deleteMutation = trpc.news.delete.useMutation({
     onSuccess: () => {
       utils.news.list.invalidate();
-      toast.success(t("Haber silindi", "News article deleted"));
+      toast.success(t("Haber silindi", "News article deleted", "Новость удалена"));
     },
     onError: (err) => toast.error(err.message),
   });
@@ -110,7 +110,7 @@ export default function AdminNews() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim() || !excerpt.trim()) {
-      toast.error(t("Başlık ve özet zorunludur", "Title and excerpt are required"));
+      toast.error(t("Başlık ve özet zorunludur", "Title and excerpt are required", "Заголовок и краткое описание обязательны"));
       return;
     }
 
@@ -149,14 +149,14 @@ export default function AdminNews() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e3a5f]">{t("Haberler", "News")}</h1>
+          <h1 className="text-2xl font-bold text-[#1e3a5f]">{t("Haberler", "News", "Новости")}</h1>
           <p className="text-sm text-slate-500 mt-1">
-            {t("Basın sayfasındaki haberleri yönetin", "Manage news articles on the press page")}
+            {t("Basın sayfasındaki haberleri yönetin", "Manage news articles on the press page", "Управление новостями на странице прессы")}
           </p>
         </div>
         <Button onClick={openCreate} className="bg-[#1d4ed8] hover:bg-[#1e40af]">
           <Plus className="h-4 w-4 mr-2" />
-          {t("Yeni Haber", "New Article")}
+          {t("Yeni Haber", "New Article", "Новая новость")}
         </Button>
       </div>
 
@@ -166,18 +166,18 @@ export default function AdminNews() {
         </div>
       ) : !articles?.length ? (
         <div className="text-center py-12 text-slate-500">
-          <p className="text-lg">{t("Henüz haber eklenmemiş", "No news articles added yet")}</p>
-          <p className="text-sm mt-1">{t("İlk haberi eklemek için yukarıdaki butonu kullanın", "Use the button above to add the first article")}</p>
+          <p className="text-lg">{t("Henüz haber eklenmemiş", "No news articles added yet", "Новости пока не добавлены")}</p>
+          <p className="text-sm mt-1">{t("İlk haberi eklemek için yukarıdaki butonu kullanın", "Use the button above to add the first article", "Используйте кнопку выше, чтобы добавить первую новость")}</p>
         </div>
       ) : (
         <div className="border rounded-lg overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-16">{t("Görsel", "Image")}</TableHead>
-                <TableHead>{t("Başlık", "Title")}</TableHead>
-                <TableHead className="w-40">{t("Tarih", "Date")}</TableHead>
-                <TableHead className="w-24 text-right">{t("İşlemler", "Actions")}</TableHead>
+                <TableHead className="w-16">{t("Görsel", "Image", "Изображение")}</TableHead>
+                <TableHead>{t("Başlık", "Title", "Заголовок")}</TableHead>
+                <TableHead className="w-40">{t("Tarih", "Date", "Дата")}</TableHead>
+                <TableHead className="w-24 text-right">{t("İşlemler", "Actions", "Действия")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -192,7 +192,7 @@ export default function AdminNews() {
                       />
                     ) : (
                       <div className="w-12 h-12 bg-slate-100 rounded flex items-center justify-center text-slate-400 text-xs">
-                        {t("Yok", "None")}
+                        {t("Yok", "None", "Нет")}
                       </div>
                     )}
                   </TableCell>
@@ -207,7 +207,7 @@ export default function AdminNews() {
                     </div>
                   </TableCell>
                   <TableCell className="text-sm text-slate-500">
-                    {new Date(article.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : "tr-TR", {
+                    {new Date(article.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : lang === "ru" ? "ru-RU" : "tr-TR", {
                       day: "numeric",
                       month: "long",
                       year: "numeric",
@@ -227,7 +227,7 @@ export default function AdminNews() {
                         variant="ghost"
                         size="icon"
                         onClick={() => {
-                          if (confirm(t("Bu haberi silmek istediğinize emin misiniz?", "Are you sure you want to delete this article?"))) {
+                          if (confirm(t("Bu haberi silmek istediğinize emin misiniz?", "Are you sure you want to delete this article?", "Вы уверены, что хотите удалить эту новость?"))) {
                             deleteMutation.mutate({ id: article.id });
                           }
                         }}
@@ -248,41 +248,41 @@ export default function AdminNews() {
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>
-              {editingId ? t("Haberi Düzenle", "Edit Article") : t("Yeni Haber Ekle", "Add New Article")}
+              {editingId ? t("Haberi Düzenle", "Edit Article", "Редактировать новость") : t("Yeni Haber Ekle", "Add New Article", "Добавить новость")}
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-slate-700">{t("Başlık *", "Title *")}</label>
+              <label className="text-sm font-medium text-slate-700">{t("Başlık *", "Title *", "Заголовок *")}</label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder={t("Haber başlığı", "Article title")}
+                placeholder={t("Haber başlığı", "Article title", "Заголовок новости")}
                 className="mt-1"
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700">{t("Özet *", "Excerpt *")}</label>
+              <label className="text-sm font-medium text-slate-700">{t("Özet *", "Excerpt *", "Краткое описание *")}</label>
               <Textarea
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
-                placeholder={t("Kısa açıklama", "Short description")}
+                placeholder={t("Kısa açıklama", "Short description", "Краткое описание")}
                 rows={3}
                 className="mt-1"
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700">{t("İçerik", "Content")}</label>
+              <label className="text-sm font-medium text-slate-700">{t("İçerik", "Content", "Содержание")}</label>
               <Textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder={t("Detaylı haber içeriği (opsiyonel)", "Detailed article content (optional)")}
+                placeholder={t("Detaylı haber içeriği (opsiyonel)", "Detailed article content (optional)", "Подробное содержание новости (необязательно)")}
                 rows={5}
                 className="mt-1"
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700">{t("Görsel", "Image")}</label>
+              <label className="text-sm font-medium text-slate-700">{t("Görsel", "Image", "Изображение")}</label>
               <Input
                 type="file"
                 accept="image/*"
@@ -299,7 +299,7 @@ export default function AdminNews() {
             </div>
             <div className="flex justify-end gap-2 pt-2">
               <Button type="button" variant="outline" onClick={resetForm}>
-                {t("İptal", "Cancel")}
+                {t("İptal", "Cancel", "Отмена")}
               </Button>
               <Button
                 type="submit"
@@ -307,7 +307,7 @@ export default function AdminNews() {
                 className="bg-[#1d4ed8] hover:bg-[#1e40af]"
               >
                 {isMutating && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                {editingId ? t("Güncelle", "Update") : t("Ekle", "Add")}
+                {editingId ? t("Güncelle", "Update", "Обновить") : t("Ekle", "Add", "Добавить")}
               </Button>
             </div>
           </form>

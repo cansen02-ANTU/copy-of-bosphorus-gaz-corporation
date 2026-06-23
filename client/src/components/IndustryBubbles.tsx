@@ -8,12 +8,16 @@ interface Industry {
   id: string;
   name: string;
   nameEn: string;
+  nameRu: string;
   taglineTr: string;
   taglineEn: string;
+  taglineRu: string;
   descriptionTr: string;
   descriptionEn: string;
+  descriptionRu: string;
   benefitsTr: string[];
   benefitsEn: string[];
+  benefitsRu: string[];
   scale: string;
 }
 
@@ -22,10 +26,13 @@ const industries: Industry[] = [
     id: "data-centers",
     name: "Veri Merkezleri",
     nameEn: "Data Centers",
+    nameRu: "Центры обработки данных",
     taglineTr: "Kesintisiz Enerji, Maksimum Verimlilik",
     taglineEn: "Uninterrupted Energy, Maximum Efficiency",
+    taglineRu: "Бесперебойная энергия, максимальная эффективность",
     descriptionTr: "Doğal gaz; yerinde enerji üretimi, kojenerasyon uygulamaları ve alternatif yedek güç çözümleri için güvenilir bir enerji kaynağı sunarken, veri merkezlerinin hizmet sürekliliği, veri güvenliği ve müşteri memnuniyeti konularını yönetmelerine ve operasyonel esneklik kazanmalarına yardımcı olur.",
     descriptionEn: "Natural gas provides a reliable energy source for on-site power generation, cogeneration applications, and alternative backup power solutions, helping data centers manage service continuity, data security, and customer satisfaction while gaining operational flexibility.",
+    descriptionRu: "Природный газ является надёжным источником энергии для локальной генерации, когенерации и резервного энергоснабжения, помогая центрам обработки данных обеспечивать непрерывность работы, безопасность данных и удовлетворённость клиентов, получая операционную гибкость.",
     benefitsTr: [
       "Yedek ve kesintisiz güç için doğalgaz jeneratör sistemleri",
       "Kojenerasyon (CHP) ile elektrik üretimi ve atık ısı geri kazanımı",
@@ -36,16 +43,24 @@ const industries: Industry[] = [
       "Electricity generation and waste heat recovery through cogeneration (CHP)",
       "Custom supply agreements with competitive prices suited to flexible consumption profiles"
     ],
+    benefitsRu: [
+      "Газовые генераторные системы для резервного и бесперебойного питания",
+      "Выработка электроэнергии и рекуперация тепла благодаря когенерации (CHP)",
+      "Индивидуальные договоры поставки с конкурентными ценами, соответствующие гибкому профилю потребления"
+    ],
     scale: "5–50 Mm³/yr"
   },
   {
     id: "manufacturing",
     name: "İmalat",
     nameEn: "Manufacturing",
+    nameRu: "Производство",
     taglineTr: "Endüstriyel Isı, Esnek Kontratlar",
     taglineEn: "Industrial Heat, Flexible Contracts",
+    taglineRu: "Промышленное тепло, гибкие контракты",
     descriptionTr: "Üretim bantlarından proses fırınlarına, buhar sistemlerinden ısıtma altyapısına kadar her ölçekteki sanayi tesisi için doğal gaz, esnekliği ve maliyet etkinliğiyle farklı sektörlerin farklı üretim ihtiyaçlarına kolayca uyum sağlayan en yaygın sanayi yakıtı olma özelliğini korumaktadır.",
     descriptionEn: "From production lines to process furnaces, steam systems to heating infrastructure, natural gas remains the most common industrial fuel for manufacturing facilities of all sizes, easily adapting to different production needs across various sectors with its flexibility and cost-effectiveness.",
+    descriptionRu: "От производственных линий до технологических печей, от паровых систем до инфраструктуры отопления природный газ остаётся самым распространённым промышленным топливом для предприятий любого масштаба, легко адаптируясь к различным производственным потребностям благодаря своей гибкости и экономичности.",
     benefitsTr: [
       "Her ölçek ve sektördeki sanayi tesisi için esnek hacim ve sözleşme yapıları",
       "Üretim sürekliliğini destekleyen güçlü arz ve portföy yönetimi",
@@ -56,16 +71,24 @@ const industries: Industry[] = [
       "Strong supply and portfolio management supporting production continuity",
       "Lower carbon footprint compared to alternative fuels and easier compliance with increasing environmental regulations"
     ],
+    benefitsRu: [
+      "Гибкие объёмы и структуры договоров для предприятий любого масштаба и отрасли",
+      "Надёжные поставки и управление портфелем, поддерживающие непрерывность производства",
+      "Меньший углеродный след по сравнению с альтернативным топливом и простота соблюдения ужесточающихся экологических норм"
+    ],
     scale: "100–300 Mm³/yr"
   },
   {
     id: "power-generation",
     name: "Enerji Üretimi",
     nameEn: "Power Generation",
+    nameRu: "Энергогенерация",
     taglineTr: "Yüksek Verimlilik, Hızlı Yanıt",
     taglineEn: "High Efficiency, Rapid Response",
+    taglineRu: "Высокая эффективность, быстрый отклик",
     descriptionTr: "Kesintisiz ve yüksek hacimli yakıt tedariki, doğal gaz santrallerinde üretim performansını ve kârlılığı doğrudan etkiler. Esnek teslimat yapıları ve farklı fiyatlama modelleriyle spot piyasa risklerini minimize ederek üreticilerin ihtiyaçlarına uygun çözümler sunuyoruz.",
     descriptionEn: "Uninterrupted and high-volume fuel supply directly affects production performance and profitability in natural gas power plants. We offer solutions tailored to producers' needs by minimizing spot market risks through flexible delivery structures and various pricing models.",
+    descriptionRu: "Бесперебойные и крупнообъёмные поставки топлива напрямую влияют на производительность и рентабельность газовых электростанций. Мы предлагаем решения, адаптированные под потребности производителей, минимизируя риски спотового рынка за счёт гибких схем поставок и различных моделей ценообразования.",
     benefitsTr: [
       "Yüksek hacimli ve kesintisiz baz yük tedariki",
       "Spot fiyat dalgalanmalarına karşı uzun vadeli sözleşme güvencesi",
@@ -76,16 +99,24 @@ const industries: Industry[] = [
       "Long-term contract security against spot price fluctuations",
       "Flexible delivery guarantee from various sources with access to the balancing market"
     ],
+    benefitsRu: [
+      "Крупнообъёмные и бесперебойные базовые поставки",
+      "Гарантии долгосрочных контрактов против колебаний спотовых цен",
+      "Гибкая гарантия поставок из различных источников с доступом к балансирующему рынку"
+    ],
     scale: "200 Mm³–1,500 Mm³/yr"
   },
   {
     id: "petrochemicals",
     name: "Petrokimya",
     nameEn: "Petrochemicals",
+    nameRu: "Нефтехимия",
     taglineTr: "Çift Kullanım: Hammadde + Yakıt",
     taglineEn: "Dual Use: Feedstock + Fuel",
+    taglineRu: "Двойное применение: сырьё + топливо",
     descriptionTr: "Doğal gaz; fırınlardan buhar kazanlarına kadar her aşamada hem operasyonel sürekliliği hem de fuel-oil ve kömüre kıyasla daha düşük karbon ayak izini mümkün kılar. Kesintisiz tedarik ve öngörülebilir maliyet yapısıyla operasyonların güvenilir bir şekilde sürdürülebilirliği için kritik öneme sahiptir.",
     descriptionEn: "Natural gas enables both operational continuity and a lower carbon footprint compared to fuel oil and coal at every stage from furnaces to steam boilers. With uninterrupted supply and predictable cost structures, it is critical for the reliable sustainability of operations.",
+    descriptionRu: "Природный газ обеспечивает как операционную непрерывность, так и меньший углеродный след по сравнению с мазутом и углём на каждом этапе — от печей до паровых котлов. Благодаря бесперебойным поставкам и предсказуемой структуре затрат он имеет критическое значение для надёжной устойчивости операций.",
     benefitsTr: [
       "Yüksek enerji yoğunluklu prosesler için güvenilir doğal gaz arzı",
       "Üretim planlamasını kolaylaştıran öngörülebilir maliyet yapıları",
@@ -96,16 +127,24 @@ const industries: Industry[] = [
       "Predictable cost structures that facilitate production planning",
       "Long-term supply solutions supporting operational continuity"
     ],
+    benefitsRu: [
+      "Надёжные поставки природного газа для энергоёмких процессов",
+      "Предсказуемые структуры затрат, облегчающие планирование производства",
+      "Долгосрочные решения по поставкам, поддерживающие операционную непрерывность"
+    ],
     scale: "100–1,300 Mm³/yr"
   },
   {
     id: "ceramics-glass",
     name: "Seramik & Cam",
     nameEn: "Ceramics & Glass",
+    nameRu: "Керамика и стекло",
     taglineTr: "Hassas Sıcaklık Kontrolü",
     taglineEn: "Precise Temperature Control",
+    taglineRu: "Точный контроль температуры",
     descriptionTr: "Seramik ve cam üretimi doğal gazın kesintisiz ve hassas biçimde temin edilmesinin en kritik önem taşıdığı endüstriyel prosesler arasında yer alır; seramik tünel fırınlarında 1.200–1.400°C'ye ulaşan sürekli yanma süreçleri en ufak bir tedarik dalgalanmasında bile ürün kalitesini tehlikeye atarken, cam eritme fırınlarında operasyonel süreklilik üretimin temel koşuludur.",
     descriptionEn: "Ceramic and glass production are among the industrial processes where uninterrupted and precise natural gas supply is most critical; continuous combustion processes reaching 1,200–1,400°C in ceramic tunnel kilns can compromise product quality with even the slightest supply fluctuation, while operational continuity in glass melting furnaces is a fundamental condition of production.",
+    descriptionRu: "Производство керамики и стекла относится к промышленным процессам, где бесперебойные и точные поставки природного газа наиболее критичны: непрерывные процессы горения, достигающие 1200–1400°C в керамических туннельных печах, могут снизить качество продукции даже при малейших колебаниях поставок, а операционная непрерывность в стекловаренных печах является фундаментальным условием производства.",
     benefitsTr: [
       "Seramik tünel fırınlarında kesintisiz ve hassas sıcaklık kontrolü için sabit basınçlı yakıt tedariki",
       "7/24 kesintisiz arz güvencesi ile birlikte rekabetçi fiyatlar",
@@ -116,16 +155,24 @@ const industries: Industry[] = [
       "24/7 uninterrupted supply guarantee with competitive prices",
       "Lower carbon footprint compared to fuel oil alternatives in high energy-intensive processes"
     ],
+    benefitsRu: [
+      "Поставка топлива под постоянным давлением для бесперебойного и точного контроля температуры в керамических туннельных печах",
+      "Круглосуточная гарантия бесперебойных поставок с конкурентными ценами",
+      "Меньший углеродный след по сравнению с мазутом в энергоёмких процессах"
+    ],
     scale: "100–1,200 Mm³/yr"
   },
   {
     id: "food-beverage",
     name: "Gıda & İçecek",
     nameEn: "Food & Beverage",
+    nameRu: "Продукты питания и напитки",
     taglineTr: "Gıda Güvenliği Standartlarında Enerji",
     taglineEn: "Energy at Food Safety Standards",
+    taglineRu: "Энергия по стандартам пищевой безопасности",
     descriptionTr: "Gıda ve içecek sektörü, üretim süreçlerinde hijyen, sıcaklık kontrolü ve enerji verimliliği açısından doğal gaza büyük ölçüde bağımlıdır. Bosphorus Gaz, gıda üreticilerine temiz yanma profili ve kararlı enerji tedariki sunarak üretim kalitesini ve gıda güvenliğini destekler.",
     descriptionEn: "The food and beverage sector is heavily dependent on natural gas for hygiene, temperature control, and energy efficiency in production processes. Bosphorus Gaz supports production quality and food safety by providing food producers with a clean combustion profile and stable energy supply.",
+    descriptionRu: "Сектор продуктов питания и напитков сильно зависит от природного газа для обеспечения гигиены, контроля температуры и энергоэффективности в производственных процессах. Bosphorus Gaz поддерживает качество производства и пищевую безопасность, предоставляя производителям чистый профиль горения и стабильное энергоснабжение.",
     benefitsTr: [
       "AB gıda sınıfı yanma kalitesi",
       "4–40 bar buhar üretim kapasitesi",
@@ -136,16 +183,24 @@ const industries: Industry[] = [
       "4–40 bar steam generation capacity",
       "Lower CO₂ emissions compared to HFO"
     ],
+    benefitsRu: [
+      "Качество горения пищевого класса Стандарта ЕС",
+      "Мощность выработки пара 4–40 бар",
+      "Меньшие выбросы CO₂ по сравнению с мазутом (HFO)"
+    ],
     scale: "1–20 Mm³/yr"
   },
   {
     id: "textiles",
     name: "Tekstil",
     nameEn: "Textiles",
+    nameRu: "Текстиль",
     taglineTr: "Boyama ve Kurutma İçin Hassas Buhar",
     taglineEn: "Precise Steam for Dyeing and Drying",
+    taglineRu: "Точный пар для крашения и сушки",
     descriptionTr: "Proseslerde kullanılan doğal gaz, hem rekabetçi maliyet avantajı hem de global markaların tedarikçilerinden giderek daha fazla talep ettiği düşük karbon ayak izi gereksinimleri açısından en uygun yakıt seçeneği olarak öne çıkar.",
     descriptionEn: "Natural gas used in processes stands out as the most suitable fuel option both for competitive cost advantages and the low carbon footprint requirements increasingly demanded by global brands from their suppliers.",
+    descriptionRu: "Природный газ, используемый в технологических процессах, выделяется как наиболее подходящий вариант топлива как с точки зрения конкурентных издержек, так и требований к низкому углеродному следу, которые всё чаще выдвигают глобальные бренды к своим поставщикам.",
     benefitsTr: [
       "Boyahane, kurutma ve fikse fırınları için kesintisiz buhar ve ısı enerjisi temini",
       "Global markaların ESG gereksinimlerine uyumda düşük karbon ayak izi avantajı",
@@ -156,16 +211,24 @@ const industries: Industry[] = [
       "Low carbon footprint advantage for compliance with global brands' ESG requirements",
       "Flexible volume options that facilitate production planning"
     ],
+    benefitsRu: [
+      "Бесперебойная подача пара и тепловой энергии для красильных, сушильных и фиксационных печей",
+      "Преимущество низкого углеродного следа для соответствия ESG-требованиям глобальных брендов",
+      "Гибкие варианты объёмов, облегчающие планирование производства"
+    ],
     scale: "50–700 Mm³/yr"
   },
   {
     id: "distribution",
     name: "Dağıtım",
     nameEn: "Distribution",
+    nameRu: "Распределение",
     taglineTr: "Güvenilir Dağıtım Altyapısı",
     taglineEn: "Reliable Distribution Infrastructure",
+    taglineRu: "Надёжная распределительная инфраструктура",
     descriptionTr: "Kış aylarındaki ani talep artışlarından arz kaynaklı dalgalanmalara kadar her koşulda güvenilir bir tedarikçiyle çalışmak, dağıtım şirketlerinin hem operasyonel sürekliliğini hem de abone memnuniyetini doğrudan belirler.",
     descriptionEn: "Working with a reliable supplier in all conditions, from sudden demand increases in winter months to supply-related fluctuations, directly determines both operational continuity and subscriber satisfaction for distribution companies.",
+    descriptionRu: "Работа с надёжным поставщиком в любых условиях — от резкого роста спроса в зимние месяцы до колебаний поставок — напрямую определяет как операционную непрерывность, так и удовлетворённость абонентов для распределительных компаний.",
     benefitsTr: [
       "Mevsimsel talep zirvelerinde bile kesintisiz ve güvenilir toptan gaz temini",
       "Kısa ve uzun vadeli sözleşme esnekliğiyle abone talebine duyarlı portföy yönetimi",
@@ -176,16 +239,24 @@ const industries: Industry[] = [
       "Portfolio management responsive to subscriber demand with short and long-term contract flexibility",
       "High supply security supported by strong source diversification"
     ],
+    benefitsRu: [
+      "Бесперебойные и надёжные оптовые поставки газа даже в пики сезонного спроса",
+      "Управление портфелем, реагирующее на спрос абонентов, с гибкостью кратко- и долгосрочных контрактов",
+      "Высокая безопасность поставок, подкреплённая широкой диверсификацией источников"
+    ],
     scale: "500–3,000 Mm³/yr"
   },
   {
     id: "steel",
     name: "Demir-Çelik",
     nameEn: "Steel",
+    nameRu: "Чёрная металлургия",
     taglineTr: "Ağır Sanayide Geçiş Yakıtı",
     taglineEn: "Transition Fuel for Heavy Industry",
+    taglineRu: "Переходное топливо для тяжёлой промышленности",
     descriptionTr: "Doğal gaz, kömür ve kok gazına kıyasla daha düşük karbon ayak iziyle, tavlama fırınlarından haddehanelere kadar birçok süreçte bu sektörün yüksek sıcaklık gerektiren ağır üretim koşullarını karşılarken CBAM gibi artan çevresel düzenlemelere uyum sürecinde de kritik bir geçiş yakıtı işlevi görür.",
     descriptionEn: "With a lower carbon footprint compared to coal and coke gas, natural gas meets the heavy production conditions requiring high temperatures in this sector from annealing furnaces to rolling mills, while serving as a critical transition fuel in compliance with increasing environmental regulations such as CBAM.",
+    descriptionRu: "Благодаря меньшему углеродному следу по сравнению с углём и коксовым газом природный газ обеспечивает тяжёлые производственные условия, требующие высоких температур — от отжигательных печей до прокатных станов, являясь критически важным переходным топливом в соответствии с ужесточающимися экологическими нормами, такими как CBAM.",
     benefitsTr: [
       "Yüksek fırın, haddehane ve döküm prosesleri için kesintisiz yüksek kapasiteli yakıt tedariki",
       "Kömür ve kok gazına kıyasla daha düşük karbon emisyonu ile CBAM uyumunda avantaj",
@@ -196,16 +267,24 @@ const industries: Industry[] = [
       "Advantage in CBAM compliance with lower carbon emissions compared to coal and coke gas",
       "Predictability and price stability in production costs through long-term contract structures"
     ],
+    benefitsRu: [
+      "Бесперебойная высокомощная подача топлива для доменных печей, прокатных станов и литейных процессов",
+      "Преимущество в соответствии CBAM с меньшими выбросами углерода по сравнению с углём и коксовым газом",
+      "Предсказуемость и ценовая стабильность производственных затрат благодаря долгосрочным контрактам"
+    ],
     scale: "100–400 Mm³/yr"
   },
   {
     id: "wholesale",
     name: "Toptan Satış",
     nameEn: "Wholesale",
+    nameRu: "Оптовая торговля",
     taglineTr: "Rekabetçi Tedarik Çözümleri",
     taglineEn: "Competitive Supply Solutions",
+    taglineRu: "Конкурентные решения по поставкам",
     descriptionTr: "Sektördeki deneyimimiz, güçlü tedarik ve esnek ticari çözümlerimizle, toptan satış şirketlerinin portföylerini daha etkin yönetmelerine destek oluyoruz.",
     descriptionEn: "With our industry experience, strong supply, and flexible commercial solutions, we support wholesale companies in managing their portfolios more effectively.",
+    descriptionRu: "Благодаря нашему отраслевому опыту, надёжным поставкам и гибким коммерческим решениям мы помогаем оптовым компаниям эффективнее управлять своими портфелями.",
     benefitsTr: [
       "Ticari karlılığı doğrudan destekleyen rekabetçi toptan alış fiyatları",
       "Değişken müşteri portföyüne uyum sağlayan esnek hacim ve sözleşme yapıları",
@@ -215,6 +294,11 @@ const industries: Industry[] = [
       "Competitive wholesale purchase prices directly supporting commercial profitability",
       "Flexible volume and contract structures adapting to variable customer portfolios",
       "Uninterrupted supply securing commitments made to customers"
+    ],
+    benefitsRu: [
+      "Конкурентные оптовые закупочные цены, напрямую поддерживающие коммерческую рентабельность",
+      "Гибкие объёмы и структуры договоров, адаптирующиеся к изменчивым клиентским портфелям",
+      "Бесперебойные поставки, обеспечивающие выполнение обязательств перед клиентами"
     ],
     scale: "50–1,000 Mm³/yr"
   }
@@ -301,7 +385,7 @@ export default function IndustryBubbles() {
   const radius = Math.min(bubbleAreaWidth, dims.height) * 0.34 - 20;
   const positions = getCirclePositions(industries.length, radius, centerX, centerY);
 
-  const getBubbleLabel = (industry: Industry) => lang === "en" ? industry.nameEn : industry.name;
+  const getBubbleLabel = (industry: Industry) => lang === "en" ? industry.nameEn : lang === "ru" ? industry.nameRu : industry.name;
 
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-[#1e3a5f] via-[#1e4976] to-[#2563eb]">
@@ -309,15 +393,16 @@ export default function IndustryBubbles() {
         {/* Section Header */}
         <div className="mb-16 text-center">
           <p className="text-blue-300 text-sm font-medium uppercase tracking-wider mb-3">
-            {t("Sektörler", "Sectors")}
+            {t("Sektörler", "Sectors", "Отрасли")}
           </p>
           <h2 className="text-3xl lg:text-4xl font-extrabold text-white mb-4">
-            {t("Hizmet Verdiğimiz Sektörler", "Industries We Serve")}
+            {t("Hizmet Verdiğimiz Sektörler", "Industries We Serve", "Отрасли, которые мы обслуживаем")}
           </h2>
           <p className="text-blue-200/70 max-w-xl mx-auto text-base">
             {t(
               "Türkiye'nin en büyük özel doğal gaz ithalatçısı olarak, farklı sektörlere özel enerji çözümleri sunuyoruz.",
-              "As Turkey's largest private natural gas importer, we offer tailored energy solutions to various industries."
+              "As Turkey's largest private natural gas importer, we offer tailored energy solutions to various industries.",
+              "Как крупнейший частный импортёр природного газа в Турции, мы предлагаем индивидуальные энергетические решения для различных отраслей."
             )}
           </p>
         </div>
@@ -437,20 +522,20 @@ export default function IndustryBubbles() {
                 className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8"
               >
                 <h3 className="text-2xl font-bold text-white mb-1">
-                  {lang === "en" ? selected.nameEn : selected.name}
+                  {lang === "en" ? selected.nameEn : lang === "ru" ? selected.nameRu : selected.name}
                 </h3>
                 <p className="text-sm text-blue-200/60 mb-4">
-                  {lang === "en" ? selected.name : selected.nameEn}
+                  {lang === "tr" ? selected.nameEn : selected.name}
                 </p>
                 <p className="text-sm font-medium mb-4 text-blue-300">
-                  {lang === "en" ? selected.taglineEn : selected.taglineTr}
+                  {lang === "en" ? selected.taglineEn : lang === "ru" ? selected.taglineRu : selected.taglineTr}
                 </p>
                 <p className="text-white/70 text-sm leading-relaxed mb-6">
-                  {lang === "en" ? selected.descriptionEn : selected.descriptionTr}
+                  {lang === "en" ? selected.descriptionEn : lang === "ru" ? selected.descriptionRu : selected.descriptionTr}
                 </p>
 
                 <ul className="space-y-2 mb-6">
-                  {(lang === "en" ? selected.benefitsEn : selected.benefitsTr).map((benefit, i) => (
+                  {(lang === "en" ? selected.benefitsEn : lang === "ru" ? selected.benefitsRu : selected.benefitsTr).map((benefit, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white/70">
                       <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-blue-400" />
                       {benefit}
@@ -460,14 +545,14 @@ export default function IndustryBubbles() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-white/10">
                   <div>
-                    <p className="text-xs text-white/40 uppercase tracking-wider">{t("Yıllık Tüketim", "Annual Consumption")}</p>
+                    <p className="text-xs text-white/40 uppercase tracking-wider">{t("Yıllık Tüketim", "Annual Consumption", "Годовое потребление")}</p>
                     <p className="text-sm font-semibold text-white">{selected.scale}</p>
                   </div>
                   <a
                     href="/dogal-gaz#talep"
                     className="px-4 py-2 bg-white text-[#1e3a5f] text-sm font-semibold rounded-md hover:bg-blue-50 transition-all duration-200 active:scale-[0.97]"
                   >
-                    {t("Teklif Al", "Get a Quote")} &rarr;
+                    {t("Teklif Al", "Get a Quote", "Запросить КП")} &rarr;
                   </a>
                 </div>
               </motion.div>

@@ -27,9 +27,9 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 
 const menuItems = [
-  { icon: Newspaper, labelTr: "Haberler", labelEn: "News", path: "/admin/haberler" },
-  { icon: ImageIcon, labelTr: "Galeri", labelEn: "Gallery", path: "/admin/galeri" },
-  { icon: Home, labelTr: "Siteye Dön", labelEn: "Back to Site", path: "/" },
+  { icon: Newspaper, labelTr: "Haberler", labelEn: "News", labelRu: "Новости", path: "/admin/haberler" },
+  { icon: ImageIcon, labelTr: "Galeri", labelEn: "Gallery", labelRu: "Галерея", path: "/admin/galeri" },
+  { icon: Home, labelTr: "Siteye Dön", labelEn: "Back to Site", labelRu: "На сайт", path: "/" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -165,7 +165,7 @@ function DashboardLayoutContent({
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="font-semibold tracking-tight truncate">
-                    {t("Yönetim Paneli", "Admin Panel")}
+                    {t("Yönetim Paneli", "Admin Panel", "Панель управления")}
                   </span>
                 </div>
               ) : null}
@@ -181,13 +181,13 @@ function DashboardLayoutContent({
                     <SidebarMenuButton
                       isActive={isActive}
                       onClick={() => setLocation(item.path)}
-                      tooltip={t(item.labelTr, item.labelEn)}
+                      tooltip={t(item.labelTr, item.labelEn, item.labelRu)}
                       className={`h-10 transition-all font-normal`}
                     >
                       <item.icon
                         className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
                       />
-                      <span>{t(item.labelTr, item.labelEn)}</span>
+                      <span>{t(item.labelTr, item.labelEn, item.labelRu)}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -209,7 +209,7 @@ function DashboardLayoutContent({
                       {adminUser.username}
                     </p>
                     <p className="text-xs text-muted-foreground truncate mt-1.5">
-                      {t("Yönetici", "Administrator")}
+                      {t("Yönetici", "Administrator", "Администратор")}
                     </p>
                   </div>
                 </button>
@@ -220,7 +220,7 @@ function DashboardLayoutContent({
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>{t("Çıkış Yap", "Log Out")}</span>
+                  <span>{t("Çıkış Yap", "Log Out", "Выйти")}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -244,7 +244,7 @@ function DashboardLayoutContent({
               <div className="flex items-center gap-3">
                 <div className="flex flex-col gap-1">
                   <span className="tracking-tight text-foreground">
-                    {activeMenuItem ? t(activeMenuItem.labelTr, activeMenuItem.labelEn) : "Menu"}
+                    {activeMenuItem ? t(activeMenuItem.labelTr, activeMenuItem.labelEn, activeMenuItem.labelRu) : "Menu"}
                   </span>
                 </div>
               </div>

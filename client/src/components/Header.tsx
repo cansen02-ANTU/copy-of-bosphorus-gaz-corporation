@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navLinks = [
-  { href: "/", labelTr: "Ana Sayfa", labelEn: "Home" },
-  { href: "/sirketimiz", labelTr: "Şirketimiz", labelEn: "Company" },
-  { href: "/dogal-gaz", labelTr: "Doğal Gaz", labelEn: "Natural Gas" },
-  { href: "/basin", labelTr: "Basın", labelEn: "Press" },
-  { href: "/kariyer", labelTr: "Kariyer", labelEn: "Careers" },
-  { href: "/iletisim", labelTr: "İletişim", labelEn: "Contact" },
+  { href: "/", labelTr: "Ana Sayfa", labelEn: "Home", labelRu: "Главная" },
+  { href: "/sirketimiz", labelTr: "Şirketimiz", labelEn: "Company", labelRu: "Компания" },
+  { href: "/dogal-gaz", labelTr: "Doğal Gaz", labelEn: "Natural Gas", labelRu: "Природный газ" },
+  { href: "/basin", labelTr: "Basın", labelEn: "Press", labelRu: "Пресса" },
+  { href: "/kariyer", labelTr: "Kariyer", labelEn: "Careers", labelRu: "Карьера" },
+  { href: "/iletisim", labelTr: "İletişim", labelEn: "Contact", labelRu: "Контакты" },
 ];
 
 export default function Header() {
@@ -62,7 +62,7 @@ export default function Header() {
                   : "text-slate-600 hover:text-[#1d4ed8]"
               }`}
             >
-              {lang === "en" ? link.labelEn : link.labelTr}
+              {lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr}
             </Link>
           ))}
         </nav>
@@ -86,12 +86,20 @@ export default function Header() {
             >
               EN
             </button>
+            <button
+              onClick={() => setLang("ru")}
+              className={`px-2 py-1 rounded font-medium transition-colors ${
+                lang === "ru" ? "text-[#1d4ed8] bg-blue-50" : "hover:text-slate-700"
+              }`}
+            >
+              RU
+            </button>
           </div>
           <Link
             href="/dogal-gaz#talep"
             className="px-4 py-2 bg-[#1d4ed8] text-white text-sm font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97]"
           >
-            {t("Teklif Al", "Request Quote")}
+            {t("Teklif Al", "Request Quote", "Запросить КП")}
           </Link>
         </div>
 
@@ -126,7 +134,7 @@ export default function Header() {
                       : "text-slate-700 hover:text-[#1d4ed8] hover:bg-slate-50"
                   }`}
                 >
-                  {lang === "en" ? link.labelEn : link.labelTr}
+                  {lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr}
                 </Link>
               ))}
             </nav>
@@ -148,12 +156,20 @@ export default function Header() {
                 >
                   EN
                 </button>
+                <button
+                  onClick={() => setLang("ru")}
+                  className={`px-3 py-1.5 rounded font-medium ${
+                    lang === "ru" ? "text-[#1d4ed8] bg-blue-50" : "hover:text-slate-700"
+                  }`}
+                >
+                  RU
+                </button>
               </div>
               <Link
                 href="/dogal-gaz#talep"
                 className="px-4 py-3 bg-[#1d4ed8] text-white text-center font-semibold rounded-md"
               >
-                {t("Teklif Al", "Request Quote")}
+                {t("Teklif Al", "Request Quote", "Запросить КП")}
               </Link>
             </div>
           </motion.div>

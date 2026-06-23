@@ -28,15 +28,16 @@ export default function Press() {
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
           >
             <p className="text-blue-200 text-sm font-medium uppercase tracking-wider mb-3">
-              {t("Basın", "Press")}
+              {t("Basın", "Press", "Пресса")}
             </p>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-6">
-              {t("Haberler", "News")}
+              {t("Haberler", "News", "Новости")}
             </h1>
             <p className="text-white/70 max-w-2xl text-lg">
               {t(
                 "Bosphorus Gaz Corporation'dan son gelişmeler ve sektör haberleri.",
-                "Latest developments and industry news from Bosphorus Gaz Corporation."
+                "Latest developments and industry news from Bosphorus Gaz Corporation.",
+                "Последние события и отраслевые новости от Bosphorus Gaz Corporation."
               )}
             </p>
           </motion.div>
@@ -52,14 +53,14 @@ export default function Press() {
             </div>
           ) : newsError ? (
             <div className="text-center py-16 text-slate-500">
-              <p className="text-lg">{t("Haberler yüklenirken bir hata oluştu.", "An error occurred while loading the news.")}</p>
-              <p className="text-sm mt-1">{t("Lütfen daha sonra tekrar deneyin.", "Please try again later.")}</p>
+              <p className="text-lg">{t("Haberler yüklenirken bir hata oluştu.", "An error occurred while loading the news.", "При загрузке новостей произошла ошибка.")}</p>
+              <p className="text-sm mt-1">{t("Lütfen daha sonra tekrar deneyin.", "Please try again later.", "Пожалуйста, попробуйте позже.")}</p>
             </div>
           ) : !dbArticles || dbArticles.length === 0 ? (
             <div className="text-center py-16 text-slate-500">
               <Newspaper className="h-12 w-12 mx-auto mb-3 text-slate-300" />
-              <p className="text-lg">{t("Henüz haber bulunmamaktadır.", "No news articles available yet.")}</p>
-              <p className="text-sm mt-1">{t("Yeni haberler eklendiğinde burada görünecektir.", "New articles will appear here when published.")}</p>
+              <p className="text-lg">{t("Henüz haber bulunmamaktadır.", "No news articles available yet.", "Пока нет новостей.")}</p>
+              <p className="text-sm mt-1">{t("Yeni haberler eklendiğinde burada görünecektir.", "New articles will appear here when published.", "Новые новости появятся здесь после публикации.")}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -83,7 +84,7 @@ export default function Press() {
                   )}
                   <div className="p-6">
                     <p className="text-xs text-slate-400 mb-3">
-                      {new Date(article.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : "tr-TR", {
+                      {new Date(article.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : lang === "ru" ? "ru-RU" : "tr-TR", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
@@ -107,7 +108,7 @@ export default function Press() {
       <section className="py-20 border-t border-slate-100 bg-slate-50">
         <div className="container">
           <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">
-            {t("Fotoğraf Galerisi", "Photo Gallery")}
+            {t("Fotoğraf Galerisi", "Photo Gallery", "Фотогалерея")}
           </h2>
           {galleryLoading ? (
             <div className="flex items-center justify-center py-12">
@@ -115,13 +116,13 @@ export default function Press() {
             </div>
           ) : galleryError ? (
             <div className="text-center py-12 text-slate-500">
-              <p className="text-lg">{t("Galeri yüklenirken bir hata oluştu.", "An error occurred while loading the gallery.")}</p>
+              <p className="text-lg">{t("Galeri yüklenirken bir hata oluştu.", "An error occurred while loading the gallery.", "При загрузке галереи произошла ошибка.")}</p>
             </div>
           ) : !dbGallery || dbGallery.length === 0 ? (
             <div className="text-center py-12 text-slate-500">
               <ImageIcon className="h-12 w-12 mx-auto mb-3 text-slate-300" />
-              <p className="text-lg">{t("Henüz galeri görseli bulunmamaktadır.", "No gallery images available yet.")}</p>
-              <p className="text-sm mt-1">{t("Yeni görseller eklendiğinde burada görünecektir.", "New images will appear here when added.")}</p>
+              <p className="text-lg">{t("Henüz galeri görseli bulunmamaktadır.", "No gallery images available yet.", "Пока нет изображений в галерее.")}</p>
+              <p className="text-sm mt-1">{t("Yeni görseller eklendiğinde burada görünecektir.", "New images will appear here when added.", "Новые изображения появятся здесь после добавления.")}</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">

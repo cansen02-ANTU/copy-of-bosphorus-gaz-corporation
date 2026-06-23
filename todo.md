@@ -36,4 +36,12 @@
 - [x] TypeScript check passes (0 errors)
 - [x] Visual verification of key pages
 - [x] users / news_articles / gallery_images tables all confirmed present
-- [ ] Save checkpoint and deliver preview
+- [x] Save checkpoint and deliver preview
+
+## Russian (RU) Language Support
+- [x] Refactor LanguageContext: add "ru" to Language type, extend t() to accept a third Russian argument, keep TR/EN behavior intact
+- [x] Add RU toggle button in Header (desktop + mobile) working like the EN toggle
+- [x] Translate all t(tr, en) calls site-wide to t(tr, en, ru) with context-appropriate Russian
+- [x] Translate data structures with Tr/En fields (Header nav, Footer, DashboardLayout, IndustryBubbles, Home news, Careers values, Company timeline/management, NaturalGas FAQ/months)
+- [x] Update date locale (tr-TR/en-US) to add ru-RU (Press, AdminNews)
+- [x] Verify build, run vitest (29/29 pass), typecheck clean
