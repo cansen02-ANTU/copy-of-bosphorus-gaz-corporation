@@ -74,8 +74,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("Telefon", "Phone", "Телефон")}</h3>
-                    <p className="text-slate-500 text-sm mt-1">+90 (212) 000 00 00</p>
-                    <p className="text-slate-500 text-sm">+90 (212) 000 00 01 ({t("Faks", "Fax", "Факс")})</p>
+                    <p className="text-slate-500 text-sm mt-1">+90 (212) 335 09 00</p>
+                    <p className="text-slate-500 text-sm">+90 (212) 335 09 20 ({t("Faks", "Fax", "Факс")})</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
