@@ -187,7 +187,7 @@ export default function Company() {
       </section>
 
       {/* Vision & Mission */}
-      <section id="vizyon" className="py-20 border-t border-slate-100 bg-slate-50">
+      <section id="vizyon" className="scroll-mt-24 py-20 border-t border-slate-100 bg-slate-50">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
@@ -312,7 +312,7 @@ export default function Company() {
       </section>
 
       {/* Timeline */}
-      <section id="tarihce" className="py-20 border-t border-slate-100">
+      <section id="tarihce" className="scroll-mt-24 py-20 border-t border-slate-100">
         <div className="container">
           <h2 className="text-2xl font-bold text-[#1e3a5f] mb-12">
             {t("Tarihçe", "History", "История")}
@@ -354,7 +354,7 @@ export default function Company() {
       </section>
 
       {/* Legal Disclosures */}
-      <section id="bilgi-toplumu" className="py-16 border-t border-slate-100">
+      <section id="bilgi-toplumu" className="scroll-mt-24 py-16 border-t border-slate-100">
         <div className="container">
           <h2 className="text-xl font-bold text-[#1e3a5f] mb-4">
             {t("Bilgi Toplumu Hizmetleri", "Information Society Services", "Услуги информационного общества")}

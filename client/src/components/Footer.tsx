@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import AnchorLink from "@/components/AnchorLink";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
@@ -15,8 +16,8 @@ export default function Footer() {
             </h4>
             <nav className="flex flex-col gap-2">
               <Link href="/sirketimiz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Profil", "Profile", "Профиль")}</Link>
-              <Link href="/sirketimiz#vizyon" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Vizyon & Misyon", "Vision & Mission", "Видение и миссия")}</Link>
-              <Link href="/sirketimiz#tarihce" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Tarihçe", "History", "История")}</Link>
+              <AnchorLink href="/sirketimiz#vizyon" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Vizyon & Misyon", "Vision & Mission", "Видение и миссия")}</AnchorLink>
+              <AnchorLink href="/sirketimiz#tarihce" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Tarihçe", "History", "История")}</AnchorLink>
               <Link href="/kariyer" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Kariyer", "Careers", "Карьера")}</Link>
             </nav>
           </div>
@@ -28,9 +29,9 @@ export default function Footer() {
             </h4>
             <nav className="flex flex-col gap-2">
               <Link href="/dogal-gaz" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Faaliyetlerimiz", "Our Activities", "Наша деятельность")}</Link>
-              <Link href="/dogal-gaz#piyasa" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Piyasa Görünümü", "Market Overview", "Обзор рынка")}</Link>
-              <Link href="/dogal-gaz#talep" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Talep Formu", "Request Form", "Форма запроса")}</Link>
-              <Link href="/dogal-gaz#sss" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("SSS", "FAQ", "Вопросы и ответы")}</Link>
+              <AnchorLink href="/dogal-gaz#piyasa" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Piyasa Görünümü", "Market Overview", "Обзор рынка")}</AnchorLink>
+              <AnchorLink href="/dogal-gaz#talep" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("Talep Formu", "Request Form", "Форма запроса")}</AnchorLink>
+              <AnchorLink href="/dogal-gaz#sss" className="text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors">{t("SSS", "FAQ", "Вопросы и ответы")}</AnchorLink>
             </nav>
           </div>
 
@@ -62,9 +63,9 @@ export default function Footer() {
             &copy; 2026 Bosphorus Gaz Corporation A.Ş. {t("Tüm hakları saklıdır.", "All rights reserved.", "Все права защищены.")}
           </p>
           <div className="flex gap-4 text-slate-400 text-xs">
-            <Link href="/sirketimiz#bilgi-toplumu" className="hover:text-[#1d4ed8] transition-colors">
+            <AnchorLink href="/sirketimiz#bilgi-toplumu" className="hover:text-[#1d4ed8] transition-colors">
               {t("Bilgi Toplumu Hizmetleri", "Information Society Services", "Услуги информационного общества")}
-            </Link>
+            </AnchorLink>
             <Link href="/iletisim" className="hover:text-[#1d4ed8] transition-colors">
               {t("Gizlilik Politikası", "Privacy Policy", "Политика конфиденциальности")}
             </Link>

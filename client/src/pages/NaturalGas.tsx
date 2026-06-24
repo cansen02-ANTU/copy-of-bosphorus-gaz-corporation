@@ -160,7 +160,7 @@ export default function NaturalGas() {
       </section>
 
       {/* Market Overview */}
-      <section id="piyasa" className="py-20 border-t border-slate-100 bg-slate-50">
+      <section id="piyasa" className="scroll-mt-24 py-20 border-t border-slate-100 bg-slate-50">
         <div className="container">
           <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">{t("Piyasa Görünümü", "Market Overview", "Обзор рынка")}</h2>
           <div className="max-w-4xl space-y-4 text-slate-600 leading-relaxed">
@@ -406,7 +406,7 @@ export default function NaturalGas() {
       </section>
 
       {/* FAQ */}
-      <section id="sss" className="py-20 border-t border-slate-100 bg-slate-50">
+      <section id="sss" className="scroll-mt-24 py-20 border-t border-slate-100 bg-slate-50">
         <div className="container max-w-2xl">
           <h2 className="text-2xl font-bold text-[#1e3a5f] mb-4">
             {t("Sıkça Sorulan Sorular", "Frequently Asked Questions", "Часто задаваемые вопросы")}
