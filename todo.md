@@ -56,3 +56,10 @@
 - [x] Dynamic document.title per language
 - [x] Verify: direct-load /ru/dogal-gaz and /en/sirketimiz render correct language; toggling updates URL; TR root still works (browser-verified)
 - [x] Typecheck clean + 29/29 vitest pass + production build OK
+
+## Copy News from bosphorusgaz.com to Press/Haberler
+- [x] Seed 10 news articles into news_articles table (title, excerpt, content, publishedAt) matching source order
+- [x] Add Haberler-style pagination to Press page (6 per page, prev/next + numbered controls)
+- [x] Add clickable article detail dialog (full content with preserved line breaks)
+- [x] Verify build, run vitest (29/29), screenshot Press page
+- [x] Clean up seed helper scripts (seed-news.sql, seed-news.mjs, gen-seed-sql.mjs)
