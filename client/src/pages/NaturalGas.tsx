@@ -211,9 +211,9 @@ export default function NaturalGas() {
       </section>
 
       {/* Demand Request Form */}
-      <section id="talep" className="py-20 border-t border-slate-100">
+      <section className="py-20 border-t border-slate-100">
         <div className="container max-w-3xl">
-          <h2 className="text-2xl font-bold text-[#1e3a5f] mb-3">{t("Doğal Gaz Bilgi Formu", "Natural Gas Information Form", "Форма информации о природном газе")}</h2>
+          <h2 id="talep" className="text-2xl font-bold text-[#1e3a5f] mb-3 scroll-mt-28">{t("Doğal Gaz Bilgi Formu", "Natural Gas Information Form", "Форма информации о природном газе")}</h2>
           <p className="text-slate-500 mb-2">
             {t(
               "Bosphorus Gaz, tedarikçilerini seçebilen Serbest Tüketicilere ve Toptan Satış Şirketlerine 2009 yılından beri Doğal Gaz tedariği sağlamaktadır.",
