@@ -18,13 +18,23 @@ type Album = {
   slug: string;
   title: string;
   description: string | null;
+  titleEn: string | null;
+  descriptionEn: string | null;
+  titleRu: string | null;
+  descriptionRu: string | null;
   coverUrl: string | null;
   photos: Photo[];
 };
 
 export default function Gallery() {
   const { data: albums, isLoading, error } = trpc.gallery.albums.useQuery();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  // Pick the album title/description for the active language, falling back to TR.
+  const albumTitle = (a: Album) =>
+    (lang === "en" ? a.titleEn : lang === "ru" ? a.titleRu : null) || a.title;
+  const albumDesc = (a: Album) =>
+    (lang === "en" ? a.descriptionEn : lang === "ru" ? a.descriptionRu : null) || a.description;
 
   // Selected album for the lightbox view
   const [openAlbum, setOpenAlbum] = useState<Album | null>(null);
@@ -146,7 +156,7 @@ export default function Gallery() {
                     {album.coverUrl && (
                       <img
                         src={album.coverUrl}
-                        alt={album.title}
+                        alt={albumTitle(album)}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -154,11 +164,11 @@ export default function Gallery() {
                   </div>
                   <div className="flex flex-col flex-1 min-w-0">
                     <h3 className="text-[#1e3a5f] font-semibold text-lg mb-2 group-hover:text-[#1d4ed8] transition-colors duration-200">
-                      {album.title}
+                      {albumTitle(album)}
                     </h3>
-                    {album.description && (
+                    {albumDesc(album) && (
                       <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 flex-1">
-                        {album.description}
+                        {albumDesc(album)}
                       </p>
                     )}
                     <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-[#1d4ed8]">
@@ -185,7 +195,7 @@ export default function Gallery() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="min-w-0">
-              <p className="font-semibold truncate">{openAlbum.title}</p>
+              <p className="font-semibold truncate">{albumTitle(openAlbum)}</p>
               <p className="text-xs text-white/60">
                 {photoIndex + 1} / {openAlbum.photos.length}
               </p>
@@ -214,7 +224,7 @@ export default function Gallery() {
             <img
               key={openAlbum.photos[photoIndex].id}
               src={openAlbum.photos[photoIndex].imageUrl}
-              alt={openAlbum.photos[photoIndex].caption ?? openAlbum.title}
+              alt={openAlbum.photos[photoIndex].caption ?? albumTitle(openAlbum)}
               className="max-h-full max-w-full object-contain rounded-lg select-none"
             />
             <button

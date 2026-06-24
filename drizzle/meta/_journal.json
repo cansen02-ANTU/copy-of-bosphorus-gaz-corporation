@@ -36,6 +36,13 @@
       "when": 1782302987728,
       "tag": "0004_giant_lenny_balinger",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1782305542803,
+      "tag": "0005_majestic_hedge_knight",
+      "breakpoints": true
     }
   ]
 }
