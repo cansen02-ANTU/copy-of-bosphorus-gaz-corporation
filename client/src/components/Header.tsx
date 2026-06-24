@@ -42,7 +42,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 z-10">
           <img
-            src="/manus-storage/BosphorusGazLogo_952823a6.png"
+            src="/manus-storage/BosphorusGazLogo_b7723e03.jpeg"
             alt="Bosphorus Gaz Corporation"
             className="h-10 w-auto object-contain"
           />
@@ -132,7 +132,7 @@ export default function Header() {
             <div className="flex items-center justify-between h-16">
               <Link href="/" className="flex items-center gap-2.5">
                 <img
-                  src="/manus-storage/BosphorusGazLogo_952823a6.png"
+                  src="/manus-storage/BosphorusGazLogo_b7723e03.jpeg"
                   alt="Bosphorus Gaz Corporation"
                   className="h-10 w-auto object-contain"
                 />

@@ -69,7 +69,7 @@ export default function Home() {
               className="mb-8"
             >
               <img
-                src="/manus-storage/BosphorusGazLogo_952823a6.png"
+                src="/manus-storage/BosphorusGazLogo_b7723e03.jpeg"
                 alt="Bosphorus Gaz Corporation A.Ş."
                 className="w-[280px] sm:w-[320px] lg:w-[380px] h-auto object-contain rounded-lg"
               />
