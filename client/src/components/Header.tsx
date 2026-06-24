@@ -29,6 +29,21 @@ export default function Header() {
     setMobileOpen(false);
   }, [location]);
 
+  // When already on the Doğal Gaz page, clicking "Teklif Al" only changes the
+  // hash (same pathname), which wouter pushes without firing a real hashchange
+  // event — so the global ScrollToTop effect doesn't re-run. Scroll directly
+  // here to guarantee the form title is reached in every case.
+  const handleTeklifClick = () => {
+    setMobileOpen(false);
+    if (location === "/dogal-gaz") {
+      requestAnimationFrame(() => {
+        document
+          .getElementById("talep")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  };
+
   return (
     <>
     <header
@@ -98,6 +113,7 @@ export default function Header() {
           </div>
           <Link
             href="/dogal-gaz#talep"
+            onClick={handleTeklifClick}
             className="px-4 py-2 bg-[#1d4ed8] text-white text-sm font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97]"
           >
             {t("Teklif Al", "Request Quote", "Запросить КП")}
@@ -192,6 +208,7 @@ export default function Header() {
               </div>
               <Link
                 href="/dogal-gaz#talep"
+                onClick={handleTeklifClick}
                 className="px-4 py-3 bg-[#1d4ed8] text-white text-center font-semibold rounded-md"
               >
                 {t("Teklif Al", "Request Quote", "Запросить КП")}
