@@ -89,3 +89,12 @@
 - [x] Remove old flat gallery section from Press page
 - [x] Add vitest for gallery.albums shape (31/31 pass), typecheck + build clean
 - [x] Clean up scraper/seed helper scripts
+
+
+## Wire Doğal Gaz Request Form (submit + notify)
+- [x] Add gas_requests table (schema + migration 0003 applied)
+- [x] Add createGasRequest db helper
+- [x] Add public gasRequest.submit procedure (validate + persist + notifyOwner, recipient information@bosphorusgaz.com)
+- [x] Make the NaturalGas form controlled (all fields + 12 monthly inputs) with loading/error/success states
+- [x] Add vitest coverage for gasRequest.submit (validation, persistence, notify, graceful notify failure) — 37/37 pass
+- [x] Verify full pipeline via direct tRPC call (success:true, row persisted), then clean up test row

@@ -84,3 +84,26 @@ export const galleryPhotos = mysqlTable("gallery_photos", {
 
 export type GalleryPhoto = typeof galleryPhotos.$inferSelect;
 export type InsertGalleryPhoto = typeof galleryPhotos.$inferInsert;
+
+/**
+ * Natural gas supply requests submitted via the Doğal Gaz Bilgi Formu.
+ */
+export const gasRequests = mysqlTable("gas_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  companyName: varchar("companyName", { length: 500 }).notNull(),
+  contactPerson: varchar("contactPerson", { length: 300 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  phone: varchar("phone", { length: 100 }).notNull(),
+  facilityAddress: text("facilityAddress").notNull(),
+  facilityProvince: varchar("facilityProvince", { length: 200 }).notNull(),
+  annualConsumption: varchar("annualConsumption", { length: 50 }).notNull(),
+  usagePurpose: varchar("usagePurpose", { length: 50 }),
+  monthlyUsage: text("monthlyUsage"),
+  personnelName: varchar("personnelName", { length: 300 }),
+  personnelPosition: varchar("personnelPosition", { length: 300 }),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type GasRequest = typeof gasRequests.$inferSelect;
+export type InsertGasRequest = typeof gasRequests.$inferInsert;

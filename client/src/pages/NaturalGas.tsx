@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -44,14 +46,90 @@ const monthsTr = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmu
 const monthsEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const monthsRu = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
+type FormState = {
+  companyName: string;
+  contactPerson: string;
+  email: string;
+  phone: string;
+  facilityAddress: string;
+  facilityProvince: string;
+  annualConsumption: string;
+  usagePurpose: string;
+  personnelName: string;
+  personnelPosition: string;
+  notes: string;
+};
+
+const EMPTY_FORM: FormState = {
+  companyName: "",
+  contactPerson: "",
+  email: "",
+  phone: "",
+  facilityAddress: "",
+  facilityProvince: "",
+  annualConsumption: "",
+  usagePurpose: "",
+  personnelName: "",
+  personnelPosition: "",
+  notes: "",
+};
+
+// Stable month keys for the monthly-usage inputs (independent of display language)
+const monthKeys = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+
 export default function NaturalGas() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [monthly, setMonthly] = useState<Record<string, string>>({});
   const { t, lang } = useLanguage();
+
+  const setField = (key: keyof FormState) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
+
+  const submitMutation = trpc.gasRequest.submit.useMutation({
+    onSuccess: () => {
+      setFormSubmitted(true);
+      setForm(EMPTY_FORM);
+      setMonthly({});
+    },
+    onError: () => {
+      toast(
+        t(
+          "Talep gönderilemedi. Lütfen tekrar deneyin.",
+          "Could not submit the request. Please try again.",
+          "Не удалось отправить запрос. Пожалуйста, попробуйте снова."
+        )
+      );
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    // Serialize monthly usage as "MM=value" pairs for any filled month
+    const monthlyUsage = monthKeys
+      .map((k, i) => {
+        const v = (monthly[k] ?? "").trim();
+        return v ? `${monthsTr[i]}: ${v}` : null;
+      })
+      .filter((x): x is string => x !== null)
+      .join(", ");
+
+    submitMutation.mutate({
+      companyName: form.companyName.trim(),
+      contactPerson: form.contactPerson.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      facilityAddress: form.facilityAddress.trim(),
+      facilityProvince: form.facilityProvince.trim(),
+      annualConsumption: form.annualConsumption,
+      usagePurpose: form.usagePurpose || undefined,
+      monthlyUsage: monthlyUsage || undefined,
+      personnelName: form.personnelName.trim() || undefined,
+      personnelPosition: form.personnelPosition.trim() || undefined,
+      notes: form.notes.trim() || undefined,
+    });
   };
 
   const months = lang === "en" ? monthsEn : lang === "ru" ? monthsRu : monthsTr;
@@ -252,6 +330,8 @@ export default function NaturalGas() {
                     <input
                       type="text"
                       required
+                      value={form.companyName}
+                      onChange={setField("companyName")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("Firma adınız", "Your company name", "Название вашей компании")}
                     />
@@ -261,6 +341,8 @@ export default function NaturalGas() {
                     <input
                       type="text"
                       required
+                      value={form.contactPerson}
+                      onChange={setField("contactPerson")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("Ad Soyad", "Full Name", "Имя и фамилия")}
                     />
@@ -270,6 +352,8 @@ export default function NaturalGas() {
                     <input
                       type="email"
                       required
+                      value={form.email}
+                      onChange={setField("email")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("ornek@firma.com", "example@company.com", "primer@company.com")}
                     />
@@ -279,6 +363,8 @@ export default function NaturalGas() {
                     <input
                       type="tel"
                       required
+                      value={form.phone}
+                      onChange={setField("phone")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder="+90 (5XX) XXX XX XX"
                     />
@@ -295,6 +381,8 @@ export default function NaturalGas() {
                     <input
                       type="text"
                       required
+                      value={form.facilityAddress}
+                      onChange={setField("facilityAddress")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("Tesis adresi", "Facility address", "Адрес объекта")}
                     />
@@ -304,6 +392,8 @@ export default function NaturalGas() {
                     <input
                       type="text"
                       required
+                      value={form.facilityProvince}
+                      onChange={setField("facilityProvince")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("İl", "Province", "Провинция")}
                     />
@@ -319,6 +409,8 @@ export default function NaturalGas() {
                     <label className="block text-sm text-slate-600 mb-1.5">{t("Yıllık Tüketim *", "Annual Consumption *", "Годовое потребление *")}</label>
                     <select
                       required
+                      value={form.annualConsumption}
+                      onChange={setField("annualConsumption")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                     >
                       <option value="">{t("Seçiniz", "Select", "Выберите")}</option>
@@ -333,6 +425,8 @@ export default function NaturalGas() {
                   <div>
                     <label className="block text-sm text-slate-600 mb-1.5">{t("Kullanım Amacı", "Purpose of Use", "Цель использования")}</label>
                     <select
+                      value={form.usagePurpose}
+                      onChange={setField("usagePurpose")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                     >
                       <option value="">{t("Seçiniz", "Select", "Выберите")}</option>
@@ -349,16 +443,21 @@ export default function NaturalGas() {
               <div>
                 <h3 className="text-sm font-semibold text-[#1e3a5f] uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">{t("Tesisin Aylık Ortalama Gaz Kullanımı", "Monthly Average Gas Usage", "Среднемесячное потребление газа")}</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {months.map((month) => (
-                    <div key={month}>
-                      <label className="block text-xs text-slate-500 mb-1">{month}</label>
-                      <input
-                        type="text"
-                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-slate-800 text-xs placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
-                        placeholder="m³"
-                      />
-                    </div>
-                  ))}
+                  {months.map((month, i) => {
+                    const key = monthKeys[i];
+                    return (
+                      <div key={month}>
+                        <label className="block text-xs text-slate-500 mb-1">{month}</label>
+                        <input
+                          type="text"
+                          value={monthly[key] ?? ""}
+                          onChange={(e) => setMonthly((prev) => ({ ...prev, [key]: e.target.value }))}
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-slate-800 text-xs placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
+                          placeholder="m³"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -370,6 +469,8 @@ export default function NaturalGas() {
                     <label className="block text-sm text-slate-600 mb-1.5">{t("Ad Soyad", "Full Name", "Имя и фамилия")}</label>
                     <input
                       type="text"
+                      value={form.personnelName}
+                      onChange={setField("personnelName")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("İlgili personel", "Contact person", "Контактный сотрудник")}
                     />
@@ -378,6 +479,8 @@ export default function NaturalGas() {
                     <label className="block text-sm text-slate-600 mb-1.5">{t("Pozisyon", "Position", "Должность")}</label>
                     <input
                       type="text"
+                      value={form.personnelPosition}
+                      onChange={setField("personnelPosition")}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                       placeholder={t("Ünvan / Pozisyon", "Title / Position", "Звание / Должность")}
                     />
@@ -389,6 +492,8 @@ export default function NaturalGas() {
                 <label className="block text-sm text-slate-600 mb-1.5">{t("Ek Notlar", "Additional Notes", "Дополнительные примечания")}</label>
                 <textarea
                   rows={3}
+                  value={form.notes}
+                  onChange={setField("notes")}
                   className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors resize-none"
                   placeholder={t("Ek bilgi veya özel talepleriniz...", "Additional information or special requests...", "Дополнительная информация или особые запросы...")}
                 />
@@ -396,9 +501,12 @@ export default function NaturalGas() {
 
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-[#1d4ed8] text-white font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97]"
+                disabled={submitMutation.isPending}
+                className="w-full px-6 py-3 bg-[#1d4ed8] text-white font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {t("Talep Gönder", "Submit Request", "Отправить запрос")}
+                {submitMutation.isPending
+                  ? t("Gönderiliyor...", "Submitting...", "Отправка...")
+                  : t("Talep Gönder", "Submit Request", "Отправить запрос")}
               </button>
             </form>
           )}

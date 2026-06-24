@@ -1,6 +1,6 @@
 import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, newsArticles, galleryImages, InsertNewsArticle, InsertGalleryImage, galleryAlbums, galleryPhotos } from "../drizzle/schema";
+import { InsertUser, users, newsArticles, galleryImages, InsertNewsArticle, InsertGalleryImage, galleryAlbums, galleryPhotos, gasRequests, InsertGasRequest } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -169,4 +169,13 @@ export async function getGalleryAlbumsWithPhotos() {
       .filter((p) => p.albumId === album.id)
       .map((p) => ({ id: p.id, imageUrl: p.imageUrl, caption: p.caption })),
   }));
+}
+
+// ─── Gas Requests ──────────────────────────────────────────────
+
+export async function createGasRequest(data: InsertGasRequest) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(gasRequests).values(data);
+  return { id: Number(result[0].insertId) };
 }

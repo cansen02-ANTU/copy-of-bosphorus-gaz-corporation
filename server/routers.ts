@@ -16,8 +16,12 @@ import {
   updateGalleryImage,
   deleteGalleryImage,
   getGalleryAlbumsWithPhotos,
+  createGasRequest,
 } from "./db";
 import { storagePut } from "./storage";
+import { notifyOwner } from "./_core/notification";
+
+const CONTACT_EMAIL = "information@bosphorusgaz.com";
 
 const ADMIN_COOKIE_NAME = "admin_session";
 const ONE_DAY_MS = 1000 * 60 * 60 * 24;
@@ -240,6 +244,72 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await deleteGalleryImage(input.id);
         return { success: true };
+      }),
+  }),
+
+  // ─── Gas Supply Request Form (Doğal Gaz Bilgi Formu) ──────────────────────
+  gasRequest: router({
+    submit: publicProcedure
+      .input(z.object({
+        companyName: z.string().min(1).max(500),
+        contactPerson: z.string().min(1).max(300),
+        email: z.string().email().max(320),
+        phone: z.string().min(1).max(100),
+        facilityAddress: z.string().min(1),
+        facilityProvince: z.string().min(1).max(200),
+        annualConsumption: z.string().min(1).max(50),
+        usagePurpose: z.string().max(50).optional(),
+        monthlyUsage: z.string().optional(),
+        personnelName: z.string().max(300).optional(),
+        personnelPosition: z.string().max(300).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        // Persist the request
+        const { id } = await createGasRequest({
+          companyName: input.companyName,
+          contactPerson: input.contactPerson,
+          email: input.email,
+          phone: input.phone,
+          facilityAddress: input.facilityAddress,
+          facilityProvince: input.facilityProvince,
+          annualConsumption: input.annualConsumption,
+          usagePurpose: input.usagePurpose ?? null,
+          monthlyUsage: input.monthlyUsage ?? null,
+          personnelName: input.personnelName ?? null,
+          personnelPosition: input.personnelPosition ?? null,
+          notes: input.notes ?? null,
+        });
+
+        // Notify the owner (best-effort; do not fail the submission if it errors)
+        const lines = [
+          `Yeni Doğal Gaz Bilgi Formu talebi alındı (#${id}).`,
+          ``,
+          `Firma: ${input.companyName}`,
+          `İletişim Kişisi: ${input.contactPerson}`,
+          `E-posta: ${input.email}`,
+          `Telefon: ${input.phone}`,
+          `Tesis Adresi: ${input.facilityAddress}`,
+          `Tesis İli: ${input.facilityProvince}`,
+          `Yıllık Tüketim: ${input.annualConsumption}`,
+          input.usagePurpose ? `Kullanım Amacı: ${input.usagePurpose}` : null,
+          input.personnelName ? `İlgili Personel: ${input.personnelName}${input.personnelPosition ? ` (${input.personnelPosition})` : ""}` : null,
+          input.monthlyUsage ? `Aylık Tüketim: ${input.monthlyUsage}` : null,
+          input.notes ? `Ek Notlar: ${input.notes}` : null,
+          ``,
+          `Bu talep ${CONTACT_EMAIL} adresine iletilmek üzere kaydedilmiştir.`,
+        ].filter((l): l is string => l !== null);
+
+        try {
+          await notifyOwner({
+            title: `Yeni Talep: ${input.companyName}`,
+            content: lines.join("\n"),
+          });
+        } catch (err) {
+          console.warn("[gasRequest] notifyOwner failed:", err);
+        }
+
+        return { success: true, id } as const;
       }),
   }),
 });
