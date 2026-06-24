@@ -1,0 +1,19 @@
+{
+  "name": "Bosphorus Gaz Corporation",
+  "short_name": "Bosphorus Gaz",
+  "description": "Türkiye'nin en büyük özel doğal gaz ithalatçısı.",
+  "lang": "tr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}
