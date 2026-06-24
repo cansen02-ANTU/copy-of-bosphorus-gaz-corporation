@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -8,16 +8,7 @@ const navLinks = [
   { href: "/", labelTr: "Ana Sayfa", labelEn: "Home", labelRu: "Главная" },
   { href: "/sirketimiz", labelTr: "Şirketimiz", labelEn: "Company", labelRu: "Компания" },
   { href: "/dogal-gaz", labelTr: "Doğal Gaz", labelEn: "Natural Gas", labelRu: "Природный газ" },
-  {
-    href: "/basin",
-    labelTr: "Basın",
-    labelEn: "Press",
-    labelRu: "Пресса",
-    children: [
-      { href: "/basin", labelTr: "Haberler", labelEn: "News", labelRu: "Новости" },
-      { href: "/basin/foto-galeri", labelTr: "Foto Galeri", labelEn: "Photo Gallery", labelRu: "Фотогалерея" },
-    ],
-  },
+  { href: "/basin", labelTr: "Basın", labelEn: "Press", labelRu: "Пресса" },
   { href: "/kariyer", labelTr: "Kariyer", labelEn: "Careers", labelRu: "Карьера" },
   { href: "/iletisim", labelTr: "İletişim", labelEn: "Contact", labelRu: "Контакты" },
 ];
@@ -62,58 +53,19 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => {
-            const label = lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr;
-            const isActive =
-              location === link.href ||
-              (link.children?.some((c) => location === c.href) ?? false);
-            if (link.children) {
-              return (
-                <div key={link.href} className="relative group">
-                  <Link
-                    href={link.href}
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
-                      isActive ? "text-[#1d4ed8]" : "text-slate-600 hover:text-[#1d4ed8]"
-                    }`}
-                  >
-                    {label}
-                    <ChevronDown className="h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180" />
-                  </Link>
-                  <div className="absolute left-0 top-full pt-2 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
-                    <div className="min-w-44 bg-white rounded-lg border border-slate-100 shadow-lg py-1.5">
-                      {link.children.map((child) => {
-                        const childLabel = lang === "en" ? child.labelEn : lang === "ru" ? child.labelRu : child.labelTr;
-                        return (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={`block px-4 py-2 text-sm transition-colors ${
-                              location === child.href
-                                ? "text-[#1d4ed8] bg-blue-50"
-                                : "text-slate-600 hover:text-[#1d4ed8] hover:bg-slate-50"
-                            }`}
-                          >
-                            {childLabel}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              );
-            }
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
-                  isActive ? "text-[#1d4ed8]" : "text-slate-600 hover:text-[#1d4ed8]"
-                }`}
-              >
-                {label}
-              </Link>
-            );
-          })}
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                location === link.href
+                  ? "text-[#1d4ed8]"
+                  : "text-slate-600 hover:text-[#1d4ed8]"
+              }`}
+            >
+              {lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr}
+            </Link>
+          ))}
         </nav>
 
         {/* Right side: Language + CTA */}
@@ -197,43 +149,19 @@ export default function Header() {
               </button>
             </div>
             <nav className="flex flex-col gap-2 mt-4">
-              {navLinks.map((link) => {
-                const label = lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr;
-                return (
-                  <div key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`px-4 py-3 block text-lg font-medium rounded-lg transition-colors ${
-                        location === link.href
-                          ? "text-[#1d4ed8] bg-blue-50"
-                          : "text-slate-700 hover:text-[#1d4ed8] hover:bg-slate-50"
-                      }`}
-                    >
-                      {label}
-                    </Link>
-                    {link.children && (
-                      <div className="ml-4 flex flex-col">
-                        {link.children.map((child) => {
-                          const childLabel = lang === "en" ? child.labelEn : lang === "ru" ? child.labelRu : child.labelTr;
-                          return (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className={`px-4 py-2.5 text-base rounded-lg transition-colors ${
-                                location === child.href
-                                  ? "text-[#1d4ed8] bg-blue-50"
-                                  : "text-slate-500 hover:text-[#1d4ed8] hover:bg-slate-50"
-                              }`}
-                            >
-                              {childLabel}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-3 text-lg font-medium rounded-lg transition-colors ${
+                    location === link.href
+                      ? "text-[#1d4ed8] bg-blue-50"
+                      : "text-slate-700 hover:text-[#1d4ed8] hover:bg-slate-50"
+                  }`}
+                >
+                  {lang === "en" ? link.labelEn : lang === "ru" ? link.labelRu : link.labelTr}
+                </Link>
+              ))}
             </nav>
             <div className="mt-8 flex flex-col gap-4">
               <div className="flex items-center gap-2 text-sm text-slate-400">
