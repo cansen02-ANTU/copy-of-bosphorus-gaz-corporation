@@ -1,6 +1,6 @@
 import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, newsArticles, galleryImages, InsertNewsArticle, InsertGalleryImage } from "../drizzle/schema";
+import { InsertUser, users, newsArticles, galleryImages, InsertNewsArticle, InsertGalleryImage, galleryAlbums, galleryPhotos } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -148,4 +148,25 @@ export async function deleteGalleryImage(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(galleryImages).where(eq(galleryImages.id, id));
+}
+
+// ─── Gallery Albums & Photos ─────────────────────────────────────────────────
+
+export async function getGalleryAlbums() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(galleryAlbums).orderBy(galleryAlbums.sortOrder);
+}
+
+export async function getGalleryAlbumsWithPhotos() {
+  const db = await getDb();
+  if (!db) return [];
+  const albums = await db.select().from(galleryAlbums).orderBy(galleryAlbums.sortOrder);
+  const photos = await db.select().from(galleryPhotos).orderBy(galleryPhotos.sortOrder);
+  return albums.map((album) => ({
+    ...album,
+    photos: photos
+      .filter((p) => p.albumId === album.id)
+      .map((p) => ({ id: p.id, imageUrl: p.imageUrl, caption: p.caption })),
+  }));
 }

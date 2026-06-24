@@ -52,3 +52,35 @@ export const galleryImages = mysqlTable("gallery_images", {
 
 export type GalleryImage = typeof galleryImages.$inferSelect;
 export type InsertGalleryImage = typeof galleryImages.$inferInsert;
+
+/**
+ * Photo gallery albums for the Basın → Foto Galeri page.
+ */
+export const galleryAlbums = mysqlTable("gallery_albums", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 191 }).notNull().unique(),
+  title: varchar("title", { length: 500 }).notNull(),
+  description: text("description"),
+  coverUrl: text("coverUrl"),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type GalleryAlbum = typeof galleryAlbums.$inferSelect;
+export type InsertGalleryAlbum = typeof galleryAlbums.$inferInsert;
+
+/**
+ * Individual photos belonging to a gallery album.
+ */
+export const galleryPhotos = mysqlTable("gallery_photos", {
+  id: int("id").autoincrement().primaryKey(),
+  albumId: int("albumId").notNull(),
+  imageUrl: text("imageUrl").notNull(),
+  imageKey: varchar("imageKey", { length: 500 }),
+  caption: varchar("caption", { length: 500 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type GalleryPhoto = typeof galleryPhotos.$inferSelect;
+export type InsertGalleryPhoto = typeof galleryPhotos.$inferInsert;

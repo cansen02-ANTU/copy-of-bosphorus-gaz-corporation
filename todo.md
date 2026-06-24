@@ -75,3 +75,17 @@
 - [x] Seed page-3 articles (2014-2016 events) -> total 30, paginated into 5 pages
 - [x] Verify total=30 and newlines stored correctly (real_nl>0, literal=0)
 - [x] Clean up page-3 seed helper scripts (gen-seed-sql-p3.mjs, seed-news-p3.sql)
+
+## Photo Gallery (Basın → Foto Galeri) from bosphorusgaz.com/basin/foto-galeri
+- [x] Study source gallery structure (4 albums, NextGEN, lightbox)
+- [x] Scrape all 127 image URLs across the 4 albums (29 + 53 + 18 + 27)
+- [x] Download all 127 images and mirror them to webdev storage (permanent /manus-storage URLs)
+- [x] Add gallery_albums + gallery_photos tables (migration 0002) and apply via webdev_execute_sql
+- [x] Seed 4 albums + 127 photos preserving source order (verified counts)
+- [x] Add getGalleryAlbumsWithPhotos db helper + gallery.albums tRPC procedure
+- [x] Build Gallery.tsx page (albums grid + click-to-open lightbox with thumbnails, keyboard nav)
+- [x] Add /basin/foto-galeri and /basin/haberler routes
+- [x] Add Basın → Haberler / Foto Galeri sub-nav on both pages + Header dropdown
+- [x] Remove old flat gallery section from Press page
+- [x] Add vitest for gallery.albums shape (31/31 pass), typecheck + build clean
+- [x] Clean up scraper/seed helper scripts

@@ -15,6 +15,13 @@
       "when": 1781266301892,
       "tag": "0001_thin_wrecking_crew",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1782291240041,
+      "tag": "0002_nostalgic_darkstar",
+      "breakpoints": true
     }
   ]
 }

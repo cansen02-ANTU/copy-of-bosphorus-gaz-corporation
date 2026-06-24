@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Newspaper, Image as ImageIcon, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { Loader2, Newspaper, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Dialog,
@@ -26,7 +27,6 @@ type Article = {
 
 export default function Press() {
   const { data: dbArticles, isLoading: newsLoading, error: newsError } = trpc.news.list.useQuery();
-  const { data: dbGallery, isLoading: galleryLoading, error: galleryError } = trpc.gallery.list.useQuery();
   const { t, lang } = useLanguage();
 
   const [page, setPage] = useState(1);
@@ -91,8 +91,26 @@ export default function Press() {
         </div>
       </section>
 
+      {/* Basın sub-navigation */}
+      <section className="border-t border-slate-100 bg-white sticky top-16 lg:top-20 z-30">
+        <div className="container flex items-center gap-1 py-3">
+          <Link
+            href="/basin"
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-[#1d4ed8] text-white"
+          >
+            {t("Haberler", "News", "Новости")}
+          </Link>
+          <Link
+            href="/basin/foto-galeri"
+            className="px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-colors"
+          >
+            {t("Foto Galeri", "Photo Gallery", "Фотогалерея")}
+          </Link>
+        </div>
+      </section>
+
       {/* News Grid */}
-      <section className="pb-20 border-t border-slate-100 pt-12">
+      <section className="pb-20 pt-12">
         <div className="container">
           {newsLoading ? (
             <div className="flex items-center justify-center py-16">
@@ -214,48 +232,6 @@ export default function Press() {
         </DialogContent>
       </Dialog>
 
-      {/* Photo Gallery */}
-      <section className="py-20 border-t border-slate-100 bg-slate-50">
-        <div className="container">
-          <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">
-            {t("Fotoğraf Galerisi", "Photo Gallery", "Фотогалерея")}
-          </h2>
-          {galleryLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-[#1d4ed8]" />
-            </div>
-          ) : galleryError ? (
-            <div className="text-center py-12 text-slate-500">
-              <p className="text-lg">{t("Galeri yüklenirken bir hata oluştu.", "An error occurred while loading the gallery.", "При загрузке галереи произошла ошибка.")}</p>
-            </div>
-          ) : !dbGallery || dbGallery.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">
-              <ImageIcon className="h-12 w-12 mx-auto mb-3 text-slate-300" />
-              <p className="text-lg">{t("Henüz galeri görseli bulunmamaktadır.", "No gallery images available yet.", "Пока нет изображений в галерее.")}</p>
-              <p className="text-sm mt-1">{t("Yeni görseller eklendiğinde burada görünecektir.", "New images will appear here when added.", "Новые изображения появятся здесь после добавления.")}</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {dbGallery.map((image, i) => (
-                <motion.div
-                  key={image.id}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.05 }}
-                  className={`overflow-hidden rounded-xl ${i % 3 === 1 ? "row-span-2" : ""}`}
-                >
-                  <img
-                    src={image.imageUrl}
-                    alt={image.caption}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
     </div>
   );
 }

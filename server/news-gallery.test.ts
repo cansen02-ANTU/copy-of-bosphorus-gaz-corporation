@@ -11,6 +11,7 @@ vi.mock("./db", () => ({
   createGalleryImage: vi.fn().mockResolvedValue({ id: 1 }),
   updateGalleryImage: vi.fn().mockResolvedValue(undefined),
   deleteGalleryImage: vi.fn().mockResolvedValue(undefined),
+  getGalleryAlbumsWithPhotos: vi.fn().mockResolvedValue([]),
   getUserByOpenId: vi.fn(),
   upsertUser: vi.fn(),
   getDb: vi.fn().mockResolvedValue(null),
@@ -31,6 +32,7 @@ import {
   createGalleryImage,
   updateGalleryImage,
   deleteGalleryImage,
+  getGalleryAlbumsWithPhotos,
 } from "./db";
 
 import { storagePut } from "./storage";
@@ -140,6 +142,40 @@ describe("News & Gallery DB helpers", () => {
 
       await deleteGalleryImage(1);
       expect(deleteGalleryImage).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe("Gallery Albums", () => {
+    it("getGalleryAlbumsWithPhotos returns albums each with a photos array", async () => {
+      const mockAlbums = [
+        {
+          id: 1,
+          slug: "nord-stream-race-2013",
+          title: "Nord Stream Race 2013",
+          description: "desc",
+          coverUrl: "/manus-storage/cover.jpg",
+          sortOrder: 1,
+          createdAt: new Date(),
+          photos: [
+            { id: 10, imageUrl: "/manus-storage/p1.jpg", caption: null },
+            { id: 11, imageUrl: "/manus-storage/p2.jpg", caption: null },
+          ],
+        },
+      ];
+      (getGalleryAlbumsWithPhotos as any).mockResolvedValue(mockAlbums);
+
+      const result = await getGalleryAlbumsWithPhotos();
+      expect(result).toHaveLength(1);
+      expect(result[0].slug).toBe("nord-stream-race-2013");
+      expect(Array.isArray(result[0].photos)).toBe(true);
+      expect(result[0].photos).toHaveLength(2);
+      expect(result[0].photos[0].imageUrl).toBe("/manus-storage/p1.jpg");
+    });
+
+    it("getGalleryAlbumsWithPhotos returns empty array when no albums", async () => {
+      (getGalleryAlbumsWithPhotos as any).mockResolvedValue([]);
+      const result = await getGalleryAlbumsWithPhotos();
+      expect(result).toEqual([]);
     });
   });
 

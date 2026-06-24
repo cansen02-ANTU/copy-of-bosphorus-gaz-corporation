@@ -15,6 +15,7 @@ import {
   createGalleryImage,
   updateGalleryImage,
   deleteGalleryImage,
+  getGalleryAlbumsWithPhotos,
 } from "./db";
 import { storagePut } from "./storage";
 
@@ -176,6 +177,10 @@ export const appRouter = router({
   gallery: router({
     list: publicProcedure.query(async () => {
       return getGalleryImages();
+    }),
+
+    albums: publicProcedure.query(async () => {
+      return getGalleryAlbumsWithPhotos();
     }),
 
     create: adminProcedure

@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import Company from "./pages/Company";
 import NaturalGas from "./pages/NaturalGas";
 import Press from "./pages/Press";
+import Gallery from "./pages/Gallery";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import Header from "./components/Header";
@@ -33,6 +34,8 @@ function PublicRoutes() {
       <Route path="/sirketimiz" component={Company} />
       <Route path="/dogal-gaz" component={NaturalGas} />
       <Route path="/basin" component={Press} />
+      <Route path="/basin/haberler" component={Press} />
+      <Route path="/basin/foto-galeri" component={Gallery} />
       <Route path="/kariyer" component={Careers} />
       <Route path="/iletisim" component={Contact} />
       <Route path="/404" component={NotFound} />
