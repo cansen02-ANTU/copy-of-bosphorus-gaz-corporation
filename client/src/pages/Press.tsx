@@ -24,6 +24,9 @@ type Article = {
   titleEn: string | null;
   excerptEn: string | null;
   contentEn: string | null;
+  titleRu: string | null;
+  excerptRu: string | null;
+  contentRu: string | null;
   imageUrl: string | null;
   publishedAt: number;
 };
@@ -37,11 +40,17 @@ export default function Press() {
 
   const locale = lang === "en" ? "en-US" : lang === "ru" ? "ru-RU" : "tr-TR";
 
-  // Use English fields on the EN site when available; fall back to Turkish otherwise.
-  const aTitle = (a: Article) => (lang === "en" && a.titleEn ? a.titleEn : a.title);
-  const aExcerpt = (a: Article) => (lang === "en" && a.excerptEn ? a.excerptEn : a.excerpt);
+  // Use localized fields when available; fall back to Turkish otherwise.
+  const aTitle = (a: Article) =>
+    lang === "en" ? a.titleEn || a.title : lang === "ru" ? a.titleRu || a.title : a.title;
+  const aExcerpt = (a: Article) =>
+    lang === "en" ? a.excerptEn || a.excerpt : lang === "ru" ? a.excerptRu || a.excerpt : a.excerpt;
   const aContent = (a: Article) =>
-    lang === "en" ? a.contentEn || a.content || a.excerptEn || a.excerpt : a.content || a.excerpt;
+    lang === "en"
+      ? a.contentEn || a.content || a.excerptEn || a.excerpt
+      : lang === "ru"
+      ? a.contentRu || a.content || a.excerptRu || a.excerpt
+      : a.content || a.excerpt;
 
   const formatDate = (ts: number) =>
     new Date(ts).toLocaleDateString(locale, {

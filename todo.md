@@ -113,3 +113,10 @@
 - [x] Backfill EN columns (UPDATED=20); verify all 30 articles have EN content (MISSING=0)
 - [x] Browser-verify EN Haberler list shows only English; TR unchanged
 - [x] Typecheck + 37/37 tests pass, cleaned up helpers, checkpoint
+
+## Russian News (RU Haberler page) — translate all 30 articles
+- [x] Add titleRu/excerptRu/contentRu columns to news_articles (migration 0006, applied)
+- [x] Export all 30 articles (TR + EN) to translate into Russian
+- [x] Backfill RU columns for all 30 articles preserving paragraph breaks (verified title=30 excerpt=30 content=30)
+- [x] Render RU title/excerpt/content on the Press page when lang=ru (fallback to TR)
+- [x] Typecheck + 38/38 tests pass, browser-verify RU Haberler, checkpoint

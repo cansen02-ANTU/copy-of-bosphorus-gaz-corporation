@@ -60,6 +60,31 @@ describe("News & Gallery DB helpers", () => {
       expect(result).toEqual([]);
     });
 
+    it("getNewsArticles preserves localized EN and RU fields", async () => {
+      const mockArticles = [
+        {
+          id: 1,
+          title: "Başlık",
+          excerpt: "Özet",
+          content: "İçerik",
+          titleEn: "Title",
+          excerptEn: "Excerpt",
+          contentEn: "Content",
+          titleRu: "Заголовок",
+          excerptRu: "Аннотация",
+          contentRu: "Содержание",
+          publishedAt: Date.now(),
+        },
+      ];
+      (getNewsArticles as any).mockResolvedValue(mockArticles);
+
+      const result = await getNewsArticles();
+      expect(result[0].titleEn).toBe("Title");
+      expect(result[0].titleRu).toBe("Заголовок");
+      expect(result[0].excerptRu).toBe("Аннотация");
+      expect(result[0].contentRu).toBe("Содержание");
+    });
+
     it("getNewsArticleById returns single article", async () => {
       const mockArticle = { id: 1, title: "Test", excerpt: "Exc", publishedAt: Date.now() };
       (getNewsArticleById as any).mockResolvedValue(mockArticle);

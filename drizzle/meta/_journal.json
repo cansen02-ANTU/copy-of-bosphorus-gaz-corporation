@@ -43,6 +43,13 @@
       "when": 1782305542803,
       "tag": "0005_majestic_hedge_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1782306926184,
+      "tag": "0006_silent_living_mummy",
+      "breakpoints": true
     }
   ]
 }
