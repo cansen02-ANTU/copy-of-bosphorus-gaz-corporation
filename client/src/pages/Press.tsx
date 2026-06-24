@@ -21,6 +21,9 @@ type Article = {
   title: string;
   excerpt: string;
   content: string | null;
+  titleEn: string | null;
+  excerptEn: string | null;
+  contentEn: string | null;
   imageUrl: string | null;
   publishedAt: number;
 };
@@ -33,6 +36,12 @@ export default function Press() {
   const [selected, setSelected] = useState<Article | null>(null);
 
   const locale = lang === "en" ? "en-US" : lang === "ru" ? "ru-RU" : "tr-TR";
+
+  // Use English fields on the EN site when available; fall back to Turkish otherwise.
+  const aTitle = (a: Article) => (lang === "en" && a.titleEn ? a.titleEn : a.title);
+  const aExcerpt = (a: Article) => (lang === "en" && a.excerptEn ? a.excerptEn : a.excerpt);
+  const aContent = (a: Article) =>
+    lang === "en" ? a.contentEn || a.content || a.excerptEn || a.excerpt : a.content || a.excerpt;
 
   const formatDate = (ts: number) =>
     new Date(ts).toLocaleDateString(locale, {
@@ -144,7 +153,7 @@ export default function Press() {
                       <div className="aspect-[3/2] overflow-hidden">
                         <img
                           src={article.imageUrl}
-                          alt={article.title}
+                          alt={aTitle(article)}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
@@ -152,10 +161,10 @@ export default function Press() {
                     <div className="p-6 flex flex-col flex-1">
                       <p className="text-xs text-slate-400 mb-3">{formatDate(article.publishedAt)}</p>
                       <h3 className="text-[#1e3a5f] font-semibold mb-3 group-hover:text-[#1d4ed8] transition-colors duration-200 line-clamp-2">
-                        {article.title}
+                        {aTitle(article)}
                       </h3>
                       <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                        {article.excerpt}
+                        {aExcerpt(article)}
                       </p>
                       <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#1d4ed8] group-hover:gap-2 transition-all duration-200">
                         {t("Devamını Oku", "Read More", "Читать далее")}
@@ -216,16 +225,16 @@ export default function Press() {
                   {formatDate(selected.publishedAt)}
                 </DialogDescription>
                 <DialogTitle className="text-2xl font-bold text-[#1e3a5f] leading-snug">
-                  {selected.title}
+                  {aTitle(selected)}
                 </DialogTitle>
               </DialogHeader>
               {selected.imageUrl && (
                 <div className="rounded-xl overflow-hidden my-2">
-                  <img src={selected.imageUrl} alt={selected.title} className="w-full object-cover" />
+                  <img src={selected.imageUrl} alt={aTitle(selected)} className="w-full object-cover" />
                 </div>
               )}
               <div className="text-slate-600 leading-relaxed whitespace-pre-line text-[15px]">
-                {selected.content || selected.excerpt}
+                {aContent(selected)}
               </div>
             </>
           )}

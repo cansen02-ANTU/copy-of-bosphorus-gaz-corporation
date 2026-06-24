@@ -98,3 +98,11 @@
 - [x] Make the NaturalGas form controlled (all fields + 12 monthly inputs) with loading/error/success states
 - [x] Add vitest coverage for gasRequest.submit (validation, persistence, notify, graceful notify failure) — 37/37 pass
 - [x] Verify full pipeline via direct tRPC call (success:true, row persisted), then clean up test row
+
+## English News (EN Haberler page) from bosphorusgaz.com/media/news?lang=en
+- [x] Extract 10 English articles (page 1) with full bodies via webpage_extract
+- [x] Map each EN article to its existing TR row by date/topic
+- [x] Add titleEn/excerptEn/contentEn columns (migration 0004) and apply
+- [x] Backfill EN content into the 10 matched rows (verified en_count=10)
+- [x] Render EN title/excerpt/content on Press page when lang=en (fallback to TR)
+- [x] Typecheck + 37/37 tests, browser-verify EN/TR, clean up helper scripts
