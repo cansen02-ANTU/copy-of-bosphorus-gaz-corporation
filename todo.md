@@ -106,3 +106,10 @@
 - [x] Backfill EN content into the 10 matched rows (verified en_count=10)
 - [x] Render EN title/excerpt/content on Press page when lang=en (fallback to TR)
 - [x] Typecheck + 37/37 tests, browser-verify EN/TR, clean up helper scripts
+
+## Translate remaining TR news to English (EN list shows English-only)
+- [x] Identify the 20 TR articles missing titleEn/excerptEn/contentEn and export them
+- [x] Translate each (title, excerpt, full body) into natural English, preserving paragraph breaks
+- [x] Backfill EN columns (UPDATED=20); verify all 30 articles have EN content (MISSING=0)
+- [x] Browser-verify EN Haberler list shows only English; TR unchanged
+- [x] Typecheck + 37/37 tests pass, cleaned up helpers, checkpoint
