@@ -69,3 +69,9 @@
 - [x] Seed page-2 articles (late-2016/early-2017) → total 20, paginated into 4 pages
 - [x] Verify total=20 and newlines stored correctly (real_nl>0, literal=0)
 - [x] Clean up page-2 seed helper scripts (gen-seed-sql-p2.mjs, seed-news-p2.sql)
+
+## Copy News Page 3 from bosphorusgaz.com/basin/haberler/page/3
+- [x] Extract 10 page-3 articles (full bodies + dates) via webpage_extract
+- [x] Seed page-3 articles (2014-2016 events) -> total 30, paginated into 5 pages
+- [x] Verify total=30 and newlines stored correctly (real_nl>0, literal=0)
+- [x] Clean up page-3 seed helper scripts (gen-seed-sql-p3.mjs, seed-news-p3.sql)
