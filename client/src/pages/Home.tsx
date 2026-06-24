@@ -262,9 +262,9 @@ export default function Home() {
                 titleTr: "Veri Merkezi Sektörüne Özel Enerji Çözümleri Tanıtıldı",
                 titleEn: "Specialized Energy Solutions for the Data Center Sector Introduced",
                 titleRu: "Представлены специализированные энергетические решения для сектора центров обработки данных",
-                excerptTr: "Türkiye'de hızla büyüyen veri merkezi sektörüne yönelik CHP destekli doğal gaz çözümlerimizi müşterilerimizle paylaştık.",
-                excerptEn: "We shared our CHP-supported natural gas solutions for Turkey's rapidly growing data center sector with our customers.",
-                excerptRu: "Мы поделились с клиентами нашими решениями на природном газе с поддержкой когенерации (CHP) для быстрорастущего сектора центров обработки данных в Турции."
+                excerptTr: "Türkiye'de hızla büyüyen veri merkezi sektörüne yönelik doğal gaz çözümlerimizi müşterilerimizle paylaştık.",
+                excerptEn: "We shared our natural gas solutions for Turkey's rapidly growing data center sector with our customers.",
+                excerptRu: "Мы поделились с клиентами нашими решениями на природном газе для быстрорастущего сектора центров обработки данных в Турции."
               }
             ].map((news, i) => (
               <motion.article
