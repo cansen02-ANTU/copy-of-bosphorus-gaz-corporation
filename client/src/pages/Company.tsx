@@ -363,7 +363,7 @@ export default function Company() {
             <p><strong className="text-slate-700">{t("Ticaret Unvanı:", "Trade Name:", "Фирменное наименование:")}</strong> Bosphorus Gaz Corporation A.Ş.</p>
             <p><strong className="text-slate-700">{t("Merkez Adresi:", "Headquarters:", "Юридический адрес:")}</strong> Seba Center, Darüşşafaka Cad. No:45, Sarıyer, İstanbul</p>
             <p><strong className="text-slate-700">{t("Ticaret Sicil No:", "Trade Registry No:", "Номер торгового реестра:")}</strong> {t("İstanbul Ticaret Sicili", "Istanbul Trade Registry", "Стамбульский торговый реестр")}</p>
-            <p><strong className="text-slate-700">{t("MERSIS No:", "MERSIS No:", "Номер MERSIS:")}</strong> —</p>
+            <p><strong className="text-slate-700">{t("MERSIS No:", "MERSIS No:", "Номер MERSIS:")}</strong> 0180 0301 4700 0015</p>
             <p><strong className="text-slate-700">{t("KEP Adresi:", "KEP Address:", "Адрес KEP:")}</strong> bosphorusgaz@hs01.kep.tr</p>
           </div>
         </div>
