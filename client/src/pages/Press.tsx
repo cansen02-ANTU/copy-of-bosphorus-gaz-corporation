@@ -82,7 +82,7 @@ export default function Press() {
             </h1>
             <p className="text-white/70 max-w-2xl text-lg">
               {t(
-                "Bosphorus Gaz Corporation'dan son gelişmeler ve sektör haberleri.",
+                "Bosphorus Gaz'dan son gelişmeler ve sektör haberleri.",
                 "Latest developments and industry news from Bosphorus Gaz Corporation.",
                 "Последние события и отраслевые новости от Bosphorus Gaz Corporation."
               )}
