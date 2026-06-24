@@ -56,26 +56,40 @@ export default function Contact() {
             <div>
               <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">{t("İletişim Bilgileri", "Contact Information", "Контактная информация")}</h2>
               <div className="space-y-6 mb-10">
+                {/* Office 1: İstanbul HQ */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-[#1d4ed8]" />
                   </div>
                   <div>
-                    <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("Adres", "Address", "Адрес")}</h3>
+                    <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("Merkez Ofis – İstanbul", "Head Office – Istanbul", "Главный офис – Стамбул")}</h3>
                     <p className="text-slate-500 text-sm mt-1">
-                      Seba Center, Darüşşafaka Cad. No:45<br />
-                      {t("Sarıyer, İstanbul, Türkiye", "Sarıyer, Istanbul, Turkey", "Сарыер, Стамбул, Турция")}
+                      İstinye Mah. Darüşşafaka Cad.<br />
+                      Seba Center No:45 34460<br />
+                      {t("İstinye / İstanbul, Türkiye", "İstinye / Istanbul, Turkey", "Истинье / Стамбул, Турция")}
+                    </p>
+                    <p className="text-slate-500 text-sm mt-2">
+                      {t("Tel", "Phone", "Тел")}: +90 (212) 335 09 00<br />
+                      {t("Faks", "Fax", "Факс")}: +90 (212) 335 09 20
                     </p>
                   </div>
                 </div>
+                {/* Office 2: Ankara */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-[#1d4ed8]" />
+                    <MapPin className="w-5 h-5 text-[#1d4ed8]" />
                   </div>
                   <div>
-                    <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("Telefon", "Phone", "Телефон")}</h3>
-                    <p className="text-slate-500 text-sm mt-1">+90 (212) 335 09 00</p>
-                    <p className="text-slate-500 text-sm">+90 (212) 335 09 20 ({t("Faks", "Fax", "Факс")})</p>
+                    <h3 className="text-[#1e3a5f] font-semibold text-sm">{t("Ankara Ofis", "Ankara Office", "Офис в Анкаре")}</h3>
+                    <p className="text-slate-500 text-sm mt-1">
+                      Mustafa Kemal Mah. Dumlupınar Bulvarı<br />
+                      No:266 Tepe Prime AVM, C Blok D:38 K:2 06800<br />
+                      {t("Çankaya / Ankara, Türkiye", "Çankaya / Ankara, Turkey", "Чанкая / Анкара, Турция")}
+                    </p>
+                    <p className="text-slate-500 text-sm mt-2">
+                      {t("Tel", "Phone", "Тел")}: +90 (312) 287 01 73<br />
+                      {t("Faks", "Fax", "Факс")}: +90 (312) 287 01 46
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
