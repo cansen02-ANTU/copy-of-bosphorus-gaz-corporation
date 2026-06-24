@@ -63,3 +63,9 @@
 - [x] Add clickable article detail dialog (full content with preserved line breaks)
 - [x] Verify build, run vitest (29/29), screenshot Press page
 - [x] Clean up seed helper scripts (seed-news.sql, seed-news.mjs, gen-seed-sql.mjs)
+
+## Copy News Page 2 from bosphorusgaz.com/basin/haberler/page/2
+- [x] Extract 10 page-2 articles (full bodies + dates) via webpage_extract
+- [x] Seed page-2 articles (late-2016/early-2017) → total 20, paginated into 4 pages
+- [x] Verify total=20 and newlines stored correctly (real_nl>0, literal=0)
+- [x] Clean up page-2 seed helper scripts (gen-seed-sql-p2.mjs, seed-news-p2.sql)
