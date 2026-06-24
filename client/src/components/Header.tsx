@@ -30,6 +30,7 @@ export default function Header() {
   }, [location]);
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
@@ -112,8 +113,11 @@ export default function Header() {
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
+    </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — rendered OUTSIDE <header> so the header's backdrop-filter
+          does not become the containing block for this position:fixed overlay
+          (which previously clipped it to the header's height on iOS Safari). */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -196,6 +200,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
