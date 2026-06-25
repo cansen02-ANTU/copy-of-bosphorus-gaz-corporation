@@ -114,9 +114,9 @@ const industries: Industry[] = [
     taglineTr: "Çift Kullanım: Hammadde + Yakıt",
     taglineEn: "Dual Use: Feedstock + Fuel",
     taglineRu: "Двойное применение: сырьё + топливо",
-    descriptionTr: "Doğal gaz; fırınlardan buhar kazanlarına kadar her aşamada hem operasyonel sürekliliği hem de fuel-oil ve kömüre kıyasla daha düşük karbon ayak izini mümkün kılar. Kesintisiz tedarik ve öngörülebilir maliyet yapısıyla operasyonların güvenilir bir şekilde sürdürülebilirliği için kritik öneme sahiptir.",
-    descriptionEn: "Natural gas enables both operational continuity and a lower carbon footprint compared to fuel oil and coal at every stage from furnaces to steam boilers. With uninterrupted supply and predictable cost structures, it is critical for the reliable sustainability of operations.",
-    descriptionRu: "Природный газ обеспечивает как операционную непрерывность, так и меньший углеродный след по сравнению с мазутом и углём на каждом этапе — от печей до паровых котлов. Благодаря бесперебойным поставкам и предсказуемой структуре затрат он имеет критическое значение для надёжной устойчивости операций.",
+    descriptionTr: "Doğal gaz; her aşamada hem operasyonel sürekliliği hem de fuel-oil ve kömüre kıyasla daha düşük karbon ayak izini mümkün kılar. Kesintisiz tedarik ve öngörülebilir maliyet yapısıyla operasyonların güvenilir bir şekilde sürdürülebilirliği için kritik öneme sahiptir.",
+    descriptionEn: "Natural gas enables both operational continuity and a lower carbon footprint compared to fuel oil and coal at every stage. With uninterrupted supply and predictable cost structures, it is critical for the reliable sustainability of operations.",
+    descriptionRu: "Природный газ обеспечивает как операционную непрерывность, так и меньший углеродный след по сравнению с мазутом и углём на каждом этапе. Благодаря бесперебойным поставкам и предсказуемой структуре затрат он имеет критическое значение для надёжной устойчивости операций.",
     benefitsTr: [
       "Yüksek enerji yoğunluklu prosesler için güvenilir doğal gaz arzı",
       "Üretim planlamasını kolaylaştıran öngörülebilir maliyet yapıları",
