@@ -35,17 +35,17 @@ const industries: Industry[] = [
     descriptionRu: "Природный газ является надёжным источником энергии для локальной генерации, когенерации и резервного энергоснабжения, помогая центрам обработки данных обеспечивать непрерывность работы, безопасность данных и удовлетворённость клиентов, получая операционную гибкость.",
     benefitsTr: [
       "Yedek ve kesintisiz güç için doğalgaz jeneratör sistemleri",
-      "Kojenerasyon (CHP) ile elektrik üretimi ve atık ısı geri kazanımı",
+      "Kojenerasyon ile elektrik üretimi ve atık ısı geri kazanımı",
       "Rekabetçi fiyatlar ile birlikte esnek tüketim profiline uygun özel tedarik anlaşmaları"
     ],
     benefitsEn: [
       "Natural gas generator systems for backup and uninterrupted power",
-      "Electricity generation and waste heat recovery through cogeneration (CHP)",
+      "Electricity generation and waste heat recovery through cogeneration",
       "Custom supply agreements with competitive prices suited to flexible consumption profiles"
     ],
     benefitsRu: [
       "Газовые генераторные системы для резервного и бесперебойного питания",
-      "Выработка электроэнергии и рекуперация тепла благодаря когенерации (CHP)",
+      "Выработка электроэнергии и рекуперация тепла благодаря когенерации",
       "Индивидуальные договоры поставки с конкурентными ценами, соответствующие гибкому профилю потребления"
     ],
     scale: "5–50 Mm³/yr"
