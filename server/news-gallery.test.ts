@@ -19,7 +19,7 @@ vi.mock("./db", () => ({
 
 // Mock the storage module
 vi.mock("./storage", () => ({
-  storagePut: vi.fn().mockResolvedValue({ key: "news/image_abc123.jpg", url: "/manus-storage/news/image_abc123.jpg" }),
+  storagePut: vi.fn().mockResolvedValue({ key: "news/image_abc123.jpg", url: "/images/news/image_abc123.jpg" }),
 }));
 
 import {
@@ -129,7 +129,7 @@ describe("News & Gallery DB helpers", () => {
   describe("Gallery Images", () => {
     it("getGalleryImages returns images list", async () => {
       const mockImages = [
-        { id: 1, caption: "Test Image", imageUrl: "/manus-storage/test.jpg", sortOrder: 1, createdAt: new Date() },
+        { id: 1, caption: "Test Image", imageUrl: "/images/test.jpg", sortOrder: 1, createdAt: new Date() },
       ];
       (getGalleryImages as any).mockResolvedValue(mockImages);
 
@@ -148,7 +148,7 @@ describe("News & Gallery DB helpers", () => {
 
       const result = await createGalleryImage({
         caption: "New Image",
-        imageUrl: "/manus-storage/gallery/image_abc.jpg",
+        imageUrl: "/images/gallery/image_abc.jpg",
         imageKey: "gallery/image_abc.jpg",
         sortOrder: 1,
       } as any);
@@ -178,12 +178,12 @@ describe("News & Gallery DB helpers", () => {
           slug: "nord-stream-race-2013",
           title: "Nord Stream Race 2013",
           description: "desc",
-          coverUrl: "/manus-storage/cover.jpg",
+          coverUrl: "/images/cover.jpg",
           sortOrder: 1,
           createdAt: new Date(),
           photos: [
-            { id: 10, imageUrl: "/manus-storage/p1.jpg", caption: null },
-            { id: 11, imageUrl: "/manus-storage/p2.jpg", caption: null },
+            { id: 10, imageUrl: "/images/p1.jpg", caption: null },
+            { id: 11, imageUrl: "/images/p2.jpg", caption: null },
           ],
         },
       ];
@@ -194,7 +194,7 @@ describe("News & Gallery DB helpers", () => {
       expect(result[0].slug).toBe("nord-stream-race-2013");
       expect(Array.isArray(result[0].photos)).toBe(true);
       expect(result[0].photos).toHaveLength(2);
-      expect(result[0].photos[0].imageUrl).toBe("/manus-storage/p1.jpg");
+      expect(result[0].photos[0].imageUrl).toBe("/images/p1.jpg");
     });
 
     it("getGalleryAlbumsWithPhotos returns empty array when no albums", async () => {
@@ -209,7 +209,7 @@ describe("News & Gallery DB helpers", () => {
       const result = await storagePut("news/image.jpg", Buffer.from("test"), "image/jpeg");
       expect(result).toEqual({
         key: "news/image_abc123.jpg",
-        url: "/manus-storage/news/image_abc123.jpg",
+        url: "/images/news/image_abc123.jpg",
       });
       expect(storagePut).toHaveBeenCalledWith("news/image.jpg", expect.any(Buffer), "image/jpeg");
     });
