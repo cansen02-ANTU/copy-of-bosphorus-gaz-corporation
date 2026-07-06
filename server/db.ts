@@ -1,5 +1,6 @@
 import { eq, desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { InsertUser, users, newsArticles, galleryImages, InsertNewsArticle, InsertGalleryImage, galleryAlbums, galleryPhotos, gasRequests, InsertGasRequest } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -9,7 +10,8 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      const client = postgres(process.env.DATABASE_URL, { ssl: 'require' });
+      _db = drizzle(client);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -68,7 +70,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.lastSignedIn = new Date();
     }
 
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
+    await db.insert(users).values(values).onConflictDoUpdate({
+      target: users.openId,
       set: updateSet,
     });
   } catch (error) {
@@ -107,8 +110,8 @@ export async function getNewsArticleById(id: number) {
 export async function createNewsArticle(data: InsertNewsArticle) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  const result = await db.insert(newsArticles).values(data);
-  return { id: Number(result[0].insertId) };
+  const result = await db.insert(newsArticles).values(data).returning({ id: newsArticles.id });
+  return { id: result[0].id };
 }
 
 export async function updateNewsArticle(id: number, data: Partial<InsertNewsArticle>) {
@@ -134,8 +137,8 @@ export async function getGalleryImages(limit = 100) {
 export async function createGalleryImage(data: InsertGalleryImage) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  const result = await db.insert(galleryImages).values(data);
-  return { id: Number(result[0].insertId) };
+  const result = await db.insert(galleryImages).values(data).returning({ id: galleryImages.id });
+  return { id: result[0].id };
 }
 
 export async function updateGalleryImage(id: number, data: Partial<InsertGalleryImage>) {
@@ -176,6 +179,6 @@ export async function getGalleryAlbumsWithPhotos() {
 export async function createGasRequest(data: InsertGasRequest) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  const result = await db.insert(gasRequests).values(data);
-  return { id: Number(result[0].insertId) };
+  const result = await db.insert(gasRequests).values(data).returning({ id: gasRequests.id });
+  return { id: result[0].id };
 }
