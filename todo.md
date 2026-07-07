@@ -120,3 +120,10 @@
 - [x] Backfill RU columns for all 30 articles preserving paragraph breaks (verified title=30 excerpt=30 content=30)
 - [x] Render RU title/excerpt/content on the Press page when lang=ru (fallback to TR)
 - [x] Typecheck + 38/38 tests pass, browser-verify RU Haberler, checkpoint
+
+## Custom Admin Auth (replace Manus OAuth)
+- [x] Create server-side admin login/logout tRPC procedures with JWT session (already existed)
+- [x] Build dedicated /admin/login page with username/password form (already existed)
+- [x] Update admin pages to use new auth flow instead of Manus OAuth (already used adminAuth)
+- [x] Ensure public site continues to work without OAuth (context.ts skips OAuth when env vars missing)
+- [x] Typecheck + 38/38 tests pass, build succeeds

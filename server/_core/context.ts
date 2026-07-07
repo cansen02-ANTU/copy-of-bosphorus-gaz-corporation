@@ -1,6 +1,5 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
-import { sdk } from "./sdk";
 import { parse as parseCookieHeader } from "cookie";
 import { jwtVerify } from "jose";
 import { ENV } from "./env";
@@ -47,15 +46,16 @@ export async function createContext(
 ): Promise<TrpcContext> {
   let user: User | null = null;
 
-  // First check for standalone admin session cookie
+  // Check for standalone admin session cookie (username/password auth)
   user = await getAdminUserFromCookie(opts.req.headers.cookie);
 
-  // If no admin cookie, try Manus OAuth for public page auth (non-admin features)
-  // Admin panel access is exclusively via username/password (admin_session cookie)
-  if (!user) {
+  // If no admin cookie and Manus OAuth is configured, try OAuth for public user auth
+  // When self-hosting without Manus OAuth, this block is safely skipped
+  if (!user && ENV.oAuthServerUrl && ENV.appId) {
     try {
+      const { sdk } = await import("./sdk");
       user = await sdk.authenticateRequest(opts.req);
-    } catch (error) {
+    } catch {
       // Authentication is optional for public procedures.
       user = null;
     }
