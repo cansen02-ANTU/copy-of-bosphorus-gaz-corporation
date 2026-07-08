@@ -17,20 +17,41 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, X, ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+type TabLang = "tr" | "en" | "ru";
 
 export default function AdminNews() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<TabLang>("tr");
+
+  // TR fields
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
+
+  // EN fields
+  const [titleEn, setTitleEn] = useState("");
+  const [excerptEn, setExcerptEn] = useState("");
+  const [contentEn, setContentEn] = useState("");
+
+  // RU fields
+  const [titleRu, setTitleRu] = useState("");
+  const [excerptRu, setExcerptRu] = useState("");
+  const [contentRu, setContentRu] = useState("");
+
+  // Date
+  const [publishedAt, setPublishedAt] = useState<string>("");
+
+  // Image
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { t, lang } = useLanguage();
+  const [removeImage, setRemoveImage] = useState(false);
 
+  const { t, lang } = useLanguage();
   const utils = trpc.useUtils();
   const { data: articles, isLoading } = trpc.news.list.useQuery();
 
@@ -63,25 +84,50 @@ export default function AdminNews() {
   function resetForm() {
     setIsDialogOpen(false);
     setEditingId(null);
+    setActiveTab("tr");
     setTitle("");
     setExcerpt("");
     setContent("");
+    setTitleEn("");
+    setExcerptEn("");
+    setContentEn("");
+    setTitleRu("");
+    setExcerptRu("");
+    setContentRu("");
+    setPublishedAt("");
     setImageFile(null);
     setImagePreview(null);
+    setRemoveImage(false);
+  }
+
+  function toLocalDatetimeString(d: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   }
 
   function openCreate() {
     resetForm();
+    setPublishedAt(toLocalDatetimeString(new Date()));
     setIsDialogOpen(true);
   }
 
   function openEdit(article: NonNullable<typeof articles>[number]) {
     setEditingId(article.id);
+    setActiveTab("tr");
     setTitle(article.title);
     setExcerpt(article.excerpt);
     setContent(article.content ?? "");
+    setTitleEn(article.titleEn ?? "");
+    setExcerptEn(article.excerptEn ?? "");
+    setContentEn(article.contentEn ?? "");
+    setTitleRu(article.titleRu ?? "");
+    setExcerptRu(article.excerptRu ?? "");
+    setContentRu(article.contentRu ?? "");
+    const d = new Date(article.publishedAt);
+    setPublishedAt(toLocalDatetimeString(d));
     setImagePreview(article.imageUrl ?? null);
     setImageFile(null);
+    setRemoveImage(false);
     setIsDialogOpen(true);
   }
 
@@ -89,9 +135,16 @@ export default function AdminNews() {
     const file = e.target.files?.[0];
     if (!file) return;
     setImageFile(file);
+    setRemoveImage(false);
     const reader = new FileReader();
     reader.onload = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
+  }
+
+  function handleRemoveImage() {
+    setImageFile(null);
+    setImagePreview(null);
+    setRemoveImage(true);
   }
 
   async function fileToBase64(file: File): Promise<string> {
@@ -110,7 +163,7 @@ export default function AdminNews() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim() || !excerpt.trim()) {
-      toast.error(t("Başlık ve özet zorunludur", "Title and excerpt are required", "Заголовок и краткое описание обязательны"));
+      toast.error(t("Başlık ve özet zorunludur (TR)", "Title and excerpt are required (TR)", "Заголовок и краткое описание обязательны (TR)"));
       return;
     }
 
@@ -122,28 +175,57 @@ export default function AdminNews() {
       imageMimeType = imageFile.type;
     }
 
+    const dateMs = publishedAt ? new Date(publishedAt).getTime() : Date.now();
+
     if (editingId) {
       updateMutation.mutate({
         id: editingId,
         title,
         excerpt,
         content: content || undefined,
+        titleEn: titleEn || undefined,
+        excerptEn: excerptEn || undefined,
+        contentEn: contentEn || undefined,
+        titleRu: titleRu || undefined,
+        excerptRu: excerptRu || undefined,
+        contentRu: contentRu || undefined,
+        publishedAt: dateMs,
         imageBase64,
         imageMimeType,
+        removeImage: removeImage || undefined,
       });
     } else {
       createMutation.mutate({
         title,
         excerpt,
         content: content || undefined,
+        titleEn: titleEn || undefined,
+        excerptEn: excerptEn || undefined,
+        contentEn: contentEn || undefined,
+        titleRu: titleRu || undefined,
+        excerptRu: excerptRu || undefined,
+        contentRu: contentRu || undefined,
+        publishedAt: dateMs,
         imageBase64,
         imageMimeType,
-        publishedAt: Date.now(),
       });
     }
   }
 
   const isMutating = createMutation.isPending || updateMutation.isPending;
+
+  function hasTranslation(article: NonNullable<typeof articles>[number], langCode: TabLang) {
+    if (langCode === "tr") return true; // TR is always the base
+    if (langCode === "en") return !!(article.titleEn && article.excerptEn);
+    if (langCode === "ru") return !!(article.titleRu && article.excerptRu);
+    return false;
+  }
+
+  const tabs: { id: TabLang; label: string }[] = [
+    { id: "tr", label: "Türkçe (TR)" },
+    { id: "en", label: "English (EN)" },
+    { id: "ru", label: "Русский (RU)" },
+  ];
 
   return (
     <div className="space-y-6">
@@ -176,6 +258,7 @@ export default function AdminNews() {
               <TableRow>
                 <TableHead className="w-16">{t("Görsel", "Image", "Изображение")}</TableHead>
                 <TableHead>{t("Başlık", "Title", "Заголовок")}</TableHead>
+                <TableHead className="w-28">{t("Diller", "Languages", "Языки")}</TableHead>
                 <TableHead className="w-40">{t("Tarih", "Date", "Дата")}</TableHead>
                 <TableHead className="w-24 text-right">{t("İşlemler", "Actions", "Действия")}</TableHead>
               </TableRow>
@@ -206,10 +289,26 @@ export default function AdminNews() {
                       </p>
                     </div>
                   </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      {(["tr", "en", "ru"] as TabLang[]).map((code) => (
+                        <span
+                          key={code}
+                          className={`inline-flex items-center justify-center w-7 h-5 rounded text-[10px] font-bold uppercase ${
+                            hasTranslation(article, code)
+                              ? "bg-green-100 text-green-700"
+                              : "bg-slate-100 text-slate-400"
+                          }`}
+                        >
+                          {code}
+                        </span>
+                      ))}
+                    </div>
+                  </TableCell>
                   <TableCell className="text-sm text-slate-500">
                     {new Date(article.publishedAt).toLocaleDateString(lang === "en" ? "en-US" : lang === "ru" ? "ru-RU" : "tr-TR", {
                       day: "numeric",
-                      month: "long",
+                      month: "short",
                       year: "numeric",
                     })}
                   </TableCell>
@@ -245,59 +344,188 @@ export default function AdminNews() {
       )}
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {editingId ? t("Haberi Düzenle", "Edit Article", "Редактировать новость") : t("Yeni Haber Ekle", "Add New Article", "Добавить новость")}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Date picker */}
             <div>
-              <label className="text-sm font-medium text-slate-700">{t("Başlık *", "Title *", "Заголовок *")}</label>
+              <label className="text-sm font-medium text-slate-700">{t("Yayın Tarihi *", "Publish Date *", "Дата публикации *")}</label>
               <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder={t("Haber başlığı", "Article title", "Заголовок новости")}
-                className="mt-1"
+                type="datetime-local"
+                value={publishedAt}
+                onChange={(e) => setPublishedAt(e.target.value)}
+                className="mt-1 w-auto"
               />
             </div>
-            <div>
-              <label className="text-sm font-medium text-slate-700">{t("Özet *", "Excerpt *", "Краткое описание *")}</label>
-              <Textarea
-                value={excerpt}
-                onChange={(e) => setExcerpt(e.target.value)}
-                placeholder={t("Kısa açıklama", "Short description", "Краткое описание")}
-                rows={3}
-                className="mt-1"
-              />
+
+            {/* Language tabs */}
+            <div className="border-b border-slate-200">
+              <div className="flex gap-0">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                      activeTab === tab.id
+                        ? "border-[#1d4ed8] text-[#1d4ed8]"
+                        : "border-transparent text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    {tab.label}
+                    {tab.id === "tr" && " *"}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div>
-              <label className="text-sm font-medium text-slate-700">{t("İçerik", "Content", "Содержание")}</label>
-              <Textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder={t("Detaylı haber içeriği (opsiyonel)", "Detailed article content (optional)", "Подробное содержание новости (необязательно)")}
-                rows={5}
-                className="mt-1"
-              />
-            </div>
+
+            {/* TR fields */}
+            {activeTab === "tr" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Başlık *</label>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Haber başlığı"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Özet *</label>
+                  <Textarea
+                    value={excerpt}
+                    onChange={(e) => setExcerpt(e.target.value)}
+                    placeholder="Kısa açıklama"
+                    rows={3}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">İçerik</label>
+                  <Textarea
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Detaylı haber içeriği (opsiyonel)"
+                    rows={5}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* EN fields */}
+            {activeTab === "en" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Title (EN)</label>
+                  <Input
+                    value={titleEn}
+                    onChange={(e) => setTitleEn(e.target.value)}
+                    placeholder="Article title in English"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Excerpt (EN)</label>
+                  <Textarea
+                    value={excerptEn}
+                    onChange={(e) => setExcerptEn(e.target.value)}
+                    placeholder="Short description in English"
+                    rows={3}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Content (EN)</label>
+                  <Textarea
+                    value={contentEn}
+                    onChange={(e) => setContentEn(e.target.value)}
+                    placeholder="Detailed article content in English (optional)"
+                    rows={5}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* RU fields */}
+            {activeTab === "ru" && (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Заголовок (RU)</label>
+                  <Input
+                    value={titleRu}
+                    onChange={(e) => setTitleRu(e.target.value)}
+                    placeholder="Заголовок новости на русском"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Краткое описание (RU)</label>
+                  <Textarea
+                    value={excerptRu}
+                    onChange={(e) => setExcerptRu(e.target.value)}
+                    placeholder="Краткое описание на русском"
+                    rows={3}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700">Содержание (RU)</label>
+                  <Textarea
+                    value={contentRu}
+                    onChange={(e) => setContentRu(e.target.value)}
+                    placeholder="Подробное содержание новости на русском (необязательно)"
+                    rows={5}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Image section */}
             <div>
               <label className="text-sm font-medium text-slate-700">{t("Görsel", "Image", "Изображение")}</label>
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="mt-1"
-              />
-              {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="mt-2 w-full h-32 object-cover rounded"
-                />
+              {imagePreview && !removeImage ? (
+                <div className="mt-2 relative">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-40 object-cover rounded border"
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 h-8 gap-1"
+                  >
+                    <ImageOff className="h-3.5 w-3.5" />
+                    {t("Görseli Kaldır", "Remove Image", "Удалить изображение")}
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-1">
+                  {removeImage && (
+                    <p className="text-xs text-amber-600 mb-2">
+                      {t("Görsel kaydedildiğinde kaldırılacak", "Image will be removed on save", "Изображение будет удалено при сохранении")}
+                    </p>
+                  )}
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </div>
               )}
             </div>
-            <div className="flex justify-end gap-2 pt-2">
+
+            <div className="flex justify-end gap-2 pt-2 border-t">
               <Button type="button" variant="outline" onClick={resetForm}>
                 {t("İptal", "Cancel", "Отмена")}
               </Button>

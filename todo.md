@@ -144,3 +144,11 @@
 - [x] Replace hardcoded news on homepage with latest 3 articles from database
 - [x] Render titles/excerpts according to active language (TR/EN/RU)
 - [x] Verify section headers localize correctly (TR/EN/RU), cards render from DB
+
+## Admin News Multilingual Enhancement
+- [x] Add TR/EN/RU fields (title, excerpt, content) to admin news create/edit form (tabbed UI)
+- [x] Add date picker to admin news form for editing publishedAt
+- [x] Add delete image button on admin news form
+- [x] Update create/update procedures to accept all language fields + date + removeImage
+- [x] Show translation status indicators in admin news list (green/grey badges per language)
+- [x] Verify frontend Press page uses localized fields with TR fallback (already implemented)

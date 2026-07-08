@@ -115,6 +115,12 @@ export const appRouter = router({
         title: z.string().min(1),
         excerpt: z.string().min(1),
         content: z.string().optional(),
+        titleEn: z.string().optional(),
+        excerptEn: z.string().optional(),
+        contentEn: z.string().optional(),
+        titleRu: z.string().optional(),
+        excerptRu: z.string().optional(),
+        contentRu: z.string().optional(),
         imageBase64: z.string().optional(),
         imageMimeType: z.string().optional(),
         publishedAt: z.number(),
@@ -139,6 +145,12 @@ export const appRouter = router({
           title: input.title,
           excerpt: input.excerpt,
           content: input.content ?? null,
+          titleEn: input.titleEn ?? null,
+          excerptEn: input.excerptEn ?? null,
+          contentEn: input.contentEn ?? null,
+          titleRu: input.titleRu ?? null,
+          excerptRu: input.excerptRu ?? null,
+          contentRu: input.contentRu ?? null,
           imageUrl: imageUrl ?? null,
           imageKey: imageKey ?? null,
           publishedAt: input.publishedAt,
@@ -151,15 +163,25 @@ export const appRouter = router({
         title: z.string().min(1).optional(),
         excerpt: z.string().min(1).optional(),
         content: z.string().optional(),
+        titleEn: z.string().optional(),
+        excerptEn: z.string().optional(),
+        contentEn: z.string().optional(),
+        titleRu: z.string().optional(),
+        excerptRu: z.string().optional(),
+        contentRu: z.string().optional(),
         imageBase64: z.string().optional(),
         imageMimeType: z.string().optional(),
+        removeImage: z.boolean().optional(),
         publishedAt: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, imageBase64, imageMimeType, ...rest } = input;
+        const { id, imageBase64, imageMimeType, removeImage, ...rest } = input;
         const updateData: Record<string, unknown> = { ...rest };
 
-        if (imageBase64 && imageMimeType) {
+        if (removeImage) {
+          updateData.imageUrl = null;
+          updateData.imageKey = null;
+        } else if (imageBase64 && imageMimeType) {
           const buffer = Buffer.from(imageBase64, "base64");
           const ext = imageMimeType.split("/")[1] || "jpg";
           const { key, url } = await storagePut(
