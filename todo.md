@@ -139,3 +139,8 @@
 - [x] Update storagePut to fall back to local file storage when BUILT_IN_FORGE_API_URL is not set
 - [x] Serve uploaded files from a persistent directory (dist/public/uploads in prod, client/public/uploads in dev)
 - [x] Typecheck clean, 38/38 tests pass, build succeeds
+
+## Dynamic homepage Son Haberler from DB
+- [x] Replace hardcoded news on homepage with latest 3 articles from database
+- [x] Render titles/excerpts according to active language (TR/EN/RU)
+- [x] Verify section headers localize correctly (TR/EN/RU), cards render from DB

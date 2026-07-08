@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { motion, useInView } from "framer-motion";
 import IndustryBubbles from "@/components/IndustryBubbles";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trpc } from "@/lib/trpc";
 
 /* Design: Light theme — White background, blue accents (#1d4ed8), navy text. */
 
@@ -34,6 +35,109 @@ function AnimatedCounter({ end, suffix = "", duration = 2000, decimals = 0 }: { 
     <div ref={ref} className="text-3xl lg:text-4xl font-extrabold text-[#1e3a5f] tabular-nums">
       {display}{suffix}
     </div>
+  );
+}
+
+function LatestNewsSection() {
+  const { t, lang } = useLanguage();
+  const { data: articles, isLoading, isError } = trpc.news.list.useQuery(undefined, {
+    retry: 1,
+    staleTime: 60_000,
+  });
+
+  const latestThree = useMemo(() => {
+    if (!articles) return [];
+    return articles.slice(0, 3);
+  }, [articles]);
+
+  const formatDate = (dateStr: string | number | Date | null) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    const localeMap: Record<string, string> = { tr: "tr-TR", en: "en-US", ru: "ru-RU" };
+    return d.toLocaleDateString(localeMap[lang] || "tr-TR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  const getTitle = (article: any) => {
+    if (lang === "en" && article.titleEn) return article.titleEn;
+    if (lang === "ru" && article.titleRu) return article.titleRu;
+    return article.title;
+  };
+
+  const getExcerpt = (article: any) => {
+    if (lang === "en" && article.excerptEn) return article.excerptEn;
+    if (lang === "ru" && article.excerptRu) return article.excerptRu;
+    return article.excerpt;
+  };
+
+  return (
+    <section className="py-24 lg:py-32 border-t border-slate-100">
+      <div className="container">
+        <div className="flex items-end justify-between mb-12">
+          <div>
+            <p className="text-[#1d4ed8] text-sm font-medium uppercase tracking-wider mb-3">
+              {t("Bas\u0131n", "Press", "\u041f\u0440\u0435\u0441\u0441\u0430")}
+            </p>
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-[#1e3a5f]">
+              {t("Son Haberler", "Latest News", "\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u0438\u0435 \u043d\u043e\u0432\u043e\u0441\u0442\u0438")}
+            </h2>
+          </div>
+          <Link
+            href="/basin"
+            className="hidden sm:inline-flex items-center gap-2 text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors"
+          >
+            {t("T\u00fcm\u00fcn\u00fc G\u00f6r", "View All", "\u0421\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u0432\u0441\u0435")} &rarr;
+          </Link>
+        </div>
+
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="bg-slate-50 border border-slate-100 rounded-xl p-6 animate-pulse">
+                <div className="h-3 w-24 bg-slate-200 rounded mb-4" />
+                <div className="h-5 w-full bg-slate-200 rounded mb-3" />
+                <div className="h-4 w-3/4 bg-slate-200 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : isError || latestThree.length === 0 ? (
+          <div className="text-center py-12 text-slate-400">
+            <p>{t("Haberler yüklenemedi.", "Unable to load news.", "Не удалось загрузить новости.")}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestThree.map((article, i) => (
+              <motion.article
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
+                className="group bg-white border border-slate-100 rounded-xl p-6 hover:border-blue-200 hover:shadow-md transition-all duration-300"
+              >
+                <p className="text-xs text-slate-400 mb-3">{formatDate(article.publishedAt)}</p>
+                <h3 className="text-[#1e3a5f] font-semibold mb-3 group-hover:text-[#1d4ed8] transition-colors duration-200 line-clamp-2">
+                  {getTitle(article)}
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                  {getExcerpt(article)}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+        )}
+
+        <Link
+          href="/basin"
+          className="sm:hidden mt-6 inline-flex items-center gap-2 text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors"
+        >
+          {t("T\u00fcm\u00fcn\u00fc G\u00f6r", "View All", "\u0421\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u0432\u0441\u0435")} &rarr;
+        </Link>
+      </div>
+    </section>
   );
 }
 
@@ -211,89 +315,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Latest News */}
-      <section className="py-24 lg:py-32 border-t border-slate-100">
-        <div className="container">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <p className="text-[#1d4ed8] text-sm font-medium uppercase tracking-wider mb-3">
-                {t("Basın", "Press", "Пресса")}
-              </p>
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-[#1e3a5f]">
-                {t("Son Haberler", "Latest News", "Последние новости")}
-              </h2>
-            </div>
-            <Link
-              href="/basin"
-              className="hidden sm:inline-flex items-center gap-2 text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors"
-            >
-              {t("Tümünü Gör", "View All", "Смотреть все")} &rarr;
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                dateTr: "15 Mart 2026",
-                dateEn: "March 15, 2026",
-                dateRu: "15 марта 2026",
-                titleTr: "Bosphorus Gaz, 2043'e Kadar Uzatılan Kontratla Türkiye'nin Enerji Güvenliğini Pekiştiriyor",
-                titleEn: "Bosphorus Gaz Reinforces Turkey's Energy Security with Contract Extended to 2043",
-                titleRu: "Bosphorus Gaz укрепляет энергетическую безопасность Турции благодаря контракту, продлённому до 2043 года",
-                excerptTr: "Şirketimiz, Gazprom ile olan tedarik anlaşmasını 2043 yılına kadar uzatarak Türkiye enerji piyasasında öncü konumunu sürdürmektedir.",
-                excerptEn: "Our company continues its leading position in Turkey's energy market by extending its supply agreement with Gazprom until 2043.",
-                excerptRu: "Наша компания сохраняет лидирующие позиции на энергетическом рынке Турции, продлив договор о поставках с «Газпромом» до 2043 года."
-              },
-              {
-                dateTr: "28 Şubat 2026",
-                dateEn: "February 28, 2026",
-                dateRu: "28 февраля 2026",
-                titleTr: "Spot LNG İthalatında Yeni Kapasite Artışı",
-                titleEn: "New Capacity Increase in Spot LNG Imports",
-                titleRu: "Новое увеличение мощностей по импорту спотового СПГ",
-                excerptTr: "Bosphorus Gaz, Spot LNG lisansı kapsamında ithalat kapasitesini artırarak müşterilerine daha esnek tedarik seçenekleri sunuyor.",
-                excerptEn: "Bosphorus Gaz increases its import capacity under the Spot LNG license, offering more flexible supply options to its customers.",
-                excerptRu: "Bosphorus Gaz увеличивает импортные мощности в рамках лицензии на спотовый СПГ, предлагая клиентам более гибкие варианты поставок."
-              },
-              {
-                dateTr: "10 Ocak 2026",
-                dateEn: "January 10, 2026",
-                dateRu: "10 января 2026",
-                titleTr: "Veri Merkezi Sektörüne Özel Enerji Çözümleri Tanıtıldı",
-                titleEn: "Specialized Energy Solutions for the Data Center Sector Introduced",
-                titleRu: "Представлены специализированные энергетические решения для сектора центров обработки данных",
-                excerptTr: "Türkiye'de hızla büyüyen veri merkezi sektörüne yönelik doğal gaz çözümlerimizi müşterilerimizle paylaştık.",
-                excerptEn: "We shared our natural gas solutions for Turkey's rapidly growing data center sector with our customers.",
-                excerptRu: "Мы поделились с клиентами нашими решениями на природном газе для быстрорастущего сектора центров обработки данных в Турции."
-              }
-            ].map((news, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
-                className="group bg-white border border-slate-100 rounded-xl p-6 hover:border-blue-200 hover:shadow-md transition-all duration-300"
-              >
-                <p className="text-xs text-slate-400 mb-3">{t(news.dateTr, news.dateEn, news.dateRu)}</p>
-                <h3 className="text-[#1e3a5f] font-semibold mb-3 group-hover:text-[#1d4ed8] transition-colors duration-200 line-clamp-2">
-                  {t(news.titleTr, news.titleEn, news.titleRu)}
-                </h3>
-                <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                  {t(news.excerptTr, news.excerptEn, news.excerptRu)}
-                </p>
-              </motion.article>
-            ))}
-          </div>
-
-          <Link
-            href="/basin"
-            className="sm:hidden mt-6 inline-flex items-center gap-2 text-slate-500 hover:text-[#1d4ed8] text-sm transition-colors"
-          >
-            {t("Tümünü Gör", "View All", "Смотреть все")} &rarr;
-          </Link>
-        </div>
-      </section>
+      {/* Latest News — dynamic from DB */}
+      <LatestNewsSection />
 
       {/* CTA Banner */}
       <section className="py-20 lg:py-24 bg-gradient-to-r from-[#1e3a5f] to-[#2563eb]">
