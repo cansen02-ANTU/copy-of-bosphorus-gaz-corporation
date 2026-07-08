@@ -280,14 +280,9 @@ export default function AdminNews() {
                     )}
                   </TableCell>
                   <TableCell>
-                    <div>
-                      <p className="font-medium text-[#1e3a5f] line-clamp-1">
-                        {article.title}
-                      </p>
-                      <p className="text-sm text-slate-500 line-clamp-1 mt-0.5">
-                        {article.excerpt}
-                      </p>
-                    </div>
+                    <p className="font-medium text-[#1e3a5f] line-clamp-1">
+                      {article.title}
+                    </p>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
