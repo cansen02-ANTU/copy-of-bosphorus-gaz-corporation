@@ -174,6 +174,60 @@ export async function getGalleryAlbumsWithPhotos() {
   }));
 }
 
+// ─── Gallery Albums Admin CRUD ───────────────────────────────────────────────
+
+export async function createGalleryAlbum(data: { slug: string; title: string; description?: string | null; coverUrl?: string | null; sortOrder?: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(galleryAlbums).values({
+    slug: data.slug,
+    title: data.title,
+    description: data.description ?? null,
+    coverUrl: data.coverUrl ?? null,
+    sortOrder: data.sortOrder ?? 0,
+  }).returning({ id: galleryAlbums.id });
+  return { id: result[0].id };
+}
+
+export async function updateGalleryAlbum(id: number, data: Partial<{ title: string; description: string | null; coverUrl: string | null; sortOrder: number }>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(galleryAlbums).set(data).where(eq(galleryAlbums.id, id));
+}
+
+export async function deleteGalleryAlbum(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  // Delete all photos in the album first
+  await db.delete(galleryPhotos).where(eq(galleryPhotos.albumId, id));
+  await db.delete(galleryAlbums).where(eq(galleryAlbums.id, id));
+}
+
+export async function createGalleryPhoto(data: { albumId: number; imageUrl: string; imageKey?: string | null; caption?: string | null; sortOrder?: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(galleryPhotos).values({
+    albumId: data.albumId,
+    imageUrl: data.imageUrl,
+    imageKey: data.imageKey ?? null,
+    caption: data.caption ?? null,
+    sortOrder: data.sortOrder ?? 0,
+  }).returning({ id: galleryPhotos.id });
+  return { id: result[0].id };
+}
+
+export async function updateGalleryPhoto(id: number, data: Partial<{ imageUrl: string; imageKey: string | null; caption: string | null; sortOrder: number }>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(galleryPhotos).set(data).where(eq(galleryPhotos.id, id));
+}
+
+export async function deleteGalleryPhoto(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(galleryPhotos).where(eq(galleryPhotos.id, id));
+}
+
 // ─── Gas Requests ──────────────────────────────────────────────
 
 export async function createGasRequest(data: InsertGasRequest) {

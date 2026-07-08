@@ -127,3 +127,10 @@
 - [x] Update admin pages to use new auth flow instead of Manus OAuth (already used adminAuth)
 - [x] Ensure public site continues to work without OAuth (context.ts skips OAuth when env vars missing)
 - [x] Typecheck + 38/38 tests pass, build succeeds
+
+## Fix Admin Gallery Panel (reads wrong table)
+- [x] Rewrite AdminGallery.tsx to query gallery.albums (gallery_albums + gallery_photos) instead of gallery.list (legacy gallery_images)
+- [x] Add admin CRUD procedures for gallery_albums and gallery_photos (createAlbum, updateAlbum, deleteAlbum, addPhoto, deletePhoto)
+- [x] Verify admin panel displays existing 4 albums with 127 photos
+- [x] Add updateGalleryPhoto db helper + gallery.updatePhoto admin procedure
+- [x] Browser-verify album detail view shows photos from gallery_photos (4 albums visible in admin grid)

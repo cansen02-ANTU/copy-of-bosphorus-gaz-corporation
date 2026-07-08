@@ -16,6 +16,12 @@ import {
   updateGalleryImage,
   deleteGalleryImage,
   getGalleryAlbumsWithPhotos,
+  createGalleryAlbum,
+  updateGalleryAlbum,
+  deleteGalleryAlbum,
+  createGalleryPhoto,
+  updateGalleryPhoto,
+  deleteGalleryPhoto,
   createGasRequest,
 } from "./db";
 import { storagePut } from "./storage";
@@ -243,6 +249,113 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deleteGalleryImage(input.id);
+        return { success: true };
+      }),
+
+    // ─── Album Admin CRUD ───────────────────────────────────────────────────
+    createAlbum: adminProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        slug: z.string().min(1),
+        description: z.string().optional(),
+        coverImageBase64: z.string().optional(),
+        coverImageMimeType: z.string().optional(),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        let coverUrl: string | undefined;
+        if (input.coverImageBase64 && input.coverImageMimeType) {
+          const buffer = Buffer.from(input.coverImageBase64, "base64");
+          const ext = input.coverImageMimeType.split("/")[1] || "jpg";
+          const { url } = await storagePut(`gallery/cover.${ext}`, buffer, input.coverImageMimeType);
+          coverUrl = url;
+        }
+        return createGalleryAlbum({
+          slug: input.slug,
+          title: input.title,
+          description: input.description ?? null,
+          coverUrl: coverUrl ?? null,
+          sortOrder: input.sortOrder ?? 0,
+        });
+      }),
+
+    updateAlbum: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1).optional(),
+        description: z.string().optional(),
+        coverImageBase64: z.string().optional(),
+        coverImageMimeType: z.string().optional(),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, coverImageBase64, coverImageMimeType, ...rest } = input;
+        const updateData: Record<string, unknown> = { ...rest };
+        if (coverImageBase64 && coverImageMimeType) {
+          const buffer = Buffer.from(coverImageBase64, "base64");
+          const ext = coverImageMimeType.split("/")[1] || "jpg";
+          const { url } = await storagePut(`gallery/cover.${ext}`, buffer, coverImageMimeType);
+          updateData.coverUrl = url;
+        }
+        await updateGalleryAlbum(id, updateData as any);
+        return { success: true };
+      }),
+
+    deleteAlbum: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteGalleryAlbum(input.id);
+        return { success: true };
+      }),
+
+    // ─── Photo Admin CRUD ───────────────────────────────────────────────────
+    addPhoto: adminProcedure
+      .input(z.object({
+        albumId: z.number(),
+        imageBase64: z.string(),
+        imageMimeType: z.string(),
+        caption: z.string().optional(),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const buffer = Buffer.from(input.imageBase64, "base64");
+        const ext = input.imageMimeType.split("/")[1] || "jpg";
+        const { key, url } = await storagePut(`gallery/photo.${ext}`, buffer, input.imageMimeType);
+        return createGalleryPhoto({
+          albumId: input.albumId,
+          imageUrl: url,
+          imageKey: key,
+          caption: input.caption ?? null,
+          sortOrder: input.sortOrder ?? 0,
+        });
+      }),
+
+    updatePhoto: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        caption: z.string().optional(),
+        sortOrder: z.number().optional(),
+        imageBase64: z.string().optional(),
+        imageMimeType: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, imageBase64, imageMimeType, ...rest } = input;
+        const updateData: Record<string, unknown> = { ...rest };
+        if (imageBase64 && imageMimeType) {
+          const buffer = Buffer.from(imageBase64, "base64");
+          const ext = imageMimeType.split("/")[1] || "jpg";
+          const { key, url } = await storagePut(`gallery/photo.${ext}`, buffer, imageMimeType);
+          updateData.imageUrl = url;
+          updateData.imageKey = key;
+        }
+        await updateGalleryPhoto(id, updateData as any);
+        return { success: true };
+      }),
+
+    deletePhoto: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteGalleryPhoto(input.id);
         return { success: true };
       }),
   }),
