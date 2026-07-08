@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import path from "path";
+import fs from "fs";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
@@ -38,6 +40,15 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
+
+  // Serve locally uploaded files from /uploads/ (self-hosting fallback)
+  const uploadsDir = process.env.UPLOADS_DIR
+    ? path.resolve(process.env.UPLOADS_DIR)
+    : path.resolve(process.cwd(), process.env.NODE_ENV === "production" ? "dist/public/uploads" : "client/public/uploads");
+  if (fs.existsSync(uploadsDir) || !process.env.UPLOADS_DIR) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    app.use("/uploads", express.static(uploadsDir));
+  }
   // tRPC API
   app.use(
     "/api/trpc",

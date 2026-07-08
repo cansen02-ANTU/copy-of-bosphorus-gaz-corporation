@@ -112,3 +112,7 @@ temp/
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json
 .project-config.json
+
+# User-uploaded files (local storage fallback)
+client/public/uploads/
+dist/public/uploads/

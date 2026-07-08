@@ -134,3 +134,8 @@
 - [x] Verify admin panel displays existing 4 albums with 127 photos
 - [x] Add updateGalleryPhoto db helper + gallery.updatePhoto admin procedure
 - [x] Browser-verify album detail view shows photos from gallery_photos (4 albums visible in admin grid)
+
+## Fix storage for self-hosting (no Manus S3 proxy)
+- [x] Update storagePut to fall back to local file storage when BUILT_IN_FORGE_API_URL is not set
+- [x] Serve uploaded files from a persistent directory (dist/public/uploads in prod, client/public/uploads in dev)
+- [x] Typecheck clean, 38/38 tests pass, build succeeds
