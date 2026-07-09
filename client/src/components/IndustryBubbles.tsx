@@ -360,6 +360,56 @@ export default function IndustryBubbles() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dims, setDims] = useState({ width: 500, height: 500 });
   const { t, lang } = useLanguage();
+  const [paused, setPaused] = useState(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detect desktop viewport (lg breakpoint = 1024px)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // Auto-rotation: cycle through sectors every 3s on desktop only, pause on hover/click
+  useEffect(() => {
+    if (paused || !isDesktop) return;
+    const interval = setInterval(() => {
+      setSelected((prev) => {
+        const idx = industries.findIndex((ind) => ind.id === prev.id);
+        return industries[(idx + 1) % industries.length];
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [paused, isDesktop]);
+
+  // Cleanup pause timer on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    };
+  }, []);
+
+  const handleUserInteraction = (industry: Industry) => {
+    setSelected(industry);
+    setPaused(true);
+    // Resume auto-rotation after 8 seconds of inactivity
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => setPaused(false), 8000);
+  };
+
+  const handleHoverEnter = () => {
+    setPaused(true);
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+  };
+
+  const handleHoverLeave = () => {
+    // Resume after a short delay when mouse leaves
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => setPaused(false), 3000);
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -411,7 +461,7 @@ export default function IndustryBubbles() {
           {/* Bubbles Container with Pipeline */}
           <div ref={containerRef} className="relative w-full lg:w-1/2 lg:aspect-square lg:max-h-[550px]">
             {/* Desktop: Circle layout with pipelines */}
-            <div className="hidden lg:block relative w-full h-full">
+            <div className="hidden lg:block relative w-full h-full" onMouseEnter={handleHoverEnter} onMouseLeave={handleHoverLeave}>
               <PipelineSVG selected={selected} containerWidth={dims.width} containerHeight={dims.height} />
 
               {/* Central Company Bubble */}
@@ -445,7 +495,7 @@ export default function IndustryBubbles() {
                 return (
                   <motion.button
                     key={industry.id}
-                    onClick={() => setSelected(industry)}
+                    onClick={() => handleUserInteraction(industry)}
                     className="absolute flex items-center justify-center z-20"
                     style={{
                       left: x - 40,
@@ -522,7 +572,7 @@ export default function IndustryBubbles() {
                 return (
                   <motion.button
                     key={industry.id}
-                    onClick={() => setSelected(industry)}
+                    onClick={() => handleUserInteraction(industry)}
                     className="absolute flex items-center justify-center z-20"
                     style={{
                       left: `calc(${x}% - 26px)`,

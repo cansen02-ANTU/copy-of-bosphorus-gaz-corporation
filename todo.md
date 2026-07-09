@@ -157,3 +157,8 @@
 - [x] Desktop orbit: forced aspect-square container for truly circular layout
 - [x] Mobile orbit: replaced flat grid with proper circular orbit layout (absolute positioning, SVG pipelines, pulse animation on selected bubble)
 - [x] Verified at 375px and 414px viewports — circular layout renders correctly on both
+
+## IndustryBubbles Auto-Rotation
+- [x] Add auto-rotation on desktop that cycles through sectors every 3 seconds
+- [x] Pause auto-rotation on hover or manual click
+- [x] Resume auto-rotation after inactivity (8s after click, 3s after mouse leave)
