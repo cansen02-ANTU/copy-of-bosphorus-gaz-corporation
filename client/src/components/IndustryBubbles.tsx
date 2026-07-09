@@ -409,7 +409,7 @@ export default function IndustryBubbles() {
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
           {/* Bubbles Container with Pipeline */}
-          <div ref={containerRef} className="relative w-full lg:w-1/2 h-[450px] lg:h-[550px]">
+          <div ref={containerRef} className="relative w-full lg:w-1/2 lg:aspect-square lg:max-h-[550px]">
             {/* Desktop: Circle layout with pipelines */}
             <div className="hidden lg:block relative w-full h-full">
               <PipelineSVG selected={selected} containerWidth={dims.width} containerHeight={dims.height} />
@@ -499,6 +499,14 @@ export default function IndustryBubbles() {
                         : "bg-white/5 border border-white/20"
                     }`}
                   >
+                    {selected.id === industry.id && (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-blue-300"
+                        initial={{ scale: 1, opacity: 0.8 }}
+                        animate={{ scale: 1.6, opacity: 0 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "easeOut" }}
+                      />
+                    )}
                     <span className={`text-[8px] sm:text-[9px] font-semibold leading-tight px-0.5 ${
                       selected.id === industry.id ? "text-white" : "text-white/70"
                     }`}>
