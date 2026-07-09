@@ -152,3 +152,8 @@
 - [x] Update create/update procedures to accept all language fields + date + removeImage
 - [x] Show translation status indicators in admin news list (green/grey badges per language)
 - [x] Verify frontend Press page uses localized fields with TR fallback (already implemented)
+
+## IndustryBubbles (Sektörler) Visual Fixes
+- [x] Desktop orbit: forced aspect-square container for truly circular layout
+- [x] Mobile orbit: replaced flat grid with proper circular orbit layout (absolute positioning, SVG pipelines, pulse animation on selected bubble)
+- [x] Verified at 375px and 414px viewports — circular layout renders correctly on both

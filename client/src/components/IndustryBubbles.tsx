@@ -479,42 +479,83 @@ export default function IndustryBubbles() {
               })}
             </div>
 
-            {/* Mobile: Grid layout */}
-            <div className="lg:hidden grid grid-cols-5 gap-2 sm:gap-3 place-items-center pt-4">
-              <div className="col-span-5 mb-3">
-                <div className="w-16 h-16 rounded-full bg-white/10 border-2 border-white/50 flex items-center justify-center">
-                  <span className="text-[9px] font-bold text-white text-center leading-tight">Bosphorus<br/>Gaz</span>
+            {/* Mobile: Circular orbit layout */}
+            <div className="lg:hidden relative w-full aspect-square max-w-[340px] sm:max-w-[380px] mx-auto">
+              {/* Central Company Bubble */}
+              <div className="absolute z-10 flex items-center justify-center" style={{ left: 'calc(50% - 30px)', top: 'calc(50% - 30px)', width: 60, height: 60 }}>
+                <div className="w-[60px] h-[60px] rounded-full bg-white/10 border-2 border-white/50 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-[8px] font-bold text-white text-center leading-tight">Bosphorus<br/>Gaz</span>
                 </div>
               </div>
-              {industries.map((industry) => (
-                <button
-                  key={industry.id}
-                  onClick={() => setSelected(industry)}
-                  className="relative flex items-center justify-center"
-                >
-                  <div
-                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-center transition-all duration-200 ${
-                      selected.id === industry.id
-                        ? "bg-white/20 border-2 border-white scale-110"
-                        : "bg-white/5 border border-white/20"
-                    }`}
+
+              {/* SVG Pipelines for mobile */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 340 340">
+                {industries.map((industry, i) => {
+                  const cx = 170;
+                  const cy = 170;
+                  const r = 120;
+                  const angle = (2 * Math.PI * i) / industries.length - Math.PI / 2;
+                  const x = cx + r * Math.cos(angle);
+                  const y = cy + r * Math.sin(angle);
+                  const isSelected = selected.id === industry.id;
+                  return (
+                    <g key={industry.id}>
+                      <line x1={cx} y1={cy} x2={x} y2={y} stroke={isSelected ? "#93c5fd" : "#60a5fa"} strokeWidth={isSelected ? 2 : 1.5} strokeDasharray={isSelected ? "none" : "4 3"} opacity={isSelected ? 1 : 0.3} />
+                      {isSelected && (
+                        <circle r={3} fill="#60a5fa">
+                          <animateMotion dur="1.5s" repeatCount="indefinite" path={`M${cx},${cy} L${x},${y}`} />
+                        </circle>
+                      )}
+                    </g>
+                  );
+                })}
+                <circle cx={170} cy={170} r={2.5} fill="#93c5fd" opacity={0.6} />
+              </svg>
+
+              {/* Industry Bubbles in circle */}
+              {industries.map((industry, i) => {
+                const angle = (2 * Math.PI * i) / industries.length - Math.PI / 2;
+                const r = 35.3; // percentage from center (120/340 * 100)
+                const x = 50 + r * Math.cos(angle);
+                const y = 50 + r * Math.sin(angle);
+                const isSelected = selected.id === industry.id;
+                return (
+                  <motion.button
+                    key={industry.id}
+                    onClick={() => setSelected(industry)}
+                    className="absolute flex items-center justify-center z-20"
+                    style={{
+                      left: `calc(${x}% - 26px)`,
+                      top: `calc(${y}% - 26px)`,
+                      width: 52,
+                      height: 52,
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {selected.id === industry.id && (
-                      <motion.div
-                        className="absolute inset-0 rounded-full border-2 border-blue-300"
-                        initial={{ scale: 1, opacity: 0.8 }}
-                        animate={{ scale: 1.6, opacity: 0 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "easeOut" }}
-                      />
-                    )}
-                    <span className={`text-[8px] sm:text-[9px] font-semibold leading-tight px-0.5 ${
-                      selected.id === industry.id ? "text-white" : "text-white/70"
-                    }`}>
-                      {getBubbleLabel(industry)}
-                    </span>
-                  </div>
-                </button>
-              ))}
+                    <div
+                      className={`w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] rounded-full flex items-center justify-center text-center transition-all duration-200 ${
+                        isSelected
+                          ? "bg-white/20 border-2 border-white shadow-lg shadow-blue-400/30"
+                          : "bg-white/5 border border-white/20"
+                      }`}
+                    >
+                      {isSelected && (
+                        <motion.div
+                          className="absolute inset-0 rounded-full border-2 border-blue-300"
+                          initial={{ scale: 1, opacity: 0.8 }}
+                          animate={{ scale: 1.6, opacity: 0 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "easeOut" }}
+                        />
+                      )}
+                      <span className={`text-[7px] sm:text-[8px] font-semibold leading-tight px-0.5 ${
+                        isSelected ? "text-white" : "text-white/70"
+                      }`}>
+                        {getBubbleLabel(industry)}
+                      </span>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
 
