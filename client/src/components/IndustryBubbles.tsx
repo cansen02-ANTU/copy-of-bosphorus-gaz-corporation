@@ -614,10 +614,10 @@ export default function IndustryBubbles() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={selected.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
+                initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
                 className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8"
               >
                 <h3 className="text-2xl font-bold text-white mb-1">
