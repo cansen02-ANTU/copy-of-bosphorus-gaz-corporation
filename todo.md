@@ -163,3 +163,6 @@
 - [x] Pause auto-rotation on hover or manual click
 - [x] Resume auto-rotation after inactivity (8s after click, 3s after mouse leave)
 - [x] Smooth crossfade + blur transition on detail panel when sector changes (0.4s ease-out with subtle vertical slide and blur)
+
+## Footer Cleanup
+- [x] Remove Admin/Yönetim link from footer (all languages)

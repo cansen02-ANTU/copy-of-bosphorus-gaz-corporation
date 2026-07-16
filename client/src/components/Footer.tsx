@@ -69,9 +69,6 @@ export default function Footer() {
             <Link href="/iletisim" className="hover:text-[#1d4ed8] transition-colors">
               {t("Gizlilik Politikası", "Privacy Policy", "Политика конфиденциальности")}
             </Link>
-            <Link href="/admin" className="hover:text-[#1d4ed8] transition-colors">
-              {t("Yönetim", "Admin", "Администрирование")}
-            </Link>
           </div>
         </div>
       </div>
