@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 /* Design: Light theme — White bg, blue accents, navy headings. */
 
@@ -353,6 +354,34 @@ export default function Company() {
         </div>
       </section>
 
+      {/* Bilgi Toplumu Hizmetleri */}
+      <section id="bilgi-toplumu" className="scroll-mt-24 py-16 border-t border-slate-100">
+        <div className="container">
+          <h2 className="text-xl font-bold text-[#1e3a5f] mb-6">
+            {t("Bilgi Toplumu Hizmetleri", "Information Society Services", "Услуги информационного общества")}
+          </h2>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="belgemodul">
+              <AccordionTrigger className="text-base font-semibold text-[#1e3a5f]">
+                {t("Bilgi Toplumu Hizmetleri Detayları", "Information Society Services Details", "Подробности услуг информационного общества")}
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="w-full overflow-x-auto">
+                  <iframe
+                    src="https://www.belgemodul.com/sirket/132"
+                    width="700"
+                    height="1050"
+                    frameBorder="0"
+                    scrolling="yes"
+                    className="max-w-full border border-slate-200 rounded-lg"
+                    title={t("Bilgi Toplumu Hizmetleri", "Information Society Services", "Услуги информационного общества")}
+                  />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
 
     </div>
   );
