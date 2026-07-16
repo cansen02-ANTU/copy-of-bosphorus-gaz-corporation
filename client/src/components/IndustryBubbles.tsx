@@ -162,34 +162,7 @@ const industries: Industry[] = [
     ],
     scale: "100–1,200 Mm³/yr"
   },
-  {
-    id: "food-beverage",
-    name: "Gıda & İçecek",
-    nameEn: "Food & Beverage",
-    nameRu: "Продукты питания и напитки",
-    taglineTr: "Gıda Güvenliği Standartlarında Enerji",
-    taglineEn: "Energy at Food Safety Standards",
-    taglineRu: "Энергия по стандартам пищевой безопасности",
-    descriptionTr: "Gıda ve içecek sektörü, üretim süreçlerinde hijyen, sıcaklık kontrolü ve enerji verimliliği açısından doğal gaza büyük ölçüde bağımlıdır. Bosphorus Gaz, gıda üreticilerine temiz yanma profili ve kararlı enerji tedariki sunarak üretim kalitesini ve gıda güvenliğini destekler.",
-    descriptionEn: "The food and beverage sector is heavily dependent on natural gas for hygiene, temperature control, and energy efficiency in production processes. Bosphorus Gaz supports production quality and food safety by providing food producers with a clean combustion profile and stable energy supply.",
-    descriptionRu: "Сектор продуктов питания и напитков сильно зависит от природного газа для обеспечения гигиены, контроля температуры и энергоэффективности в производственных процессах. Bosphorus Gaz поддерживает качество производства и пищевую безопасность, предоставляя производителям чистый профиль горения и стабильное энергоснабжение.",
-    benefitsTr: [
-      "AB gıda sınıfı yanma kalitesi",
-      "4–40 bar buhar üretim kapasitesi",
-      "HFO'ya göre düşük CO₂ emisyonu"
-    ],
-    benefitsEn: [
-      "EU food-grade combustion quality",
-      "4–40 bar steam generation capacity",
-      "Lower CO₂ emissions compared to HFO"
-    ],
-    benefitsRu: [
-      "Качество горения пищевого класса Стандарта ЕС",
-      "Мощность выработки пара 4–40 бар",
-      "Меньшие выбросы CO₂ по сравнению с мазутом (HFO)"
-    ],
-    scale: "1–20 Mm³/yr"
-  },
+
   {
     id: "textiles",
     name: "Tekstil",
