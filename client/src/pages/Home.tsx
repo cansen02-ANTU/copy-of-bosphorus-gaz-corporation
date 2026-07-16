@@ -252,7 +252,7 @@ export default function Home() {
             <div className="text-center lg:text-left">
               <div className="flex items-baseline gap-1 justify-center lg:justify-start">
                 <span className="text-slate-400 text-lg">~</span>
-                <AnimatedCounter end={25} suffix="%" />
+                <AnimatedCounter end={45} suffix="%" />
               </div>
               <p className="text-slate-500 text-sm mt-2">{t("Özel Pazar Payı", "Private Market Share", "Доля на частном рынке")}</p>
             </div>
