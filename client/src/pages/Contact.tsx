@@ -113,26 +113,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="relative rounded-xl overflow-hidden border border-slate-100 aspect-[4/3] bg-slate-50">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-8 h-8 text-[#1d4ed8] mx-auto mb-2" />
-                    <p className="text-slate-500 text-sm">Seba Center, Sarıyer</p>
-                    <p className="text-slate-400 text-xs mt-1">41.1°N, 29.0°E</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 opacity-30">
-                  <svg className="w-full h-full" viewBox="0 0 400 300">
-                    <path d="M0,150 Q100,100 200,150 T400,150" fill="none" stroke="#3b82f6" strokeWidth="0.5" opacity="0.5" />
-                    <path d="M0,180 Q150,130 250,180 T400,180" fill="none" stroke="#3b82f6" strokeWidth="0.5" opacity="0.3" />
-                    <path d="M0,120 Q80,80 180,120 T400,120" fill="none" stroke="#3b82f6" strokeWidth="0.5" opacity="0.4" />
-                    <circle cx="200" cy="150" r="4" fill="#1d4ed8" />
-                    <circle cx="200" cy="150" r="12" fill="none" stroke="#1d4ed8" strokeWidth="0.5" opacity="0.5" />
-                    <circle cx="200" cy="150" r="24" fill="none" stroke="#1d4ed8" strokeWidth="0.3" opacity="0.3" />
-                  </svg>
-                </div>
-              </div>
             </div>
 
             {/* Right: Contact Form */}
