@@ -4,6 +4,13 @@ import { motion, useInView } from "framer-motion";
 import IndustryBubbles from "@/components/IndustryBubbles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 /* Design: Light theme — White background, blue accents (#1d4ed8), navy text. */
 
@@ -40,6 +47,7 @@ function AnimatedCounter({ end, suffix = "", duration = 2000, decimals = 0 }: { 
 
 function LatestNewsSection() {
   const { t, lang } = useLanguage();
+  const [selected, setSelected] = useState<any>(null);
   const { data: articles, isLoading, isError } = trpc.news.list.useQuery(undefined, {
     retry: 1,
     staleTime: 60_000,
@@ -71,6 +79,12 @@ function LatestNewsSection() {
     if (lang === "en" && article.excerptEn) return article.excerptEn;
     if (lang === "ru" && article.excerptRu) return article.excerptRu;
     return article.excerpt;
+  };
+
+  const getContent = (article: any) => {
+    if (lang === "en") return article.contentEn || article.content || article.excerptEn || article.excerpt;
+    if (lang === "ru") return article.contentRu || article.content || article.excerptRu || article.excerpt;
+    return article.content || article.excerpt;
   };
 
   return (
@@ -116,7 +130,8 @@ function LatestNewsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
-                className="group bg-white border border-slate-100 rounded-xl p-6 hover:border-blue-200 hover:shadow-md transition-all duration-300"
+                className="group bg-white border border-slate-100 rounded-xl p-6 hover:border-blue-200 hover:shadow-md transition-all duration-300 cursor-pointer"
+                onClick={() => setSelected(article)}
               >
                 <p className="text-xs text-slate-400 mb-3">{formatDate(article.publishedAt)}</p>
                 <h3 className="text-[#1e3a5f] font-semibold mb-3 group-hover:text-[#1d4ed8] transition-colors duration-200 line-clamp-2">
@@ -137,6 +152,32 @@ function LatestNewsSection() {
           {t("T\u00fcm\u00fcn\u00fc G\u00f6r", "View All", "\u0421\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u0432\u0441\u0435")} &rarr;
         </Link>
       </div>
+
+      {/* Article Detail Dialog */}
+      <Dialog open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          {selected && (
+            <>
+              <DialogHeader>
+                <DialogDescription className="text-xs text-slate-400 mb-1">
+                  {formatDate(selected.publishedAt)}
+                </DialogDescription>
+                <DialogTitle className="text-2xl font-bold text-[#1e3a5f] leading-snug">
+                  {getTitle(selected)}
+                </DialogTitle>
+              </DialogHeader>
+              {selected.imageUrl && (
+                <div className="rounded-xl overflow-hidden my-2">
+                  <img src={selected.imageUrl} alt={getTitle(selected)} className="w-full object-cover" />
+                </div>
+              )}
+              <div className="text-slate-600 leading-relaxed whitespace-pre-line text-[15px]">
+                {getContent(selected)}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
