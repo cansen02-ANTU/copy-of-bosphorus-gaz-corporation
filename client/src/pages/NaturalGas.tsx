@@ -173,7 +173,7 @@ export default function NaturalGas() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-2xl font-bold text-[#1e3a5f] mb-6">{t("İthalat & Toptan Satış", "Import & Wholesale", "Импорт и оптовая продажа")}</h2>
+              <h2 className="text-2xl font-bold text-[#1e3a5f] mb-6">{t("Doğal Gaz Faaliyetimiz", "Our Natural Gas Operations", "Наша деятельность в сфере природного газа")}</h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
                 <p>
                   {t(
@@ -240,7 +240,7 @@ export default function NaturalGas() {
       {/* Market Overview */}
       <section id="piyasa" className="scroll-mt-24 py-20 border-t border-slate-100 bg-slate-50">
         <div className="container">
-          <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">{t("Piyasa Görünümü", "Market Overview", "Обзор рынка")}</h2>
+          <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">{t("Doğal Gaz Piyasası (Piyasa Görünümü)", "Natural Gas Market (Market Overview)", "Рынок природного газа (Обзор рынка)")}</h2>
           <div className="max-w-4xl space-y-4 text-slate-600 leading-relaxed">
             <p>
               {t(
@@ -279,7 +279,7 @@ export default function NaturalGas() {
             </p>
             <p>
               {t(
-                "Mevsimsel ve günlük tüketim dengelemesinde önemli role sahip LNG terminallerinin yanında, Silivri, İstanbul'da bulunan TPAO tarafından işletilen Yer Altı Gaz Depolama Tesisi de 2012 yılında yürürlüğe giren KUE ile üçüncü taraf erişimine açılmıştır. 1 Eylül 2018'de Organize Doğal Gaz Toptan Satış Piyasası EPİAŞ bünyesinde faaliyete geçmiştir.",
+                "Mevsimsel ve günlük tüketim dengelemesinde önemli role sahip LNG terminallerinin yanında, Yer Altı Gaz Depolama Tesisleri de 2012 yılında yürürlüğe giren KUE ile üçüncü taraf erişimine açılmıştır.\n\n1 Eylül 2018'de Organize Doğal Gaz Toptan Satış Piyasası EPİAŞ bünyesinde faaliyete geçmiştir. Gün öncesi, gün içi, gün sonrası Spot doğal gaz ticareti ve sistem dengeleme faaliyetleri de piyasa üzerinden gerçekleşmeye başlamıştır.\n\n1 Ekim 2021 tarihinden itibaren Vadeli Doğal Gaz Piyasası ile gelecek dönemler için vadeli ticaret de yapılabilir hale gelmiştir.\n\nNisan 2024'te Doğal Gaz İhracat Çıkış Noktalarının Kullanımına İlişkin Usul ve Esaslar'ın yürürlüğe girmesi ile ihracat lisansı sahibi özel sektör oyuncuları boru gazı ihracatı yapabilir hale gelmiştir.",
                 "In addition to LNG terminals, which play an important role in seasonal and daily consumption balancing, the Underground Gas Storage Facility operated by TPAO in Silivri, Istanbul was also opened to third-party access with the KUE that came into effect in 2012. On September 1, 2018, the Organized Natural Gas Wholesale Market became operational under EPİAŞ.",
                 "Помимо терминалов СПГ, играющих важную роль в сезонном и суточном балансировании потребления, подземное хранилище газа, эксплуатируемое TPAO в Силиври (Стамбул), также было открыто для доступа третьих сторон согласно KUE, вступившим в силу в 2012 году. 1 сентября 2018 года под эгидой EPİAŞ начал работу Организованный оптовый рынок природного газа."
               )}
