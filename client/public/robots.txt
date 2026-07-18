@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
 
+Host: https://bosphorusgaz.com
 Sitemap: https://bosphorusgaz.com/sitemap.xml
