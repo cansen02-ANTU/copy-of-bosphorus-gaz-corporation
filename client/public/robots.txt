@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bosphorusgaz-aksqtqhx.manus.space/sitemap.xml
+Sitemap: https://bosphorusgaz.com/sitemap.xml
