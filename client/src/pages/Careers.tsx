@@ -2,11 +2,21 @@ import { motion } from "framer-motion";
 import { Briefcase, Users, TrendingUp, Heart, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 
 /* Design: Light theme — White bg, blue accents, navy headings. */
 
 export default function Careers() {
   const { t } = useLanguage();
+
+  useSEO({
+    titleTr: "Kariyer",
+    titleEn: "Careers",
+    titleRu: "Карьера",
+    descriptionTr: "Bosphorus Gaz Corporation kariyer fırsatları. Türkiye'nin lider doğal gaz şirketinde çalışma imkânı. Açık pozisyonlar ve başvuru bilgileri.",
+    descriptionEn: "Career opportunities at Bosphorus Gaz Corporation. Work at Turkey's leading natural gas company. Open positions and application information.",
+    descriptionRu: "Карьерные возможности в Bosphorus Gaz Corporation. Работа в ведущей газовой компании Турции. Открытые вакансии и информация о подаче заявки.",
+  });
 
   const values = [
     {

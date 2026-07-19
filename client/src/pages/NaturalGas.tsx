@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 
 /* Design: Light theme — White bg, blue accents, clean forms. */
 
@@ -83,6 +84,15 @@ export default function NaturalGas() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [monthly, setMonthly] = useState<Record<string, string>>({});
   const { t, lang } = useLanguage();
+
+  useSEO({
+    titleTr: "Doğal Gaz",
+    titleEn: "Natural Gas",
+    titleRu: "Природный газ",
+    descriptionTr: "Bosphorus Gaz doğal gaz faaliyetleri. Boru hattı ve LNG ithalatı, toptan satış, piyasa görünümü ve doğal gaz bilgi formu. Türkiye doğal gaz piyasasında özel sektör lideri.",
+    descriptionEn: "Bosphorus Gaz natural gas operations. Pipeline and LNG imports, wholesale distribution, market overview, and natural gas information form. Private sector leader in Turkey's natural gas market.",
+    descriptionRu: "Деятельность Bosphorus Gaz в сфере природного газа. Трубопроводный и СПГ-импорт, оптовая продажа, обзор рынка и форма запроса. Лидер частного сектора на рынке природного газа Турции.",
+  });
 
   const setField = (key: keyof FormState) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>

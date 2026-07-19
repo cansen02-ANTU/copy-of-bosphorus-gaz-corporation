@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader2, Newspaper, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +35,15 @@ type Article = {
 export default function Press() {
   const { data: dbArticles, isLoading: newsLoading, error: newsError } = trpc.news.list.useQuery();
   const { t, lang } = useLanguage();
+
+  useSEO({
+    titleTr: "Basın",
+    titleEn: "Press",
+    titleRu: "Пресса",
+    descriptionTr: "Bosphorus Gaz Corporation basın bültenleri, haberler ve medya arşivi. Doğal gaz sektöründeki gelişmeler ve şirket haberleri.",
+    descriptionEn: "Bosphorus Gaz Corporation press releases, news, and media archive. Developments in the natural gas sector and company news.",
+    descriptionRu: "Пресс-релизы, новости и медиа-архив Bosphorus Gaz Corporation. Развитие сектора природного газа и новости компании.",
+  });
 
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Article | null>(null);

@@ -2,12 +2,22 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 
 /* Design: Light theme — White bg, blue accents, navy headings. */
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const { t } = useLanguage();
+
+  useSEO({
+    titleTr: "İletişim",
+    titleEn: "Contact",
+    titleRu: "Контакты",
+    descriptionTr: "Bosphorus Gaz Corporation iletişim bilgileri. Adres: Seba Center, Sarıyer, İstanbul. Telefon, e-posta ve iletişim formu ile bize ulaşın.",
+    descriptionEn: "Contact Bosphorus Gaz Corporation. Address: Seba Center, Sarıyer, Istanbul. Reach us via phone, email, or contact form.",
+    descriptionRu: "Контактная информация Bosphorus Gaz Corporation. Адрес: Seba Center, Сарыер, Стамбул. Свяжитесь с нами по телефону, электронной почте или через контактную форму.",
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import IndustryBubbles from "@/components/IndustryBubbles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
+import { useSEO } from "@/hooks/useSEO";
 import {
   Dialog,
   DialogContent,
@@ -184,6 +185,15 @@ function LatestNewsSection() {
 
 export default function Home() {
   const { t } = useLanguage();
+
+  useSEO({
+    titleTr: "Ana Sayfa",
+    titleEn: "Home",
+    titleRu: "Главная",
+    descriptionTr: "Bosphorus Gaz Corporation - Türkiye'nin en büyük özel doğal gaz ithalatçısı. Yılda 2,5 milyar m³ kapasite, 2043'e kadar güvenceli arz. 2003'ten beri Türkiye'ye hizmet.",
+    descriptionEn: "Bosphorus Gaz Corporation - Turkey's largest private natural gas importer. 2.5 billion m³/year capacity, supply secured until 2043. Serving Turkey since 2003.",
+    descriptionRu: "Bosphorus Gaz Corporation - крупнейший частный импортёр природного газа в Турции. Мощность 2,5 млрд м³ в год, гарантированные поставки до 2043 года. Работаем с 2003 года.",
+  });
 
   return (
     <div>

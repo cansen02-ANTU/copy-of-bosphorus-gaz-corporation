@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { useSEO } from "@/hooks/useSEO";
 
 /* Design: Light theme — White bg, blue accents, navy headings. */
 
@@ -90,6 +91,15 @@ const managementTeam = [
 
 export default function Company() {
   const { t, lang } = useLanguage();
+
+  useSEO({
+    titleTr: "Şirketimiz",
+    titleEn: "About Us",
+    titleRu: "О компании",
+    descriptionTr: "Bosphorus Gaz Corporation hakkında. 2003'ten beri Türkiye'nin enerji güvenliğine katkı sağlayan, yıllık 2,5 milyar m³ doğal gaz ithalat kapasitesine sahip özel sektör lideri.",
+    descriptionEn: "About Bosphorus Gaz Corporation. A private sector leader contributing to Turkey's energy security since 2003, with an annual natural gas import capacity of 2.5 billion m³.",
+    descriptionRu: "О компании Bosphorus Gaz Corporation. Лидер частного сектора, вносящий вклад в энергетическую безопасность Турции с 2003 года, с годовой мощностью импорта 2,5 млрд м³.",
+  });
 
   return (
     <div className="pt-20">

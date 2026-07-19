@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { Loader2, Image as ImageIcon, X, ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "wouter";
+import { useSEO } from "@/hooks/useSEO";
 
 /* Design: Light theme — White bg, blue accents. Albums grid + lightbox. */
 
@@ -29,6 +30,15 @@ type Album = {
 export default function Gallery() {
   const { data: albums, isLoading, error } = trpc.gallery.albums.useQuery();
   const { t, lang } = useLanguage();
+
+  useSEO({
+    titleTr: "Foto Galeri",
+    titleEn: "Photo Gallery",
+    titleRu: "Фотогалерея",
+    descriptionTr: "Bosphorus Gaz Corporation foto galeri. Şirket etkinlikleri, tesisler ve kurumsal fotoğraflar.",
+    descriptionEn: "Bosphorus Gaz Corporation photo gallery. Company events, facilities, and corporate photos.",
+    descriptionRu: "Фотогалерея Bosphorus Gaz Corporation. Корпоративные мероприятия, объекты и корпоративные фотографии.",
+  });
 
   // Pick the album title/description for the active language, falling back to TR.
   const albumTitle = (a: Album) =>
