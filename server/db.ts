@@ -56,6 +56,41 @@ async function tables() {
   return loadSchema();
 }
 
+// Ensure all required tables exist in production (PostgreSQL)
+// This is needed because webdev_execute_sql only targets the sandbox MySQL DB.
+let _tablesEnsured = false;
+export async function ensureTables(): Promise<void> {
+  if (_tablesEnsured) return;
+  _tablesEnsured = true;
+  const db = await getDb();
+  if (!db) return;
+  try {
+    if (isMySQL) {
+      // MySQL tables are managed via webdev_execute_sql — no action needed
+      return;
+    }
+    // PostgreSQL: run CREATE TABLE IF NOT EXISTS for all tables
+    const pg = await import("postgres");
+    const url = process.env.DATABASE_URL;
+    if (!url) return;
+    const sql = pg.default(url, { ssl: 'require' });
+    await sql`
+      CREATE TABLE IF NOT EXISTS "contact_messages" (
+        "id" SERIAL PRIMARY KEY,
+        "name" VARCHAR(300) NOT NULL,
+        "email" VARCHAR(320) NOT NULL,
+        "subject" VARCHAR(500) NOT NULL,
+        "message" TEXT NOT NULL,
+        "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql.end();
+    console.log("[Database] ensureTables: contact_messages OK");
+  } catch (err) {
+    console.warn("[Database] ensureTables failed:", err);
+  }
+}
+
 // ─── Users ──────────────────────────────────────────────────────────────────
 
 export async function upsertUser(user: any): Promise<void> {

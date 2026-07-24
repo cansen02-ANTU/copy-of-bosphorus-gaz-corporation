@@ -10,6 +10,7 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { ensureTables } from "../db";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -35,6 +36,8 @@ async function startServer() {
   const server = createServer(app);
   // Trust proxy headers (needed for correct protocol detection behind reverse proxies)
   app.set("trust proxy", 1);
+  // Ensure all DB tables exist (especially for PostgreSQL production)
+  await ensureTables();
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
