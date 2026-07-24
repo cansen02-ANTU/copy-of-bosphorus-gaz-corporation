@@ -14,9 +14,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
-import { Loader2, Mail, Fuel, Eye } from "lucide-react";
+import { Loader2, Mail, Fuel, Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type Tab = "gas" | "contact";
 
@@ -25,9 +27,45 @@ export default function AdminRequests() {
   const [activeTab, setActiveTab] = useState<Tab>("contact");
   const [selectedGas, setSelectedGas] = useState<any>(null);
   const [selectedContact, setSelectedContact] = useState<any>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ type: "contact" | "gas"; id: number; label: string } | null>(null);
+
+  const utils = trpc.useUtils();
 
   const { data: gasRequests, isLoading: gasLoading } = trpc.requests.gasRequests.useQuery();
   const { data: contactMessages, isLoading: contactLoading } = trpc.requests.contactMessages.useQuery();
+
+  const deleteContactMutation = trpc.requests.deleteContactMessage.useMutation({
+    onSuccess: () => {
+      toast.success(t("Mesaj silindi.", "Message deleted.", "Сообщение удалено."));
+      utils.requests.contactMessages.invalidate();
+      setDeleteTarget(null);
+    },
+    onError: () => {
+      toast.error(t("Silme işlemi başarısız.", "Delete failed.", "Ошибка удаления."));
+    },
+  });
+
+  const deleteGasMutation = trpc.requests.deleteGasRequest.useMutation({
+    onSuccess: () => {
+      toast.success(t("Talep silindi.", "Request deleted.", "Заявка удалена."));
+      utils.requests.gasRequests.invalidate();
+      setDeleteTarget(null);
+    },
+    onError: () => {
+      toast.error(t("Silme işlemi başarısız.", "Delete failed.", "Ошибка удаления."));
+    },
+  });
+
+  const handleConfirmDelete = () => {
+    if (!deleteTarget) return;
+    if (deleteTarget.type === "contact") {
+      deleteContactMutation.mutate({ id: deleteTarget.id });
+    } else {
+      deleteGasMutation.mutate({ id: deleteTarget.id });
+    }
+  };
+
+  const isDeleting = deleteContactMutation.isPending || deleteGasMutation.isPending;
 
   const formatDate = (d: any) => {
     if (!d) return "—";
@@ -97,7 +135,7 @@ export default function AdminRequests() {
                     <TableHead>{t("E-posta", "Email", "Эл. почта")}</TableHead>
                     <TableHead>{t("Konu", "Subject", "Тема")}</TableHead>
                     <TableHead>{t("Tarih", "Date", "Дата")}</TableHead>
-                    <TableHead className="w-16"></TableHead>
+                    <TableHead className="w-24">{t("İşlem", "Actions", "Действия")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -109,9 +147,19 @@ export default function AdminRequests() {
                       <TableCell className="text-sm">{msg.subject}</TableCell>
                       <TableCell className="text-sm text-slate-400">{formatDate(msg.createdAt)}</TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedContact(msg)}>
-                          <Eye className="w-4 h-4" />
-                        </Button>
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="sm" onClick={() => setSelectedContact(msg)}>
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => setDeleteTarget({ type: "contact", id: msg.id, label: msg.name })}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -145,7 +193,7 @@ export default function AdminRequests() {
                     <TableHead>{t("E-posta", "Email", "Эл. почта")}</TableHead>
                     <TableHead>{t("Telefon", "Phone", "Телефон")}</TableHead>
                     <TableHead>{t("Tarih", "Date", "Дата")}</TableHead>
-                    <TableHead className="w-16"></TableHead>
+                    <TableHead className="w-24">{t("İşlem", "Actions", "Действия")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -158,9 +206,19 @@ export default function AdminRequests() {
                       <TableCell className="text-sm text-slate-500">{req.phone}</TableCell>
                       <TableCell className="text-sm text-slate-400">{formatDate(req.createdAt)}</TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedGas(req)}>
-                          <Eye className="w-4 h-4" />
-                        </Button>
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="sm" onClick={() => setSelectedGas(req)}>
+                            <Eye className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => setDeleteTarget({ type: "gas", id: req.id, label: req.companyName })}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -170,6 +228,31 @@ export default function AdminRequests() {
           )}
         </div>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!deleteTarget} onOpenChange={() => !isDeleting && setDeleteTarget(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>{t("Silme Onayı", "Confirm Delete", "Подтверждение удаления")}</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-slate-600">
+            {t(
+              `"${deleteTarget?.label}" kaydını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`,
+              `Are you sure you want to delete "${deleteTarget?.label}"? This action cannot be undone.`,
+              `Вы уверены, что хотите удалить "${deleteTarget?.label}"? Это действие нельзя отменить.`
+            )}
+          </p>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isDeleting}>
+              {t("İptal", "Cancel", "Отмена")}
+            </Button>
+            <Button variant="destructive" onClick={handleConfirmDelete} disabled={isDeleting}>
+              {isDeleting && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
+              {t("Sil", "Delete", "Удалить")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Contact Message Detail Dialog */}
       <Dialog open={!!selectedContact} onOpenChange={() => setSelectedContact(null)}>

@@ -26,6 +26,8 @@ import {
   createContactMessage,
   getContactMessages,
   getGasRequests,
+  deleteContactMessage,
+  deleteGasRequest,
 } from "./db";
 import { storagePut } from "./storage";
 import { notifyOwner } from "./_core/notification";
@@ -504,6 +506,18 @@ export const appRouter = router({
     contactMessages: adminProcedure.query(async () => {
       return getContactMessages();
     }),
+    deleteContactMessage: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteContactMessage(input.id);
+        return { success: true };
+      }),
+    deleteGasRequest: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteGasRequest(input.id);
+        return { success: true };
+      }),
   }),
 });
 

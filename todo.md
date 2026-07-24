@@ -182,3 +182,9 @@
 - [x] Build admin Talepler page with tabs for Gas Requests and Contact Messages
 - [x] Add Talepler link to admin navigation
 - [x] Typecheck + tests pass
+
+## Admin Talepler Delete Functionality
+- [x] Add delete tRPC procedures for contact_messages and gas_requests
+- [x] Add delete db helpers
+- [x] Add delete buttons next to view buttons in AdminRequests page
+- [x] Add confirmation dialog before delete

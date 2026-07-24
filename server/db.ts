@@ -388,3 +388,19 @@ export async function getGasRequests() {
   const { desc } = await import("drizzle-orm");
   return db.select().from(t.gasRequests).orderBy(desc(t.gasRequests.createdAt));
 }
+
+export async function deleteContactMessage(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const t = await tables();
+  const { eq } = await import("drizzle-orm");
+  await db.delete(t.contactMessages).where(eq(t.contactMessages.id, id));
+}
+
+export async function deleteGasRequest(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const t = await tables();
+  const { eq } = await import("drizzle-orm");
+  await db.delete(t.gasRequests).where(eq(t.gasRequests.id, id));
+}
