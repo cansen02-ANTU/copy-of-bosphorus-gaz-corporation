@@ -166,3 +166,9 @@
 
 ## Footer Cleanup
 - [x] Remove Admin/Yönetim link from footer (all languages)
+
+## Contact Form Backend
+- [x] Add tRPC procedure for contact form submission
+- [x] Send owner notification with contact form data (name, email, subject, message)
+- [x] Wire Contact.tsx form to call the new tRPC procedure
+- [x] Show success/error feedback to user (toast + success state)

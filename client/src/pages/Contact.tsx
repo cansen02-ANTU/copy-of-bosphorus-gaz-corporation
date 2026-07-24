@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Mail, Clock, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSEO } from "@/hooks/useSEO";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 /* Design: Light theme — White bg, blue accents, navy headings. */
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
   const { t } = useLanguage();
 
   useSEO({
@@ -19,9 +20,32 @@ export default function Contact() {
     descriptionRu: "Контактная информация Bosphorus Gaz Corporation. Адрес: Seba Center, Сарыер, Стамбул. Свяжитесь с нами по телефону, электронной почте или через контактную форму.",
   });
 
+  // Form state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const submitMutation = trpc.contactForm.submit.useMutation({
+    onSuccess: () => {
+      setSubmitted(true);
+      toast.success(t("Mesajınız başarıyla gönderildi!", "Your message has been sent successfully!", "Ваше сообщение успешно отправлено!"));
+    },
+    onError: () => {
+      toast.error(t("Bir hata oluştu. Lütfen tekrar deneyin.", "An error occurred. Please try again.", "Произошла ошибка. Пожалуйста, попробуйте снова."));
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!name.trim() || !email.trim() || !subject || !message.trim()) return;
+    submitMutation.mutate({
+      name: name.trim(),
+      email: email.trim(),
+      subject: subject,
+      message: message.trim(),
+    });
   };
 
   return (
@@ -62,7 +86,7 @@ export default function Contact() {
       <section className="py-20 border-t border-slate-100">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Left: Info + Map */}
+            {/* Left: Info */}
             <div>
               <h2 className="text-2xl font-bold text-[#1e3a5f] mb-8">{t("İletişim Bilgileri", "Contact Information", "Контактная информация")}</h2>
               <div className="space-y-6 mb-10">
@@ -148,6 +172,8 @@ export default function Contact() {
                       <input
                         type="text"
                         required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                         placeholder={t("Adınız Soyadınız", "Your Full Name", "Ваше имя и фамилия")}
                       />
@@ -157,6 +183,8 @@ export default function Contact() {
                       <input
                         type="email"
                         required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                         placeholder={t("ornek@email.com", "example@email.com", "primer@email.com")}
                       />
@@ -166,14 +194,16 @@ export default function Contact() {
                       <label className="block text-sm text-slate-600 mb-1.5">{t("Konu *", "Subject *", "Тема *")}</label>
                     <select
                       required
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors"
                     >
                       <option value="">{t("Seçiniz", "Select", "Выберите")}</option>
-                      <option value="tedarik">{t("Doğal Gaz Tedarik", "Natural Gas Supply", "Поставка природного газа")}</option>
-                      <option value="isbirligi">{t("İş Birliği", "Partnership", "Сотрудничество")}</option>
-                      <option value="basin">{t("Basın & Medya", "Press & Media", "Пресса и Медиа")}</option>
-                      <option value="kariyer">{t("Kariyer", "Careers", "Карьера")}</option>
-                      <option value="diger">{t("Diğer", "Other", "Другое")}</option>
+                      <option value="Doğal Gaz Tedarik">{t("Doğal Gaz Tedarik", "Natural Gas Supply", "Поставка природного газа")}</option>
+                      <option value="İş Birliği">{t("İş Birliği", "Partnership", "Сотрудничество")}</option>
+                      <option value="Basın & Medya">{t("Basın & Medya", "Press & Media", "Пресса и Медиа")}</option>
+                      <option value="Kariyer">{t("Kariyer", "Careers", "Карьера")}</option>
+                      <option value="Diğer">{t("Diğer", "Other", "Другое")}</option>
                     </select>
                   </div>
                   <div>
@@ -181,15 +211,22 @@ export default function Contact() {
                     <textarea
                       rows={5}
                       required
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
                       className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-md text-slate-800 text-sm placeholder:text-slate-300 focus:border-[#1d4ed8] focus:ring-1 focus:ring-[#1d4ed8]/20 focus:outline-none transition-colors resize-none"
                       placeholder={t("Mesajınızı yazın...", "Write your message...", "Напишите ваше сообщение...")}
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full px-6 py-3 bg-[#1d4ed8] text-white font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97]"
+                    disabled={submitMutation.isPending}
+                    className="w-full px-6 py-3 bg-[#1d4ed8] text-white font-semibold rounded-md hover:bg-[#2563eb] transition-all duration-200 active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    {t("Gönder", "Send", "Отправить")}
+                    {submitMutation.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                    {submitMutation.isPending
+                      ? t("Gönderiliyor...", "Sending...", "Отправка...")
+                      : t("Gönder", "Send", "Отправить")
+                    }
                   </button>
                 </form>
               )}

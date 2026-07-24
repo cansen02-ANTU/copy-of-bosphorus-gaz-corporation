@@ -447,6 +447,42 @@ export const appRouter = router({
         return { success: true, id } as const;
       }),
   }),
+
+  // ─── Contact Form (İletişim Formu) ─────────────────────────────────────────
+  contactForm: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(1, "Name is required").max(300),
+        email: z.string().email("Valid email required").max(320),
+        subject: z.string().min(1, "Subject is required").max(500),
+        message: z.string().min(1, "Message is required").max(5000),
+      }))
+      .mutation(async ({ input }) => {
+        const lines = [
+          `Yeni iletişim formu mesajı alındı.`,
+          ``,
+          `Ad Soyad: ${input.name}`,
+          `E-posta: ${input.email}`,
+          `Konu: ${input.subject}`,
+          ``,
+          `Mesaj:`,
+          input.message,
+          ``,
+          `Bu mesaj ${CONTACT_EMAIL} adresine iletilmek üzere gönderilmiştir.`,
+        ];
+
+        try {
+          await notifyOwner({
+            title: `İletişim Formu: ${input.subject}`,
+            content: lines.join("\n"),
+          });
+        } catch (err) {
+          console.warn("[contactForm] notifyOwner failed:", err);
+        }
+
+        return { success: true } as const;
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
