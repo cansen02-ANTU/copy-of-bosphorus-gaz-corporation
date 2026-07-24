@@ -322,3 +322,34 @@ export async function createGasRequest(data: any) {
     return { id: result[0].id };
   }
 }
+
+// ─── Contact Messages ──────────────────────────────────────────────
+
+export async function createContactMessage(data: { name: string; email: string; subject: string; message: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const t = await tables();
+  if (isMySQL) {
+    const result = await db.insert(t.contactMessages).values(data);
+    return { id: result[0].insertId };
+  } else {
+    const result = await db.insert(t.contactMessages).values(data).returning({ id: t.contactMessages.id });
+    return { id: result[0].id };
+  }
+}
+
+export async function getContactMessages() {
+  const db = await getDb();
+  if (!db) return [];
+  const t = await tables();
+  const { desc } = await import("drizzle-orm");
+  return db.select().from(t.contactMessages).orderBy(desc(t.contactMessages.createdAt));
+}
+
+export async function getGasRequests() {
+  const db = await getDb();
+  if (!db) return [];
+  const t = await tables();
+  const { desc } = await import("drizzle-orm");
+  return db.select().from(t.gasRequests).orderBy(desc(t.gasRequests.createdAt));
+}

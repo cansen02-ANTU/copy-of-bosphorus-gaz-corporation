@@ -21,7 +21,7 @@ import {
 import { useIsMobile } from "@/hooks/useMobile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
-import { Newspaper, LogOut, PanelLeft, Image as ImageIcon, Home, Loader2 } from "lucide-react";
+import { Newspaper, LogOut, PanelLeft, Image as ImageIcon, Home, Loader2, Inbox } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -29,6 +29,7 @@ import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 const menuItems = [
   { icon: Newspaper, labelTr: "Haberler", labelEn: "News", labelRu: "Новости", path: "/admin/haberler" },
   { icon: ImageIcon, labelTr: "Galeri", labelEn: "Gallery", labelRu: "Галерея", path: "/admin/galeri" },
+  { icon: Inbox, labelTr: "Talepler", labelEn: "Requests", labelRu: "Заявки", path: "/admin/talepler" },
   { icon: Home, labelTr: "Siteye Dön", labelEn: "Back to Site", labelRu: "На сайт", path: "/" },
 ];
 

@@ -24,6 +24,7 @@ import DashboardLayout from "./components/DashboardLayout";
 import AdminNews from "./pages/AdminNews";
 import AdminGallery from "./pages/AdminGallery";
 import AdminLogin from "./pages/AdminLogin";
+import AdminRequests from "./pages/AdminRequests";
 
 // The public routes, defined relative to the language base (e.g. "/" matches
 // "/", "/en", or "/ru" depending on the active <Router base>).
@@ -50,6 +51,7 @@ function AdminRouter() {
       <Switch>
         <Route path="/admin/haberler" component={AdminNews} />
         <Route path="/admin/galeri" component={AdminGallery} />
+        <Route path="/admin/talepler" component={AdminRequests} />
         <Route path="/admin">
           <Redirect to="/admin/haberler" />
         </Route>

@@ -23,6 +23,9 @@ import {
   updateGalleryPhoto,
   deleteGalleryPhoto,
   createGasRequest,
+  createContactMessage,
+  getContactMessages,
+  getGasRequests,
 } from "./db";
 import { storagePut } from "./storage";
 import { notifyOwner } from "./_core/notification";
@@ -458,8 +461,17 @@ export const appRouter = router({
         message: z.string().min(1, "Message is required").max(5000),
       }))
       .mutation(async ({ input }) => {
+        // Persist to database first (durable)
+        const { id } = await createContactMessage({
+          name: input.name,
+          email: input.email,
+          subject: input.subject,
+          message: input.message,
+        });
+
+        // Notify the owner (best-effort)
         const lines = [
-          `Yeni iletişim formu mesajı alındı.`,
+          `Yeni iletişim formu mesajı alındı (#${id}).`,
           ``,
           `Ad Soyad: ${input.name}`,
           `E-posta: ${input.email}`,
@@ -480,8 +492,18 @@ export const appRouter = router({
           console.warn("[contactForm] notifyOwner failed:", err);
         }
 
-        return { success: true } as const;
+        return { success: true, id } as const;
       }),
+  }),
+
+  // ─── Admin: Talepler (Requests) ────────────────────────────────────────
+  requests: router({
+    gasRequests: adminProcedure.query(async () => {
+      return getGasRequests();
+    }),
+    contactMessages: adminProcedure.query(async () => {
+      return getContactMessages();
+    }),
   }),
 });
 

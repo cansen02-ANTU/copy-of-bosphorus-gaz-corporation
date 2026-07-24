@@ -103,5 +103,20 @@ export const gasRequests = mysqlTable("gas_requests", {
 export type GasRequest = typeof gasRequests.$inferSelect;
 export type InsertGasRequest = typeof gasRequests.$inferInsert;
 
+/**
+ * Contact form submissions from the İletişim page.
+ */
+export const contactMessages = mysqlTable("contact_messages", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 300 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull(),
+  subject: varchar("subject", { length: 500 }).notNull(),
+  message: text("message").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ContactMessage = typeof contactMessages.$inferSelect;
+export type InsertContactMessage = typeof contactMessages.$inferInsert;
+
 // Re-export roleEnum as a no-op for compatibility (MySQL uses mysqlEnum inline)
 export const roleEnum = null;

@@ -172,3 +172,13 @@
 - [x] Send owner notification with contact form data (name, email, subject, message)
 - [x] Wire Contact.tsx form to call the new tRPC procedure
 - [x] Show success/error feedback to user (toast + success state)
+
+## Contact Form Persistence + Admin Talepler Panel
+- [x] Add contact_messages DB table (name, email, subject, message, createdAt)
+- [x] Create migration and apply via webdev_execute_sql
+- [x] Add createContactMessage db helper
+- [x] Update contactForm.submit to persist to DB before notifying
+- [x] Add admin tRPC procedures to list gas_requests and contact_messages
+- [x] Build admin Talepler page with tabs for Gas Requests and Contact Messages
+- [x] Add Talepler link to admin navigation
+- [x] Typecheck + tests pass
