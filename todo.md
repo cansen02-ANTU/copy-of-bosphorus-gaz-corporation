@@ -188,3 +188,6 @@
 - [x] Add delete db helpers
 - [x] Add delete buttons next to view buttons in AdminRequests page
 - [x] Add confirmation dialog before delete
+
+## Fix robots.txt for Googlebot Rich Results Test
+- [x] Remove Disallow: /api/ from robots.txt so Googlebot can fetch tRPC endpoints during page rendering
