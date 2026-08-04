@@ -2,104 +2,272 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Homepage -->
+  <!-- ============================================================
+       ANA SAYFA
+       ============================================================ -->
   <url>
     <loc>https://bosphorusgaz.com/</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru"/>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/" />
   </url>
-
-  <!-- Şirketimiz / About -->
-  <url>
-    <loc>https://bosphorusgaz.com/sirketimiz</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/sirketimiz"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/sirketimiz"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/sirketimiz"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Doğal Gaz / Natural Gas -->
-  <url>
-    <loc>https://bosphorusgaz.com/dogal-gaz</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/dogal-gaz"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/dogal-gaz"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/dogal-gaz"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Basın / Press -->
-  <url>
-    <loc>https://bosphorusgaz.com/basin</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Basın / Haberler -->
-  <url>
-    <loc>https://bosphorusgaz.com/basin/haberler</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/haberler"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin/haberler"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin/haberler"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Basın / Foto Galeri -->
-  <url>
-    <loc>https://bosphorusgaz.com/basin/foto-galeri</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/foto-galeri"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin/foto-galeri"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin/foto-galeri"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- Kariyer / Careers -->
-  <url>
-    <loc>https://bosphorusgaz.com/kariyer</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/kariyer"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/kariyer"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/kariyer"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- İletişim / Contact -->
-  <url>
-    <loc>https://bosphorusgaz.com/iletisim</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/iletisim"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/iletisim"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/iletisim"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- English Homepage -->
   <url>
     <loc>https://bosphorusgaz.com/en</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru"/>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/" />
   </url>
-
-  <!-- Russian Homepage -->
   <url>
     <loc>https://bosphorusgaz.com/ru</loc>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru"/>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/" />
+  </url>
+
+  <!-- ============================================================
+       ŞİRKETİMİZ / ABOUT US / О КОМПАНИИ
+       ============================================================ -->
+  <url>
+    <loc>https://bosphorusgaz.com/sirketimiz</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/sirketimiz" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/sirketimiz</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/sirketimiz" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/sirketimiz</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/sirketimiz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/sirketimiz" />
+  </url>
+
+  <!-- ============================================================
+       DOĞAL GAZ / NATURAL GAS / ПРИРОДНЫЙ ГАЗ
+       ============================================================ -->
+  <url>
+    <loc>https://bosphorusgaz.com/dogal-gaz</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/natural-gas" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/natural-gas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/dogal-gaz" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/natural-gas</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/dogal-gaz" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/natural-gas</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/dogal-gaz" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/dogal-gaz" />
+  </url>
+
+  <!-- ============================================================
+       BASIN / PRESS / ПРЕССА
+       ============================================================ -->
+  <url>
+    <loc>https://bosphorusgaz.com/basin</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/press</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/press</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/basin" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/basin" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin" />
+  </url>
+
+  <!-- Basın / haberler alt sayfası -->
+  <url>
+    <loc>https://bosphorusgaz.com/basin/haberler</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/haberler" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/haberler" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/press/news</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/haberler" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/haberler" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/press/news</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/haberler" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/haberler" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/haberler" />
+  </url>
+
+  <!-- Basın / foto galeri alt sayfası -->
+  <url>
+    <loc>https://bosphorusgaz.com/basin/foto-galeri</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/foto-galeri" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/press/photo-gallery</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/foto-galeri" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/press/photo-gallery</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/basin/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/press/foto-galeri" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/basin/foto-galeri" />
+  </url>
+
+  <!-- ============================================================
+       KARİYER / CAREERS / КАРЬЕРА
+       ============================================================ -->
+  <url>
+    <loc>https://bosphorusgaz.com/kariyer</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/kariyer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/kariyer" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/kariyer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/kariyer" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/careers</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/kariyer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/kariyer" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/kariyer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/kariyer" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/careers</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/kariyer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/kariyer" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/kariyer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/kariyer" />
+  </url>
+
+  <!-- ============================================================
+       İLETİŞİM / CONTACT / КОНТАКТЫ
+       ============================================================ -->
+  <url>
+    <loc>https://bosphorusgaz.com/iletisim</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/iletisim" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/iletisim" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/iletisim" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/iletisim" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/en/contact</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/iletisim" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/iletisim" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/iletisim" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/iletisim" />
+  </url>
+  <url>
+    <loc>https://bosphorusgaz.com/ru/contact</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://bosphorusgaz.com/iletisim" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bosphorusgaz.com/en/iletisim" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bosphorusgaz.com/ru/iletisim" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bosphorusgaz.com/iletisim" />
   </url>
 
 </urlset>
