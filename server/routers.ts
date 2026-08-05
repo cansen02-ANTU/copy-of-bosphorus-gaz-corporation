@@ -29,7 +29,7 @@ import {
   deleteGasRequest,
 } from "./db";
 import { storagePut } from "./storage";
-import { notifyOwner } from "./_core/notification";
+import { sendNotificationEmail } from "./email";
 
 const CONTACT_EMAIL = "information@bosphorusgaz.com";
 
@@ -438,14 +438,11 @@ export const appRouter = router({
           `Bu talep ${CONTACT_EMAIL} adresine iletilmek üzere kaydedilmiştir.`,
         ].filter((l): l is string => l !== null);
 
-        try {
-          await notifyOwner({
-            title: `Yeni Talep: ${input.companyName}`,
-            content: lines.join("\n"),
-          });
-        } catch (err) {
-          console.warn("[gasRequest] notifyOwner failed:", err);
-        }
+        // Send email notification (best-effort, never throws)
+        await sendNotificationEmail(
+          `Yeni Doğal Gaz Talebi: ${input.companyName}`,
+          lines.join("\n")
+        );
 
         return { success: true, id } as const;
       }),
@@ -483,14 +480,11 @@ export const appRouter = router({
           `Bu mesaj ${CONTACT_EMAIL} adresine iletilmek üzere gönderilmiştir.`,
         ];
 
-        try {
-          await notifyOwner({
-            title: `İletişim Formu: ${input.subject}`,
-            content: lines.join("\n"),
-          });
-        } catch (err) {
-          console.warn("[contactForm] notifyOwner failed:", err);
-        }
+        // Send email notification (best-effort, never throws)
+        await sendNotificationEmail(
+          `İletişim Formu: ${input.subject}`,
+          lines.join("\n")
+        );
 
         return { success: true, id } as const;
       }),

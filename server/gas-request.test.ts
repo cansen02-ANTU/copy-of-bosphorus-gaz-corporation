@@ -23,14 +23,14 @@ vi.mock("./storage", () => ({
   storagePut: vi.fn().mockResolvedValue({ key: "k", url: "/u" }),
 }));
 
-// Mock owner notification so tests don't hit the network
-vi.mock("./_core/notification", () => ({
-  notifyOwner: vi.fn().mockResolvedValue(true),
+// Mock email notification so tests don't hit the network
+vi.mock("./email", () => ({
+  sendNotificationEmail: vi.fn().mockResolvedValue(true),
 }));
 
 import { appRouter } from "./routers";
 import { createGasRequest } from "./db";
-import { notifyOwner } from "./_core/notification";
+import { sendNotificationEmail } from "./email";
 
 // Minimal context for a public procedure (no auth needed)
 function makeCaller() {
@@ -74,15 +74,15 @@ describe("gasRequest.submit", () => {
     expect(arg.usagePurpose).toBe("uretim");
   });
 
-  it("notifies the owner with the company name in the title", async () => {
+  it("sends email notification with the company name in subject", async () => {
     const caller = makeCaller();
     await caller.gasRequest.submit(validInput);
 
-    expect(notifyOwner).toHaveBeenCalledTimes(1);
-    const payload = (notifyOwner as any).mock.calls[0][0];
-    expect(payload.title).toContain("Acme A.Ş.");
-    expect(payload.content).toContain("information@bosphorusgaz.com");
-    expect(payload.content).toContain("ada@acme.com");
+    expect(sendNotificationEmail).toHaveBeenCalledTimes(1);
+    const [subject, body] = (sendNotificationEmail as any).mock.calls[0];
+    expect(subject).toContain("Acme A.Ş.");
+    expect(body).toContain("information@bosphorusgaz.com");
+    expect(body).toContain("ada@acme.com");
   });
 
   it("maps omitted optional fields to null on persist", async () => {
@@ -104,8 +104,8 @@ describe("gasRequest.submit", () => {
     expect(arg.notes).toBeNull();
   });
 
-  it("still succeeds if owner notification throws", async () => {
-    (notifyOwner as any).mockRejectedValueOnce(new Error("upstream down"));
+  it("still succeeds if email notification fails", async () => {
+    (sendNotificationEmail as any).mockResolvedValueOnce(false);
     const caller = makeCaller();
     const result = await caller.gasRequest.submit(validInput);
     expect(result.success).toBe(true);

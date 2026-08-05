@@ -212,3 +212,13 @@
 - [x] Update all source code references to use /images/bg_images/ paths
 - [x] Verify typecheck and tests pass (0 TS errors, 38/38 tests pass)
 - [x] Verify images load correctly in dev preview (all 7 pages confirmed)
+
+## Implement Nodemailer + Gmail SMTP Notification System
+- [x] Install nodemailer and @types/nodemailer
+- [x] Create server/email.ts with Gmail SMTP helper
+- [x] Add SMTP env vars to server/_core/env.ts
+- [x] Replace notifyOwner() calls in routers.ts with sendNotificationEmail()
+- [x] Delete server/_core/notification.ts
+- [x] SMTP secrets set on Render by user (SMTP_USER, SMTP_PASSWORD, NOTIFICATION_EMAIL)
+- [x] Write vitest test for email helper (4 tests pass)
+- [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
