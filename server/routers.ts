@@ -1,6 +1,5 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { SignJWT } from "jose";
@@ -38,7 +37,6 @@ const ADMIN_COOKIE_NAME = "admin_session";
 const ONE_DAY_MS = 1000 * 60 * 60 * 24;
 
 export const appRouter = router({
-  system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

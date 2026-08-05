@@ -191,3 +191,17 @@
 
 ## Fix robots.txt for Googlebot Rich Results Test
 - [x] Remove Disallow: /api/ from robots.txt so Googlebot can fetch tRPC endpoints during page rendering
+
+## Remove Dead Code (Unused Manus Components)
+- [x] Delete client/src/components/ManusDialog.tsx
+- [x] Delete client/src/components/AIChatBox.tsx
+- [x] Delete client/src/components/Map.tsx
+- [x] Delete server/_core/llm.ts
+- [x] Delete server/_core/imageGeneration.ts
+- [x] Delete server/_core/voiceTranscription.ts
+- [x] Delete server/_core/dataApi.ts
+- [x] Delete server/_core/map.ts
+- [x] Delete server/_core/heartbeat.ts
+- [x] Delete server/_core/systemRouter.ts
+- [x] Verify typecheck and tests still pass after deletion (38/38 pass, 0 TS errors)
+- [x] Also deleted client/src/pages/ComponentShowcase.tsx (was importing AIChatBox, not routed anywhere)
