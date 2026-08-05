@@ -49,17 +49,6 @@ export async function createContext(
   // Check for standalone admin session cookie (username/password auth)
   user = await getAdminUserFromCookie(opts.req.headers.cookie);
 
-  // If no admin cookie and Manus OAuth is configured, try OAuth for public user auth
-  // When self-hosting without Manus OAuth, this block is safely skipped
-  if (!user && ENV.oAuthServerUrl && ENV.appId) {
-    try {
-      const { sdk } = await import("./sdk");
-      user = await sdk.authenticateRequest(opts.req);
-    } catch {
-      // Authentication is optional for public procedures.
-      user = null;
-    }
-  }
 
   return {
     req: opts.req,

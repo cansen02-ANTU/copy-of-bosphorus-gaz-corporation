@@ -227,3 +227,9 @@
 - [x] Delete server/_core/storageProxy.ts and remove its registration from index.ts
 - [x] Delete server/_core/oauth.ts and remove its registration from index.ts
 - [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
+
+## Remove Remaining Manus OAuth Code
+- [x] Delete client/src/const.ts (getLoginUrl for Manus OAuth)
+- [x] Delete server/_core/sdk.ts (Manus SDK)
+- [x] Remove imports + also deleted client/src/_core/hooks/useAuth.ts (unused, imported getLoginUrl) and server/_core/types/manusTypes.ts (only used by sdk.ts)
+- [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
