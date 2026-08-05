@@ -27,9 +27,12 @@ import {
   getGasRequests,
   deleteContactMessage,
   deleteGasRequest,
+  getAdminSetting,
+  setAdminSetting,
 } from "./db";
 import { storagePut } from "./storage";
 import { sendNotificationEmail } from "./email";
+import { generateTotpSecret, generateTotpQrCode, verifyTotpToken } from "./totp";
 
 const CONTACT_EMAIL = "information@bosphorusgaz.com";
 
@@ -47,30 +50,77 @@ export const appRouter = router({
     }),
   }),
 
-  // ─── Admin Auth (username/password) ─────────────────────────────────────────
+  // ─── Admin Auth (username/password + TOTP 2FA) ─────────────────────────────
   adminAuth: router({
+    // Step 1: Verify username/password, then check if 2FA is set up
     login: publicProcedure
       .input(z.object({
         username: z.string().min(1),
         password: z.string().min(1),
       }))
+      .mutation(async ({ input }) => {
+        if (!ENV.adminUsername || !ENV.adminPassword) {
+          return { success: false, error: "Admin kimlik bilgileri yapılandırılmamış", requires2fa: false, requiresSetup: false } as const;
+        }
+        if (input.username !== ENV.adminUsername || input.password !== ENV.adminPassword) {
+          return { success: false, error: "Geçersiz kullanıcı adı veya şifre", requires2fa: false, requiresSetup: false } as const;
+        }
+        // Password OK — check if TOTP is already set up
+        const totpSecret = await getAdminSetting("totp_secret");
+        if (!totpSecret) {
+          // 2FA not set up yet — generate a new secret and return QR code
+          const newSecret = generateTotpSecret();
+          const qrCode = await generateTotpQrCode(newSecret, ENV.adminUsername);
+          // Store the secret temporarily (unverified) — will be confirmed on first successful verify
+          await setAdminSetting("totp_secret_pending", newSecret);
+          return { success: true, error: null, requires2fa: false, requiresSetup: true, qrCode, secret: newSecret } as const;
+        }
+        // 2FA is set up — require TOTP verification
+        return { success: true, error: null, requires2fa: true, requiresSetup: false } as const;
+      }),
+
+    // Step 2: Verify TOTP code and issue session
+    verify2fa: publicProcedure
+      .input(z.object({
+        username: z.string().min(1),
+        password: z.string().min(1),
+        totpCode: z.string().length(6),
+      }))
       .mutation(async ({ input, ctx }) => {
-        // Reject if credentials are not configured
+        // Re-verify credentials
         if (!ENV.adminUsername || !ENV.adminPassword) {
           return { success: false, error: "Admin kimlik bilgileri yapılandırılmamış" } as const;
         }
-
         if (input.username !== ENV.adminUsername || input.password !== ENV.adminPassword) {
           return { success: false, error: "Geçersiz kullanıcı adı veya şifre" } as const;
         }
-
-        // Create a JWT token for the admin session
+        // Get the active TOTP secret
+        let totpSecret = await getAdminSetting("totp_secret");
+        if (!totpSecret) {
+          // Check pending (first-time setup)
+          totpSecret = await getAdminSetting("totp_secret_pending");
+          if (!totpSecret) {
+            return { success: false, error: "2FA yapılandırılmamış. Lütfen tekrar giriş yapın." } as const;
+          }
+        }
+        // Verify the TOTP code
+        const isValid = verifyTotpToken(totpSecret, input.totpCode);
+        if (!isValid) {
+          return { success: false, error: "Geçersiz doğrulama kodu. Lütfen tekrar deneyin." } as const;
+        }
+        // If this was a pending secret (first setup), promote it to active
+        const pending = await getAdminSetting("totp_secret_pending");
+        if (pending && pending === totpSecret) {
+          await setAdminSetting("totp_secret", pending);
+          // Clean up pending
+          await setAdminSetting("totp_secret_pending", "");
+        }
+        // Issue JWT session cookie
         const secret = new TextEncoder().encode(ENV.cookieSecret);
         const token = await new SignJWT({ username: input.username, role: "admin" })
           .setProtectedHeader({ alg: "HS256", typ: "JWT" })
           .setExpirationTime(Math.floor((Date.now() + ONE_DAY_MS) / 1000))
           .sign(secret);
-
         ctx.res.cookie(ADMIN_COOKIE_NAME, token, {
           httpOnly: true,
           path: "/",
@@ -78,9 +128,15 @@ export const appRouter = router({
           secure: ctx.req.protocol === "https" || ctx.req.headers["x-forwarded-proto"] === "https",
           maxAge: ONE_DAY_MS,
         });
-
         return { success: true, error: null } as const;
       }),
+
+    // Reset 2FA (admin must be logged in)
+    reset2fa: adminProcedure.mutation(async () => {
+      await setAdminSetting("totp_secret", "");
+      await setAdminSetting("totp_secret_pending", "");
+      return { success: true } as const;
+    }),
 
     logout: publicProcedure.mutation(({ ctx }) => {
       ctx.res.clearCookie(ADMIN_COOKIE_NAME, {
@@ -93,7 +149,6 @@ export const appRouter = router({
     }),
 
     me: publicProcedure.query(({ ctx }) => {
-      // Return the admin user if authenticated via admin cookie
       if (ctx.user && ctx.user.openId === "admin-local" && ctx.user.role === "admin") {
         return { username: ctx.user.name, role: "admin" };
       }

@@ -84,8 +84,17 @@ export async function ensureTables(): Promise<void> {
         "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
       )
     `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS "admin_settings" (
+        "id" SERIAL PRIMARY KEY,
+        "key" VARCHAR(100) NOT NULL UNIQUE,
+        "value" TEXT NOT NULL,
+        "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+        "updatedAt" TIMESTAMP DEFAULT NOW() NOT NULL
+      )
+    `;
     await sql.end();
-    console.log("[Database] ensureTables: contact_messages OK");
+    console.log("[Database] ensureTables: contact_messages + admin_settings OK");
   } catch (err) {
     console.warn("[Database] ensureTables failed:", err);
   }
@@ -403,4 +412,47 @@ export async function deleteGasRequest(id: number) {
   const t = await tables();
   const { eq } = await import("drizzle-orm");
   await db.delete(t.gasRequests).where(eq(t.gasRequests.id, id));
+}
+
+// ─── Admin Settings (TOTP 2FA) ──────────────────────────────────────────────
+
+export async function getAdminSetting(key: string): Promise<string | null> {
+  const url = process.env.DATABASE_URL;
+  if (!url) return null;
+  if (isMySQL) {
+    const mysql = await import("mysql2/promise");
+    const conn = await mysql.createConnection({ uri: url, ssl: { rejectUnauthorized: true } });
+    const [rows] = await conn.execute(`SELECT value FROM admin_settings WHERE \`key\` = ?`, [key]);
+    await conn.end();
+    return (rows as any)?.[0]?.value ?? null;
+  } else {
+    const pg = await import("postgres");
+    const sql = pg.default(url, { ssl: 'require' });
+    const rows = await sql`SELECT "value" FROM "admin_settings" WHERE "key" = ${key}`;
+    await sql.end();
+    return rows[0]?.value ?? null;
+  }
+}
+
+export async function setAdminSetting(key: string, value: string): Promise<void> {
+  const url = process.env.DATABASE_URL;
+  if (!url) return;
+  if (isMySQL) {
+    const mysql = await import("mysql2/promise");
+    const conn = await mysql.createConnection({ uri: url, ssl: { rejectUnauthorized: true } });
+    await conn.execute(
+      `INSERT INTO admin_settings (\`key\`, value, createdAt, updatedAt) VALUES (?, ?, NOW(), NOW()) ON DUPLICATE KEY UPDATE value = ?, updatedAt = NOW()`,
+      [key, value, value]
+    );
+    await conn.end();
+  } else {
+    const pg = await import("postgres");
+    const sql = pg.default(url, { ssl: 'require' });
+    await sql`
+      INSERT INTO "admin_settings" ("key", "value", "createdAt", "updatedAt")
+      VALUES (${key}, ${value}, NOW(), NOW())
+      ON CONFLICT ("key") DO UPDATE SET "value" = ${value}, "updatedAt" = NOW()
+    `;
+    await sql.end();
+  }
 }

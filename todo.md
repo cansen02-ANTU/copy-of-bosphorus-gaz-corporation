@@ -233,3 +233,13 @@
 - [x] Delete server/_core/sdk.ts (Manus SDK)
 - [x] Remove imports + also deleted client/src/_core/hooks/useAuth.ts (unused, imported getLoginUrl) and server/_core/types/manusTypes.ts (only used by sdk.ts)
 - [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
+
+## Implement Google Authenticator TOTP 2FA for Admin Panel
+- [x] Install otpauth and qrcode packages
+- [x] Add admin_settings table to database (key/value store for TOTP secret)
+- [x] Create server/totp.ts helper (generate secret, generate QR, verify token)
+- [x] Update admin login flow: password check → 2FA setup/verify → JWT session
+- [x] Build frontend: 2FA setup page with QR code display
+- [x] Build frontend: 2FA verification input after password login
+- [x] Write vitest tests for TOTP logic (5 tests) + updated admin-auth tests (12 tests)
+- [x] Verify TypeScript clean and all tests pass (50/50 pass, 0 TS errors)
