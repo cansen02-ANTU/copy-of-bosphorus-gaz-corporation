@@ -222,3 +222,8 @@
 - [x] SMTP secrets set on Render by user (SMTP_USER, SMTP_PASSWORD, NOTIFICATION_EMAIL)
 - [x] Write vitest test for email helper (4 tests pass)
 - [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
+
+## Remove Dead Manus Infrastructure Code
+- [x] Delete server/_core/storageProxy.ts and remove its registration from index.ts
+- [x] Delete server/_core/oauth.ts and remove its registration from index.ts
+- [x] Verify TypeScript clean and tests pass (42/42 pass, 0 TS errors)
