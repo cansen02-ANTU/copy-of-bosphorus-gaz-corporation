@@ -107,7 +107,7 @@ export default function Company() {
       <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-[#1e3a5f] to-[#2563eb]">
         <div className="absolute inset-0 opacity-15">
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406413308/YsuVUT62bVL4iGDytG28i2/about-corporate-fjzD2yPeTcmgeM3mtopuDP.webp"
+            src="/images/bg_images/about-corporate.webp"
             alt=""
             className="w-full h-full object-cover"
           />
@@ -188,7 +188,7 @@ export default function Company() {
             </div>
             <div className="relative">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406413308/YsuVUT62bVL4iGDytG28i2/gas-infrastructure-jDW9xBeX6fE33JibpWNjXK.webp"
+                src="/images/bg_images/gas-infrastructure.webp"
                 alt={t("Doğal gaz altyapısı", "Natural gas infrastructure", "Инфраструктура природного газа")}
                 className="rounded-xl w-full h-auto object-cover shadow-lg"
               />

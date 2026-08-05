@@ -201,7 +201,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406413308/YsuVUT62bVL4iGDytG28i2/hero-bg-K6Qnm8DfK2VVuDEEjfa2tY.webp"
+            src="/images/bg_images/hero-bg.webp"
             alt=""
             className="w-full h-full object-cover opacity-50"
           />
@@ -357,7 +357,7 @@ export default function Home() {
             </div>
             <div className="relative">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406413308/YsuVUT62bVL4iGDytG28i2/about-corporate-fjzD2yPeTcmgeM3mtopuDP.webp"
+                src="/images/bg_images/about-corporate.webp"
                 alt={t("Bosphorus Gaz altyapısı", "Bosphorus Gaz infrastructure", "Инфраструктура Bosphorus Gaz")}
                 className="rounded-xl w-full h-auto object-cover shadow-lg"
               />

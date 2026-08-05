@@ -150,7 +150,7 @@ export default function NaturalGas() {
       <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-[#1e3a5f] to-[#2563eb]">
         <div className="absolute inset-0 opacity-15">
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406413308/YsuVUT62bVL4iGDytG28i2/energy-abstract-EGyNLHrshnTX2Jre4jsphx.webp"
+            src="/images/bg_images/energy-abstract.webp"
             alt=""
             className="w-full h-full object-cover"
           />

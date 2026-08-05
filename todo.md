@@ -205,3 +205,10 @@
 - [x] Delete server/_core/systemRouter.ts
 - [x] Verify typecheck and tests still pass after deletion (38/38 pass, 0 TS errors)
 - [x] Also deleted client/src/pages/ComponentShowcase.tsx (was importing AIChatBox, not routed anywhere)
+
+## Migrate CloudFront CDN Background Images to Local Hosting
+- [x] Download all 7 unique background images from d2xsxph8kpxj0f.cloudfront.net
+- [x] Store them in client/public/images/bg_images/
+- [x] Update all source code references to use /images/bg_images/ paths
+- [x] Verify typecheck and tests pass (0 TS errors, 38/38 tests pass)
+- [x] Verify images load correctly in dev preview (all 7 pages confirmed)
