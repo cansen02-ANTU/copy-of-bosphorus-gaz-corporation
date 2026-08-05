@@ -33,11 +33,25 @@ import {
 import { storagePut } from "./storage";
 import { sendNotificationEmail } from "./email";
 import { generateTotpSecret, generateTotpQrCode, verifyTotpToken } from "./totp";
+import { checkRateLimit, resetRateLimit, type RateLimitConfig } from "./rateLimit";
 
 const CONTACT_EMAIL = "information@bosphorusgaz.com";
 
 const ADMIN_COOKIE_NAME = "admin_session";
 const ONE_DAY_MS = 1000 * 60 * 60 * 24;
+
+// Rate limit configs
+const LOGIN_RATE_LIMIT: RateLimitConfig = {
+  name: "admin-login",
+  maxAttempts: 5,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+};
+
+const VERIFY_2FA_RATE_LIMIT: RateLimitConfig = {
+  name: "admin-verify2fa",
+  maxAttempts: 5,
+  windowMs: 5 * 60 * 1000, // 5 minutes
+};
 
 export const appRouter = router({
   auth: router({
@@ -58,13 +72,23 @@ export const appRouter = router({
         username: z.string().min(1),
         password: z.string().min(1),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ input, ctx }) => {
+        // Rate limiting by IP
+        const ip = ctx.req.headers["x-forwarded-for"]?.toString().split(",")[0] || ctx.req.ip || "unknown";
+        const rateCheck = checkRateLimit(LOGIN_RATE_LIMIT, ip);
+        if (!rateCheck.allowed) {
+          const minutes = Math.ceil(rateCheck.retryAfterMs / 60000);
+          return { success: false, error: `Çok fazla deneme. ${minutes} dakika sonra tekrar deneyin.`, requires2fa: false, requiresSetup: false } as const;
+        }
+
         if (!ENV.adminUsername || !ENV.adminPassword) {
           return { success: false, error: "Admin kimlik bilgileri yapılandırılmamış", requires2fa: false, requiresSetup: false } as const;
         }
         if (input.username !== ENV.adminUsername || input.password !== ENV.adminPassword) {
           return { success: false, error: "Geçersiz kullanıcı adı veya şifre", requires2fa: false, requiresSetup: false } as const;
         }
+        // Successful password check — reset login rate limit
+        resetRateLimit(LOGIN_RATE_LIMIT.name, ip);
         // Password OK — check if TOTP is already set up
         const totpSecret = await getAdminSetting("totp_secret");
         if (!totpSecret) {
@@ -87,6 +111,14 @@ export const appRouter = router({
         totpCode: z.string().length(6),
       }))
       .mutation(async ({ input, ctx }) => {
+        // Rate limiting by IP
+        const ip = ctx.req.headers["x-forwarded-for"]?.toString().split(",")[0] || ctx.req.ip || "unknown";
+        const rateCheck = checkRateLimit(VERIFY_2FA_RATE_LIMIT, ip);
+        if (!rateCheck.allowed) {
+          const minutes = Math.ceil(rateCheck.retryAfterMs / 60000);
+          return { success: false, error: `Çok fazla deneme. ${minutes} dakika sonra tekrar deneyin.` } as const;
+        }
+
         // Re-verify credentials
         if (!ENV.adminUsername || !ENV.adminPassword) {
           return { success: false, error: "Admin kimlik bilgileri yapılandırılmamış" } as const;
@@ -108,6 +140,8 @@ export const appRouter = router({
         if (!isValid) {
           return { success: false, error: "Geçersiz doğrulama kodu. Lütfen tekrar deneyin." } as const;
         }
+        // Successful 2FA — reset rate limit
+        resetRateLimit(VERIFY_2FA_RATE_LIMIT.name, ip);
         // If this was a pending secret (first setup), promote it to active
         const pending = await getAdminSetting("totp_secret_pending");
         if (pending && pending === totpSecret) {

@@ -243,3 +243,10 @@
 - [x] Build frontend: 2FA verification input after password login
 - [x] Write vitest tests for TOTP logic (5 tests) + updated admin-auth tests (12 tests)
 - [x] Verify TypeScript clean and all tests pass (50/50 pass, 0 TS errors)
+
+## Add Reset 2FA Button + Rate Limiting
+- [x] Create server/rateLimit.ts with in-memory rate limiter
+- [x] Apply rate limiting to adminAuth.login (5 attempts per 15 min)
+- [x] Apply rate limiting to adminAuth.verify2fa (5 attempts per 5 min)
+- [x] Add Reset 2FA button in admin panel UI (AdminSettings.tsx at /admin/ayarlar)
+- [x] Write tests and verify (50/50 pass, 0 TS errors)
