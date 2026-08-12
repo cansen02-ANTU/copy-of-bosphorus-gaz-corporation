@@ -26,6 +26,7 @@ import AdminGallery from "./pages/AdminGallery";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRequests from "./pages/AdminRequests";
 import AdminSettings from "./pages/AdminSettings";
+import AdminActivityLog from "./pages/AdminActivityLog";
 
 // The public routes, defined relative to the language base (e.g. "/" matches
 // "/", "/en", or "/ru" depending on the active <Router base>).
@@ -54,6 +55,7 @@ function AdminRouter() {
         <Route path="/admin/galeri" component={AdminGallery} />
         <Route path="/admin/talepler" component={AdminRequests} />
         <Route path="/admin/ayarlar" component={AdminSettings} />
+        <Route path="/admin/aktivite" component={AdminActivityLog} />
         <Route path="/admin">
           <Redirect to="/admin/haberler" />
         </Route>

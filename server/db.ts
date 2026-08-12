@@ -93,8 +93,17 @@ export async function ensureTables(): Promise<void> {
         "updatedAt" TIMESTAMP DEFAULT NOW() NOT NULL
       )
     `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS "activity_log" (
+        "id" SERIAL PRIMARY KEY,
+        "event" VARCHAR(100) NOT NULL,
+        "ip" VARCHAR(100),
+        "details" TEXT,
+        "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+      )
+    `;
     await sql.end();
-    console.log("[Database] ensureTables: contact_messages + admin_settings OK");
+    console.log("[Database] ensureTables: contact_messages + admin_settings + activity_log OK");
   } catch (err) {
     console.warn("[Database] ensureTables failed:", err);
   }

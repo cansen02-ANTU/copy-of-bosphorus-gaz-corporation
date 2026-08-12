@@ -250,3 +250,12 @@
 - [x] Apply rate limiting to adminAuth.verify2fa (5 attempts per 5 min)
 - [x] Add Reset 2FA button in admin panel UI (AdminSettings.tsx at /admin/ayarlar)
 - [x] Write tests and verify (50/50 pass, 0 TS errors)
+
+## Admin Activity Log
+- [x] Create activity_log DB table (event type, IP, details, timestamp)
+- [x] Create server/activityLog.ts helper to log events
+- [x] Log failed login attempts, failed 2FA, successful logins, 2FA resets, rate limit blocks
+- [x] Create tRPC procedure to fetch activity logs (admin only)
+- [x] Create AdminActivityLog.tsx page at /admin/aktivite
+- [x] Add nav item to DashboardLayout sidebar
+- [x] Write tests and verify (55/55 pass, 0 TS errors, e2e confirmed)

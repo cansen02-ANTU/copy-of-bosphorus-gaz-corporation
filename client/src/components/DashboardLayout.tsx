@@ -21,7 +21,7 @@ import {
 import { useIsMobile } from "@/hooks/useMobile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
-import { Newspaper, LogOut, PanelLeft, Image as ImageIcon, Home, Loader2, Inbox, Settings } from "lucide-react";
+import { Newspaper, LogOut, PanelLeft, Image as ImageIcon, Home, Loader2, Inbox, Settings, Activity } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -31,6 +31,7 @@ const menuItems = [
   { icon: ImageIcon, labelTr: "Galeri", labelEn: "Gallery", labelRu: "Галерея", path: "/admin/galeri" },
   { icon: Inbox, labelTr: "Talepler", labelEn: "Requests", labelRu: "Заявки", path: "/admin/talepler" },
   { icon: Settings, labelTr: "Ayarlar", labelEn: "Settings", labelRu: "Настройки", path: "/admin/ayarlar" },
+  { icon: Activity, labelTr: "Aktivite", labelEn: "Activity Log", labelRu: "Журнал", path: "/admin/aktivite" },
   { icon: Home, labelTr: "Siteye Dön", labelEn: "Back to Site", labelRu: "На сайт", path: "/" },
 ];
 

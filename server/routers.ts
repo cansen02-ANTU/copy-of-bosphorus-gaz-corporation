@@ -34,6 +34,7 @@ import { storagePut } from "./storage";
 import { sendNotificationEmail } from "./email";
 import { generateTotpSecret, generateTotpQrCode, verifyTotpToken } from "./totp";
 import { checkRateLimit, resetRateLimit, type RateLimitConfig } from "./rateLimit";
+import { logActivity, getActivityLogs } from "./activityLog";
 
 const CONTACT_EMAIL = "information@bosphorusgaz.com";
 
@@ -78,6 +79,7 @@ export const appRouter = router({
         const rateCheck = checkRateLimit(LOGIN_RATE_LIMIT, ip);
         if (!rateCheck.allowed) {
           const minutes = Math.ceil(rateCheck.retryAfterMs / 60000);
+          logActivity("login_rate_limited", ip, `Username: ${input.username}`);
           return { success: false, error: `Çok fazla deneme. ${minutes} dakika sonra tekrar deneyin.`, requires2fa: false, requiresSetup: false } as const;
         }
 
@@ -85,6 +87,7 @@ export const appRouter = router({
           return { success: false, error: "Admin kimlik bilgileri yapılandırılmamış", requires2fa: false, requiresSetup: false } as const;
         }
         if (input.username !== ENV.adminUsername || input.password !== ENV.adminPassword) {
+          logActivity("login_failed", ip, `Username: ${input.username}`);
           return { success: false, error: "Geçersiz kullanıcı adı veya şifre", requires2fa: false, requiresSetup: false } as const;
         }
         // Successful password check — reset login rate limit
@@ -116,6 +119,7 @@ export const appRouter = router({
         const rateCheck = checkRateLimit(VERIFY_2FA_RATE_LIMIT, ip);
         if (!rateCheck.allowed) {
           const minutes = Math.ceil(rateCheck.retryAfterMs / 60000);
+          logActivity("2fa_rate_limited", ip);
           return { success: false, error: `Çok fazla deneme. ${minutes} dakika sonra tekrar deneyin.` } as const;
         }
 
@@ -138,16 +142,19 @@ export const appRouter = router({
         // Verify the TOTP code
         const isValid = verifyTotpToken(totpSecret, input.totpCode);
         if (!isValid) {
+          logActivity("2fa_failed", ip);
           return { success: false, error: "Geçersiz doğrulama kodu. Lütfen tekrar deneyin." } as const;
         }
         // Successful 2FA — reset rate limit
         resetRateLimit(VERIFY_2FA_RATE_LIMIT.name, ip);
+        logActivity("2fa_success", ip, `Username: ${input.username}`);
         // If this was a pending secret (first setup), promote it to active
         const pending = await getAdminSetting("totp_secret_pending");
         if (pending && pending === totpSecret) {
           await setAdminSetting("totp_secret", pending);
           // Clean up pending
           await setAdminSetting("totp_secret_pending", "");
+          logActivity("2fa_setup_complete", ip, `Username: ${input.username}`);
         }
         // Issue JWT session cookie
         const secret = new TextEncoder().encode(ENV.cookieSecret);
@@ -166,7 +173,9 @@ export const appRouter = router({
       }),
 
     // Reset 2FA (admin must be logged in)
-    reset2fa: adminProcedure.mutation(async () => {
+    reset2fa: adminProcedure.mutation(async ({ ctx }) => {
+      const ip = ctx.req.headers["x-forwarded-for"]?.toString().split(",")[0] || ctx.req.ip || "unknown";
+      logActivity("2fa_reset", ip);
       await setAdminSetting("totp_secret", "");
       await setAdminSetting("totp_secret_pending", "");
       return { success: true } as const;
@@ -188,6 +197,13 @@ export const appRouter = router({
       }
       return null;
     }),
+
+    activityLog: adminProcedure
+      .input(z.object({ limit: z.number().min(1).max(200).default(50) }).optional())
+      .query(async ({ input }) => {
+        const limit = input?.limit ?? 50;
+        return getActivityLogs(limit);
+      }),
   }),
 
   // ─── News Articles ─────────────────────────────────────────────────────────
