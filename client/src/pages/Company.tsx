@@ -71,7 +71,7 @@ const managementTeam = [
     titleTr: "Yönetim Kurulu Üyesi",
     titleEn: "Board Member",
     titleRu: "Член совета директоров",
-    photo: null,
+    photo: "/images/UfukErmis.jpeg",
   },
   {
     name: "Selçuk Advan",
