@@ -92,3 +92,57 @@ export async function getActivityLogs(limit = 50): Promise<ActivityLogEntry[]> {
     return [];
   }
 }
+
+const RETENTION_DAYS = 7;
+
+/**
+ * Purge activity log entries older than RETENTION_DAYS (7 days).
+ * Runs silently — errors are logged but do not propagate.
+ */
+export async function purgeOldActivityLogs(): Promise<number> {
+  const url = process.env.DATABASE_URL;
+  if (!url) return 0;
+
+  try {
+    if (isMySQL) {
+      const mysql = await import("mysql2/promise");
+      const conn = await mysql.createConnection({ uri: url, ssl: { rejectUnauthorized: true } });
+      const [result] = await conn.execute(
+        "DELETE FROM activity_log WHERE createdAt < NOW() - INTERVAL ? DAY",
+        [RETENTION_DAYS]
+      );
+      await conn.end();
+      const deleted = (result as { affectedRows?: number }).affectedRows ?? 0;
+      if (deleted > 0) console.log(`[ActivityLog] Purged ${deleted} entries older than ${RETENTION_DAYS} days`);
+      return deleted;
+    } else {
+      const pg = await import("postgres");
+      const sql = pg.default(url, { ssl: "require" });
+      const result = await sql`
+        DELETE FROM "activity_log"
+        WHERE "createdAt" < NOW() - INTERVAL '7 days'
+      `;
+      await sql.end();
+      const deleted = result.count;
+      if (deleted > 0) console.log(`[ActivityLog] Purged ${deleted} entries older than ${RETENTION_DAYS} days`);
+      return deleted;
+    }
+  } catch (err) {
+    console.warn("[ActivityLog] Purge failed:", err);
+    return 0;
+  }
+}
+
+/**
+ * Start the automatic cleanup interval.
+ * Runs once on startup (5s delay) and then every 6 hours.
+ */
+export function startActivityLogCleanup(): void {
+  setTimeout(() => {
+    purgeOldActivityLogs();
+  }, 5000);
+
+  setInterval(() => {
+    purgeOldActivityLogs();
+  }, 6 * 60 * 60 * 1000);
+}
