@@ -254,10 +254,10 @@ export default function Company() {
             <div className="bg-slate-50 border border-slate-100 rounded-xl p-6">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center">
-                  <span className="text-[#1d4ed8] font-bold text-lg">AŞ</span>
+                  <span className="text-[#1d4ed8] font-bold text-lg">ŞH</span>
                 </div>
                 <div>
-                  <h3 className="text-[#1e3a5f] font-semibold text-lg">Adnan Şen</h3>
+                  <h3 className="text-[#1e3a5f] font-semibold text-lg">Şen Holding<sup className="text-xs text-slate-400">*</sup></h3>
                   <p className="text-slate-400 text-sm">%90,1*</p>
                 </div>
               </div>
@@ -276,6 +276,8 @@ export default function Company() {
           </div>
           <p className="text-slate-400 text-xs mt-4">
             {t("* Doğrudan ve dolaylı paylar dahil.", "* Including direct and indirect shares.", "* Включая прямые и косвенные доли.")}
+            <br />
+            <span className="italic">{'* "Şen Sermaye Yatırımları Holding A.Ş."'}</span>
           </p>
           <p className="text-slate-500 text-sm mt-4 max-w-2xl leading-relaxed">
             {t(
