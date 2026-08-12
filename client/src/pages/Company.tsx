@@ -258,7 +258,7 @@ export default function Company() {
                 </div>
                 <div>
                   <h3 className="text-[#1e3a5f] font-semibold text-lg">Şen Holding<sup className="text-xs text-slate-400">*</sup></h3>
-                  <p className="text-slate-400 text-sm">%90,1*</p>
+                  <p className="text-slate-400 text-sm">%90,1 **</p>
                 </div>
               </div>
             </div>
@@ -274,11 +274,10 @@ export default function Company() {
               </div>
             </div>
           </div>
-          <p className="text-slate-400 text-xs mt-4">
-            {t("* Doğrudan ve dolaylı paylar dahil.", "* Including direct and indirect shares.", "* Включая прямые и косвенные доли.")}
-            <br />
-            <span className="italic">{'* "Şen Sermaye Yatırımları Holding A.Ş."'}</span>
-          </p>
+          <div className="text-slate-400 text-xs mt-4 leading-relaxed">
+            <p>{"* Şen Sermaye Yatırımları Holding A.Ş."}</p>
+            <p>{t("** Doğrudan ve dolaylı paylar dahil.", "** Including direct and indirect shares.", "** Включая прямые и косвенные доли.")}</p>
+          </div>
           <p className="text-slate-500 text-sm mt-4 max-w-2xl leading-relaxed">
             {t(
               "Eylül 2018 itibarıyla Gazprom hisseleri Şen Grup'a devredilmiştir. Bosphorus Gaz'ın Gazprom ile stratejik işbirliği tedarikçi ve güvenilir ortak olarak devam etmektedir.",
