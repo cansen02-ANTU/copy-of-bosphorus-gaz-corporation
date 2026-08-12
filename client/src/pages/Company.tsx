@@ -74,10 +74,17 @@ const managementTeam = [
     photo: null,
   },
   {
+    name: "Selçuk Advan",
+    titleTr: "Yönetim Kurulu Üyesi ve Genel Müdür",
+    titleEn: "Board Member & General Manager",
+    titleRu: "Член совета директоров и Генеральный директор",
+    photo: null,
+  },
+  {
     name: "Bilgehan Üstündağ",
-    titleTr: "Genel Müdür",
-    titleEn: "General Manager / CEO",
-    titleRu: "Генеральный директор",
+    titleTr: "Operasyonlardan Sorumlu Genel Müdür Yardımcısı",
+    titleEn: "Deputy General Manager – Operations",
+    titleRu: "Заместитель генерального директора по операциям",
     photo: "/images/BilgehanUstundag_7ad7486e.jpeg",
   },
   {
